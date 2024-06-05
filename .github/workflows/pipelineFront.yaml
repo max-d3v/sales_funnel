@@ -41,6 +41,8 @@ jobs:
           password: ${{ secrets.PORTAINER_PASSWORD }}
           stack-name: 'funil_vendas_frontend'
           image: copapel/funil_vendas_frontend:latest
+          stack-definition: 'stack-definition.yml'
+
 
 
 
