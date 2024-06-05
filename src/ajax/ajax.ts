@@ -6,8 +6,8 @@ interface Request {
 }
 
 export async function ajax({ method, endpoint, data, signal }: Request) {
-    const url = 'http://localhost:8003/requests' + endpoint; //TESTE
-    //const url = 'https://funilapi.copapel.com.br/requests' + endpoint; //PRODUCAO
+    const url = 'http://localhost:8003/requests' + endpoint; //TEST
+    //const url = 'https://funilapi.copapel.com.br/requests' + endpoint; //PRODUCTION
 
     try {
         const options: any = {
