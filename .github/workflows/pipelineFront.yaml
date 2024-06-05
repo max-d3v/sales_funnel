@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: portainer Deploy
-        uses: carlrygart/portainer-stack-deploy@v1
+        uses: carlrygart/portainer-stack-deploy@v1.4
         with:
           portainer-host: ${{ secrets.PORTAINER_HOST }}
           username: ${{ secrets.PORTAINER_USERNAME }}
@@ -42,6 +42,9 @@ jobs:
           stack-name: 'funil_vendas_frontend'
           image: copapel/funil_vendas_frontend:latest
           stack-definition: 'stack-definition.yml'
+          prune-stack: true
+          pull-image: true
+
 
 
 
