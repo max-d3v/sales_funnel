@@ -25,6 +25,27 @@ jobs:
         push: true
         tags:
           copapel/funil_vendas_frontend:latest
+  
+  portainerDeploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+      
+      - name: portainer Deploy
+        uses: carlrygart/portainer-stack-deploy@v1
+        with:
+          portainer-host: ${{ secrets.PORTAINER_HOST }}
+          username: ${{ secrets.PORTAINER_USERNAME }}
+          password: ${{ secrets.PORTAINER_PASSWORD }}
+          stack-name: 'funil_vendas_frontend'
+          image: copapel/funil_vendas_frontend:latest
+          prune-stack: true
+          pull-image: true
+
+
+
 
 
         
