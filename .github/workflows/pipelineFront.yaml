@@ -30,7 +30,7 @@ jobs:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Check out repo.
+      - name: Check out repo
         uses: actions/checkout@v4
       
       - name: portainer Deploy
@@ -42,8 +42,6 @@ jobs:
           stack-name: 'funil_vendas_frontend'
           image: copapel/funil_vendas_frontend:latest
           stack-definition: 'stack-definition.yml'
-          prune-stack: true
-          pull-image: true
 
 
 
