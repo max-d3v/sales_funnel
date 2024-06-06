@@ -56,10 +56,10 @@ export function Task({task, index}: taskProps) {
 
     const formatedDate = new Date(task.PredDate).toLocaleDateString();
     const daysToDate = diffInDays();
-    const classBorder =
-    daysToDate > 5 ? "border-green" :
-    daysToDate < 0 ? "border-red" :
-    "border-yellow";
+    const dateColor =
+    daysToDate > 5 ? "text-green-600" :
+    daysToDate < 0 ? "text-red-600" :
+    "text-yellow-600";
   
 
     const formatedPrice = task.MaxLocalTotal.toLocaleString('pt-BR');
@@ -67,11 +67,11 @@ export function Task({task, index}: taskProps) {
         <Draggable draggableId={task.Id.toString()} key={task.Id} index={index}>
             {(provided: any, snapshot: any) => {
             return (
-                <div className={` ${ classBorder } w-full h-auto px-2 scaleCustom py-2 rounded-md ${isInDrag ? "bg-slate-200" : "bg-white"} items-center  flex flex-row border border-black shadow-custom-shadow`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} isdragging={snapshot.isdragging}>
+                <div className={` w-full h-auto px-2 scaleCustom py-2 rounded-md ${isInDrag ? "bg-slate-200" : "bg-white"} items-center flex flex-row border border-black shadow-custom-shadow`} {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef} isdragging={snapshot.isdragging}>
                     <div className='w-11/12'>
                     <h3 className='p-0 m-0'>{task.OpportunityName}</h3>
                     <p className='m-0 mr-2 text-sm'>{task.CustomerName}</p>  
-                    <p className='m-0 text-xs font-semibold mt-3 flex gap-2 items-center'> <CgProfile /> R$ {formatedPrice} <LuDot /> {formatedDate}</p>
+                    <p className='m-0 text-xs font-semibold mt-3 flex gap-2 items-center'> <CgProfile /> R$ {formatedPrice} <LuDot /> <span className={dateColor} > {formatedDate} </span> </p>
                     </div>
                     {isInDrag ? <ImSpinner8 className='animate-spin' size={20} /> : <FaCirclePlus onClick={() => handleOpenTask(task)} size={22} className=' hover:rotate-90 cursor-pointer transition-all duration-300 hover:scale-125 p-1  '  /> }  
                 </div>
