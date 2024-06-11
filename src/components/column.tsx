@@ -1,7 +1,7 @@
 import { Droppable } from 'react-beautiful-dnd';
 import { Task } from './task';
 import { IoMdAddCircle } from "react-icons/io";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AddPotential } from './modalAddPotencial';
 import { LeadTask } from './leadTask';
 import { FaBoxOpen } from "react-icons/fa";

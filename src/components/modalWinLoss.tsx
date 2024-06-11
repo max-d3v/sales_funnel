@@ -11,7 +11,7 @@ export function GanhouPerdeu({show}: provided) {
         <div className='envelopeTeste' >
         <div className={` ${ show ? 'slide-up' : 'slide-down' } z-50 fixed bottom-0 left-0 right-0 bg-transparent w-full indexCustom flex gap-2`} >
             <Droppable droppableId={"6"}>
-                {(provided: any, snapshot:any) => {
+                {(provided: any) => {
                     return (
 
                         <div ref={provided.innerRef} {...provided.droppableProps} className="z-50 rounded-sm w-1/2 flex items-center justify-center h-20 customBorderDotted bg-white ml-2 transition-all duration-300 hover:bg-green-500 text-green-500 hover:text-white">

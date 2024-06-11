@@ -45,7 +45,7 @@ export function Board() {
     const [showWinLoss, setShowWinLoss] = useState<boolean>(false);
     const [isFirstLoadSearch, setIsFirstLoadSearch] = useState(true);
     const [isFirstLoadFilter, setIsFirstLoadFilter] = useState(true);
-    const [isHoveringWinLoss, setIsHoveringWinLoss] = useState(false);
+    //const [isHoveringWinLoss, setIsHoveringWinLoss] = useState(false);
 
     function acertaEtapaSap(etapa: number) {
         switch(etapa) {
@@ -378,10 +378,11 @@ export function Board() {
         carregaTasks();  
     }, [filters])
 
+    /*
    useEffect(() => {
     console.log(isHoveringWinLoss)
    }, [isHoveringWinLoss])
-
+   */
 
     return (
         <TaskContext.Provider value={{selectedTasks}}>
