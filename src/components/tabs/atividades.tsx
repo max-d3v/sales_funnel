@@ -190,7 +190,7 @@ export function Atividades({task}: {task?: task}) {
                     </h1>
                    <FaCircleInfo data-tooltip-id="tooltip-6" data-tooltip-content="As ações rápidas são requisições/informações repassados para internos através da agenda!" />
                 </div>
-                <div className=" flex justify-between mt-4 px-12 py-4 ">
+                <div className=" flex justify-between mt-4 px-12 py-4 gap-2 ">
                     <BtnRapidas nome="Pedir Visita" icon={<IoIosChatbubbles size={25} />} onClick={() => handlePedirAcao("Agendar Visita", "data", "77")} />
                     <BtnRapidas bgColor="red-500" nome="Requisitar Pedido" icon={<GiMoneyStack size={30} />} onClick={() =>handlePedirAcao("Requisitar Pedido", "nada", "78")} />
                     <BtnRapidas bgColor="amber-500" nome="Realizei Visita" icon={<MdConnectWithoutContact  size={30} />} onClick={() => handlePedirAcao("Realizei Visita", "conteudo", "72")} />

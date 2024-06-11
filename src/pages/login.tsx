@@ -49,14 +49,8 @@ export function Login() {
         const username = data.username;
         const password = data.password;
         const dataLogin = {email: username, senha: password}
-        var response;
-        try {
-            response = await ajax({method: 'POST',endpoint: '/login', data: dataLogin});
-        } catch(err) {
-            setloginLoading(false);
-            setLoginErrors("Erro inesperado");
-            return;
-        }
+        const response = await ajax({method: 'POST',endpoint: '/login', data: dataLogin});
+        
         if (response.status == 'error') {
             if (response.message == "Erro de validação") {
                 const erros = response.errors
@@ -79,6 +73,8 @@ export function Login() {
             toast.success("Usuário logado com sucesso")
             return;
         }
+
+        toast.error("Erro Inesperado");
         setloginLoading(false);
     }
 
