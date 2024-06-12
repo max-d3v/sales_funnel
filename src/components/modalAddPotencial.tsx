@@ -142,7 +142,7 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
                     <div className="mr-6" onClick={() => handleClose()}  ><WhiteBtn nomeBtn="Fechar" icon={<MdCancel />}/></div>
                 </div>
                 <hr className="m-0"/>
-                <form id="addPo" action="" onSubmit={handleSubmit(onSubmit)} className="flex customFormHeight w-full px-8 py-4 box-border mb-4  justify-between">
+                <form id="addPo" action="" onSubmit={handleSubmit(onSubmit)} className="flex customFormHeight w-full px-8 py-4 box-border mb-4  justify-between gap-4">
                     <div className="flex flex-col h-full  w-1/2">
                         <Input insidePlaceholder="Título da oportunidade" placeholder="Título" name="titulo" error={ errors.titulo?.message } register={register}></Input>
                         <Input type="number" insidePlaceholder="20000" placeholder="Valor Estimado" icon={<FaMoneyBillWave />} name="valorEstimado" error={ errors.valorEstimado?.message } register={register}></Input>

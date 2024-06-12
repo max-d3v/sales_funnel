@@ -36,15 +36,15 @@ export function Input({ customCss, type, placeholder, name, icon, error, registe
     };
 
     return (
-        <div className={` ${customCss} relative mt-4`}>
+        <div className={` ${customCss} relative mt-4 box-border`}>
             <p className="m-0 font-semibold text-sm">{placeholder}</p>
-            <div className="absolute ml-2 mt-2">{icon}</div>
+            <div className="absolute ml-2 mt-2 box-border">{icon}</div>
             <input
                 id={id || undefined}
                 ref={inputRef}
                 type={showPassword ? 'text' : (type ? type : 'text')}
                 placeholder={insidePlaceholder ? insidePlaceholder : ''}
-                className={` customBorderInput transition-all duration-500 inputCinza fontePadrao font-semibold colocarBorda w-72 h-8 rounded-md border-none ${icon ? 'pl-8' : 'pr-6 pl-2'} focus:outline-none focus:border-2`}
+                className={` box-border py-4 customBorderInput transition-all duration-500 inputCinza fontePadrao font-semibold colocarBorda w-full h-8 rounded-md border-none ${icon ? 'pl-8' : 'pr-6 pl-2'} focus:outline-none focus:border-2`}
                
                 {
                     ...(valueHandler ?

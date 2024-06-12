@@ -269,8 +269,8 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
                     <div className="mr-6" onClick={() => handleClose()}   ><WhiteBtn nomeBtn="Fechar" icon={<MdCancel />}/></div>
                 </div>
                 <hr className="m-0 bg-custom-gray border-custom-gray " />
-                <form id="addOp" action="" onSubmit={handleSubmit(onSubmit)} className="flex h-9/12 w-full px-8 py-4 box-border mb-4  justify-between">
-                    <div className="flex flex-col w-1/2 h-full">
+                <form id="addOp" action="" onSubmit={handleSubmit(onSubmit)} className="flex h-9/12 w-full px-8 py-4 box-border mb-4  justify-between gap-4">
+                    <div className="flex flex-col w-1/2 h-full box-border">
                         <Input customCss="h-1/2" insidePlaceholder="Título da oportunidade" placeholder="Título" name="titulo" error={ errors.titulo?.message } register={register} ></Input>
                         <div>
 
