@@ -1,7 +1,7 @@
 {
     "name": "Funil de Vendas Copapel",
     "short_name": "Funil Vendas",
-    "start_url": "/",
+    "start_url": "/?standalone=true",
     "display": "standalone",
     "background_color": "#ffffff",
     "theme_color": "#000000",
