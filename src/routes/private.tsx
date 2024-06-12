@@ -13,22 +13,20 @@ export function Private({children}: PrivateProps): any {
     const { signed, loading, attAuthStatus } = useContext(AuthContext);
     const [authStatusChecked, setAuthStatusChecked] = useState(false);
 
+    
     useEffect(() => {
-        const checkAuthStatus = async () => {
-            if (!signed) {
-                await attAuthStatus();
-            }
-            setAuthStatusChecked(true);
-        };
-        checkAuthStatus();
-    }, [attAuthStatus, signed]);
+        if (!signed) {
+            attAuthStatus();
+        }
+        setAuthStatusChecked(true);
+    }, []);
 
     if (loading || !authStatusChecked) {
         return  (
             <LoadingModal/>
         )
     }
-    if (!signed) {
+    if (!loading && !signed) {
       return <Navigate to="/login"/>;
     }
 

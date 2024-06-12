@@ -2,14 +2,14 @@ import { useNavigate } from 'react-router-dom';
 import { Input } from '../components/input';
 import { CgProfile } from "react-icons/cg";
 import { FaLock } from "react-icons/fa";
-import { useState } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import {useForm} from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ajax } from '../ajax/ajax';
 import { ImSpinner8 } from "react-icons/im";
 import toast, { Toaster } from 'react-hot-toast';
-
+import { AuthContext } from '../context/authProvider';
 
 const schema = z.object({
     username: z.string().min(1, "Usuário é obrigatório"),
@@ -21,6 +21,9 @@ type FormData = z.infer<typeof schema>
 
 
 export function Login() {
+
+    const { user } = useContext(AuthContext);
+
     const [loginErrors, setLoginErrors] = useState<string | null>(null);
     const [loginLoading, setloginLoading] = useState<boolean>(false);
     const [isWaiting, setIsWaiting] = useState(false);
@@ -88,6 +91,13 @@ export function Login() {
             icon: '👨‍💻',
         });
     }
+
+    useEffect(() => {
+        console.log(user);
+        if (user) {
+            navigate("/");
+        }
+    }, [])
     
 
     return (
