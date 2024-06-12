@@ -13,7 +13,7 @@ import { useNavigate } from "react-router-dom";
 import { AddOportunity } from "../modalAddOportunity";
 import { Filter } from "../modalFilter";
 import { IoClose } from "react-icons/io5";
-import logo from '../../assets/images/logo_funil_fundoBranco.png'
+import logo from '../../../public/assets/images/logo_funil_fundoBranco.png'
 interface header {
     setSearch: (search: string) => void;
     setFilters: (filters: any) => void;

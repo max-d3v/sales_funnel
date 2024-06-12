@@ -1,5 +1,5 @@
 import Lottie from 'react-lottie';
-import loadingAnimation from '../assets/lotties/loadingAnimation.json'
+import loadingAnimation from '../../public/assets/lotties/loadingAnimation.json';
 
 export function LoadingModal() {
     const defaultOptions = {
