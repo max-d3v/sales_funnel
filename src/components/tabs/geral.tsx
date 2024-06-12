@@ -46,13 +46,19 @@ export function Geral({task}: {task?: task}) {
         }
         if (response.status == 'error') {
             toast.dismiss();
-            toast.error(response.message);
+            if (typeof response.message == "string") {
+                toast.error(response.message);
+                return;
+            }
+            toast.error("Erro inesperado");
             return;
         }
 
         if (response.status == 'success') {
             toast.dismiss();
-            toast.success(response.message);
+            if ( typeof response.message == "string") {
+                toast.success(response.message);
+            }
             setTimeout(() => {
                 //tempinho chique 
             }, 500)

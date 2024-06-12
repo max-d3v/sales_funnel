@@ -71,7 +71,11 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
                 });
                 return;
             }
-            //toast.error(response.message);            
+            if ( typeof response.message == "string" ) {
+                toast.error(response.message);            
+                return;
+            }
+            toast.error("Erro Inesperado");
             return;
         }
 
@@ -79,7 +83,9 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
             setAddLoading(false);
             toast.dismiss(toastId);
             setRenderToaster(false);
-            toast.success(response.message);
+            if (typeof response.message == "string") {
+                toast.success(response.message);
+            }
             setTimeout(() => {}, 100)
             setIsOpen(false);
             return;

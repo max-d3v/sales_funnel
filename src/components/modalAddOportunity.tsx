@@ -112,18 +112,26 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
             if (Array.isArray(response.message)) {
                 const errorMsgs = response.message;
                 errorMsgs.forEach((msg: any) => {
-                    toast.error(msg.msg);
+                    if (typeof msg.msg == "string") {
+                        toast.error(msg.msg);
+                    }
                 });
                 return
             }
-            toast.error(response.message);            
+            if (typeof response.message == "string") {
+                toast.error(response.message);  
+                return;
+            }
+            toast.error("Erro inesperado");
             return;
         }
         
         if (response.status == 'success') {
             setAddLoading(false);
             toast.dismiss();
-            toast.success(response.message);
+            if (typeof response.message == "string") {
+                toast.success(response.message);
+            }
             setRenderToaster(false)
             atualizaEstadoModal();
             setTimeout(() => {}, 100)
@@ -140,7 +148,7 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
 
     const handleCodigoCliente = async (e: any) => {
         const value = e.target.value;
-        if (value.length < 3 || value.length == 7) {
+        if (value.length < 3) {
             setClientes([]);
             return;
         }
@@ -168,12 +176,15 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
             setClientes([]);
     
             if (!response) {
-                toast.error("Erro inesperado");
+                //toast.error("Erro inesperado");
                 return;
             }
     
             if (response.status == "Error") {
-                toast.error(response.message);
+                if (typeof response.message == "string") {
+                    toast.error(response.message);
+                    return    
+                }
                 return;
             }
     
