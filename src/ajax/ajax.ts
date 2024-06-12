@@ -17,8 +17,8 @@ const deleteAllCookies = () => {
 }
 
 export async function ajax({ method, endpoint, data, signal }: Request) {
-    const url = 'http://localhost:8003/requests' + endpoint; //TEST
-    //const url = 'https://funilapi.copapel.com.br/requests' + endpoint; //PRODUCTION
+    //const url = 'http://localhost:8003/requests' + endpoint; //TEST
+    const url = 'https://funilapi.copapel.com.br/requests' + endpoint; //PRODUCTION
 
     try {
         const options: any = {
