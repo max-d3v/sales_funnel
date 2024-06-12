@@ -5,9 +5,20 @@ interface Request {
     signal?: AbortSignal;
 }
 
+const deleteAllCookies = () => {
+    const cookies = document.cookie.split(";");
+  
+    for (let i = 0; i < cookies.length; i++) {
+      const cookie = cookies[i];
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+    }
+}
+
 export async function ajax({ method, endpoint, data, signal }: Request) {
-    //const url = 'http://localhost:8003/requests' + endpoint; //TEST
-    const url = 'https://funilapi.copapel.com.br/requests' + endpoint; //PRODUCTION
+    const url = 'http://localhost:8003/requests' + endpoint; //TEST
+    //const url = 'https://funilapi.copapel.com.br/requests' + endpoint; //PRODUCTION
 
     try {
         const options: any = {
@@ -31,6 +42,11 @@ export async function ajax({ method, endpoint, data, signal }: Request) {
             if (endpoint === "/logout") {
                 return;
             }
+
+            deleteAllCookies();
+            localStorage.clear();
+            sessionStorage.clear();
+            
             return window.location.href = '/login';
         }
 
