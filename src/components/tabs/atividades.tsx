@@ -201,7 +201,9 @@ export function Atividades({task}: {task?: task}) {
             <div className="mt-6 box-border" >
                 <div className=" flex justify-between mb-2 items-end" >
                     <GrnBtn nomeBtn="Novo Ticket" onClick={() => adicionarNovoTicket()} icon={<IoMdAddCircle />} customCss="h-10" />
-                    <Input valueHandler={(e) => setFilter(e.target.value)} placeholder="Pesquise por atividades / tickets" name="filter" icon={<CiSearch size={20} />} insidePlaceholder="Fulano de tal" />
+                    <div className="w-4/12" >
+                        <Input valueHandler={(e) => setFilter(e.target.value)} placeholder="Pesquise por atividades / tickets" name="filter" icon={<CiSearch size={20} />} insidePlaceholder="Fulano de tal" />
+                    </div>
                 </div>
                 <div key={0} style={{ maxHeight: "80vh" }} className="flex  flex-col gap-0.5 bg-custom-gray rounded-md customBorder shadow-sm p-2 box-border overflow-y-scroll overflow-x-hidden" >
                     <div className="flex gap-2  w-full px-2 mb-2 " >

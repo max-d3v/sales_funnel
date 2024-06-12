@@ -36,7 +36,7 @@ export function Input({ customCss, type, placeholder, name, icon, error, registe
     };
 
     return (
-        <div className={` ${customCss} relative mt-4 box-border`}>
+        <div className={` ${customCss} w-full relative mt-4 box-border`}>
             <p className="m-0 font-semibold text-sm">{placeholder}</p>
             <div className="absolute ml-2 mt-2 box-border">{icon}</div>
             <input
