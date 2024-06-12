@@ -3,7 +3,7 @@ import { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
-
+import { ajax } from "../ajax/ajax";
 export function ModalProfile() {
     const { user, signed } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -11,9 +11,30 @@ export function ModalProfile() {
     if (signed) {
         name = user.name
     }
+
+    const deleteAllCookies = () => {
+        const cookies = document.cookie.split(";");
+      
+        for (let i = 0; i < cookies.length; i++) {
+          const cookie = cookies[i];
+          const eqPos = cookie.indexOf("=");
+          const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+          document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+        }
+    }
+
+    const deslogaUsuario = async () => {
+        localStorage.clear();
+        sessionStorage.clear();
+        deleteAllCookies();
+        const response = await ajax({method: "GET", endpoint: "/logout", data: null});
+        console.log(response);
+    }
     
 
     async function handleLogOut() {    
+        await deslogaUsuario();
+
         navigate("/login");
     }
     

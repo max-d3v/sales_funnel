@@ -8,7 +8,6 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ajax } from '../ajax/ajax';
 import { ImSpinner8 } from "react-icons/im";
-import { useEffect } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 
 
@@ -32,14 +31,6 @@ export function Login() {
         resolver: zodResolver(schema),
         mode: "onSubmit"
     })  
-
-    useEffect(() => {
-        const deslogaUsuario = async () => {
-            const response = await ajax({method: "GET", endpoint: "/logout", data: null});
-            console.log(response);
-        }
-        deslogaUsuario();
-    }, []);
 
     
     
