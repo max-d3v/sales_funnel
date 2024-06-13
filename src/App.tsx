@@ -6,8 +6,9 @@ import { Private } from "./routes/private";
 import { Opportunity } from "./pages/opportunity";
 import { Leads } from "./pages/leads";
 import { ErrorBoundary } from "./pages/error";
+import { Gestoria } from "./pages/gestoria";
+import { NotFound } from "./pages/notFound";
 const router = createBrowserRouter([
-  
   {
     element: <Layout/>,
     children: [
@@ -27,6 +28,14 @@ const router = createBrowserRouter([
         element: <ErrorBoundary/>,
         path: "iohfpio",
       },
+      {
+        element: <Gestoria/>,
+        path: "/gestoria"
+      },
+      {
+        path: "*",
+        element: <NotFound/>
+      }
     ]
   },
   {
