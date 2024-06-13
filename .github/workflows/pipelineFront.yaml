@@ -25,7 +25,7 @@ jobs:
         push: true
         tags:
           copapel/funil_vendas_frontend:latest
-          copapel/funil_vendas_frontend:${{ github.GITHUB_RUN_NUMBER }}
+          copapel/funil_vendas_frontend:${{ github.run_number }}
   
   #portainer-deploy:
    # runs-on: ubuntu-latest
