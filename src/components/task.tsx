@@ -57,8 +57,8 @@ export function Task({task, index}: taskProps) {
     const formatedDate = new Date(task.PredDate).toLocaleDateString();
     const daysToDate = diffInDays();
     const dateColor =
-    daysToDate > 5 ? "text-green-600" :
-    daysToDate < 0 ? "text-red-600" :
+    daysToDate > 5 ? "text-green-700" :
+    daysToDate < 0 ? "text-red-700" :
     "text-yellow-600";
   
 

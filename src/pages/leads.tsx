@@ -167,7 +167,7 @@ export function Leads() {
             const task = await ajax({method: "POST", endpoint: "/lead", data: {id: id}});
             if (task.status == "success") {
                 toast.dismiss(toastId)
-                toast.success("Lead carregado");
+                toast.success("Potencial carregado!");
                 setTask(task.data);
                 setLoadingLead(false);
                 return;

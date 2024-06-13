@@ -10,7 +10,7 @@ export default {
         '0.5': '0.5px'
       },
       boxShadow: {
-        'custom-shadow': '1px 1px 4px 1px rgba(0, 0, 0, 0.25)'
+        'custom-shadow': '1px 1px 4px 1px rgba(0, 0, 0, 0.15)'
       },
       colors: {
         'custom-green': '#28C26F',
