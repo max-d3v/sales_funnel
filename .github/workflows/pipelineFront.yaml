@@ -19,13 +19,19 @@ jobs:
         username: ${{secrets.DOCKERHUB_USER}}
         password: ${{secrets.DOCKERHUB_PWD}}
 
-    - name: Set up Docker Build and Push
+    - name: Set up Docker Build and Push latest
       uses: docker/build-push-action@v5.3.0
       with:
         push: true
         tags:
-          copapel/funil_vendas_frontend:30
-          - copapel/funil_vendas_frontend:latest
+          copapel/funil_vendas_frontend:latest
+    
+    - name: Set up Docker Build and Push version
+      uses: docker/build-push-action@v5.3.0
+      with:
+        push: true
+        tags:
+          copapel/funil_vendas_frontend:${{ github.RUN_NUMBER }}
   
   #portainer-deploy:
    # runs-on: ubuntu-latest
