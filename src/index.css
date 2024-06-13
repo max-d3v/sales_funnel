@@ -151,6 +151,14 @@ body {
   box-shadow: #000;
 }
 
+.headerHeight {
+  height: 8vh;
+}
+
+.pageHeight {
+  height: 92vh;
+}
+
 .myQuillBig .ql-editor {
   font-size: 20px;
 }
