@@ -2,7 +2,6 @@ import { DragDropContext } from 'react-beautiful-dnd';
 import { ColumnGestoria } from '../../components/gestoria/columnGestoria';
 import { useEffect, useState, useContext } from 'react';
 import { ajax } from '../../ajax/ajax';
-import { useNavigate } from 'react-router-dom';
 import toast, { Toaster } from 'react-hot-toast';
 import React from 'react';
 import SearchContext from './layoutGestoria';
@@ -46,8 +45,6 @@ export function BoardGestoria() {
     const [showWinLoss, setShowWinLoss] = useState<boolean>(false);
     const [isFirstLoadSearch, setIsFirstLoadSearch] = useState(true);
    //const [isHoveringWinLoss, setIsHoveringWinLoss] = useState(false);
-
-    //const navigate = useNavigate();
 
 
     function acertaEtapaSap(etapa: number) {
