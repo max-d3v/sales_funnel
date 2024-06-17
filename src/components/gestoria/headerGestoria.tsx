@@ -16,6 +16,7 @@ import logo from '../../../public/assets/images/logo_funil_fundoBranco.png'
 import { WhiteBtn } from "../whiteBtn";
 import { FcBusinessman } from "react-icons/fc";
 import { ajax } from "../../ajax/ajax";
+import { IoFilterSharp } from "react-icons/io5";
 
 interface header {
     setSearch: (search: string) => void;
@@ -25,6 +26,7 @@ interface header {
 interface gerenciado {
     CodigoVendedor: string;
     VendedorExterno: string;
+    Selecionado: boolean;
 }
 
 export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }: header) {
@@ -33,7 +35,7 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }:
     const [mostrarFiltro, setMostrarFiltro] = useState<boolean>(false);
     const [localSearch, setLocalSearch] = useState<string>('');
     const [showVendors, setShowVendors] = useState<boolean>(false);
-    const [selectedGerenciados, setSelectedGerenciados] = useState<gerenciado[]>([]);
+    const [gerenciados, setGerenciados] = useState<gerenciado[]>([]);
     
 
     const navigate = useNavigate();
@@ -76,23 +78,39 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }:
         }
         if (response.status == "success") {
             const data = response.data;
-            setSelectedGerenciados(data);
+            await adicionaSelecionadoGerenciados(data);
+            atualizaGerenciadosContext();
         }
+    }
+
+    const adicionaSelecionadoGerenciados = async (data: gerenciado[]) => {
+        var gerenciadosComSelecionado = data;
+        gerenciadosComSelecionado.forEach((gerenciado) => {
+            gerenciado.Selecionado = true;
+        })
+        setGerenciados(gerenciadosComSelecionado);
     }
 
     const handleGerenciados = ( gerenciado: gerenciado ) => {
-        const index = selectedGerenciados.findIndex((item) => item.CodigoVendedor == gerenciado.CodigoVendedor);
-        if (index == -1) {
-            setSelectedGerenciados([...selectedGerenciados, gerenciado]);
-        } else {
-            setSelectedGerenciados(selectedGerenciados.filter((item) => item.CodigoVendedor != gerenciado.CodigoVendedor));
+        const index = gerenciados.findIndex((item) => item.CodigoVendedor == gerenciado.CodigoVendedor);
+        console.log(gerenciados[index]);
+        if (gerenciados[index].Selecionado) {
+            gerenciados[index].Selecionado = false;
+            setGerenciados([...gerenciados]);
+            return;
+        }
+        if (!gerenciados[index].Selecionado) {
+            gerenciados[index].Selecionado = true;
+            setGerenciados([...gerenciados]);
+            return;
         }
     }
 
 
-    useEffect(() => {
-        setGerenciadosContext(selectedGerenciados);
-    }, [selectedGerenciados])
+    const atualizaGerenciadosContext = () => {
+        var gerenciadosFiltrados = gerenciados.filter((gerenciado) => gerenciado.Selecionado == true);
+        setGerenciadosContext(gerenciadosFiltrados);
+    }
 
     useEffect(() => {
         carregaGerenciados();
@@ -125,24 +143,32 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }:
                             692
                         </button>
                     </div>
+                </div>    
+            </div>
+
+                <div className="flex flex-col items-center justify-center" >
+                    <p className="m-0 text-xs font-semibold text-black" >Valor Total</p>
+                    <button className=" hover:scale-105 h-9 customBorder outline-none bg-white rounded-md font-semibold text-black cursor-pointer hover:bg-black hover:text-white transition-all duration-300 ">
+                        R$ 2.002.732,00
+                    </button>
                 </div>
-                <div className="ml-4 relative flex justify-center "  >
+
+                <div className=" relative flex justify-center "  >
                     <WhiteBtn nomeBtn="Vendedores" icon={<FcBusinessman  />} onClick={() => setShowVendors(!showVendors)} />
-                    <div className={` ${showVendors ? "" : "hidden"} customBorder mt-14  customListWidth box-border absolute z-50 bg-white flex flex-col `} >
+                    <div className={` ${showVendors ? "" : "hidden"} customBorder mt-14  customListWidth rounded-md box-border absolute z-50 bg-white flex flex-col `} >
                     {
-                        selectedGerenciados.map((gerenciado: { VendedorExterno: string, CodigoVendedor: string }) =>  {
+                        gerenciados.map((gerenciado: { VendedorExterno: string, CodigoVendedor: string }) =>  {
                             return (
-                                <label onClick={() => handleGerenciados( gerenciado )} className=" flex px-2 py-3 w-full box-border justify-between transition-all duration-300 hover:bg-black hover:bg-opacity-10 cursor-pointer " >
+                                <label onClick={() => handleGerenciados( gerenciado )} className=" flex px-4 py-3 w-full box-border justify-between transition-all duration-300 hover:bg-black hover:bg-opacity-10 cursor-pointer " >
                                     {gerenciado.VendedorExterno}
-                                    <input checked type="checkbox" className=" w-8 transition-all duration-300 hover:scale-105 " />
+                                    <input checked={ gerenciado.Selecionado } onClick={(e) => e.stopPropagation()}  type="checkbox" className=" w-8 transition-all duration-300 hover:scale-105 " />
                                 </label>
                             )
                         })
                     }
+                    <GrnBtn onClick={ () => atualizaGerenciadosContext() } customCss="mt-2 mb-2 w-11/12 self-center" nomeBtn="Aplicar Filtros" type="submit" icon={<IoFilterSharp />} />
                     </div>
                 </div>
-            </div>
-            
 
             <div className="justify-self-end flex items-center justify-center gap-8 mr-6 h-full">
                 {pathname.includes('/opportunity') ? null : <WhiteBtn onClick={() => handleFiltro()} nomeBtn="Filtros" icon={<FaFilter size={16}/>}></WhiteBtn>}

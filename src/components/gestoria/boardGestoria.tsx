@@ -259,7 +259,7 @@ export function BoardGestoria() {
 
 
     const carregaTasksSAP = async (filter: string = "") => {
-        const response = await ajax({ method: 'POST', endpoint: '/tasks', data: {filter: filter, filtros: filters, gerenciados: gerenciados} });
+        const response = await ajax({ method: 'POST', endpoint: '/gerenciados/tasks', data: {filter: filter, filtros: filters, gerenciados: gerenciados} });
         if (!response) {
             return false;
         }
@@ -281,7 +281,7 @@ export function BoardGestoria() {
     }
 
     const carregaLeads = async (filter:string = "") => {
-        const response = await ajax({method: "POST", endpoint: "/leads", data: {filter: filter, filtros: filters, gerenciados: gerenciados}});    
+        const response = await ajax({method: "POST", endpoint: "/gerenciados/leads", data: {filter: filter, filtros: filters, gerenciados: gerenciados}});    
         if (!response) {
             setLeadMysql([]);
             return false;
@@ -313,6 +313,12 @@ export function BoardGestoria() {
     }
 
     const carregaTasks = async ( filter: string = "" ) => {
+        if (gerenciados.length == 0) {
+            return;
+        }
+        console.log("foi carregado com o gerenciados:");
+        console.log(gerenciados);
+        
         if (filter.length == 0) {
             toast.dismiss();
             toast.loading('Carregando Oportunidades...');    
@@ -369,6 +375,7 @@ export function BoardGestoria() {
     useEffect(() => {
         carregaTasks();  
     }, [filters, gerenciados])   
+
 
     /*
    useEffect(() => {

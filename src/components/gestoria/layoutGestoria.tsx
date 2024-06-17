@@ -10,6 +10,12 @@ interface headerContextData {
     gerenciados: any;
 }
 
+interface gerenciado {
+    CodigoVendedor: string;
+    VendedorExterno: string;
+    Selecionado: boolean;
+}
+
 const SearchContextGestoria = React.createContext({} as headerContextData);
 
 export default SearchContextGestoria;
@@ -17,7 +23,7 @@ export default SearchContextGestoria;
 export function LayoutGestoria() {
     const [search, setSearch] = useState<string>('');
     const [filters, setFilters] = useState({});
-    const [gerenciados, setGerenciados] = useState<any>([]);
+    const [gerenciados, setGerenciados] = useState<gerenciado[]>([]);
     return (
         <>
         <SearchContextGestoria.Provider value={{searchValue: search, filters: filters, gerenciados: gerenciados}}>
