@@ -6,8 +6,10 @@ import { Private } from "./routes/private";
 import { Opportunity } from "./pages/opportunity";
 import { Leads } from "./pages/leads";
 import { ErrorBoundary } from "./pages/error";
-import { Gestoria } from "./pages/gestoria";
+import { Gestoria } from "./pages/gestoria/gestoria";
 import { NotFound } from "./pages/notFound";
+import { LayoutGestoria } from "./components/gestoria/layoutGestoria";
+
 const router = createBrowserRouter([
   {
     element: <Layout/>,
@@ -29,10 +31,6 @@ const router = createBrowserRouter([
         path: "iohfpio",
       },
       {
-        element: <Gestoria/>,
-        path: "/gestoria"
-      },
-      {
         path: "*",
         element: <NotFound/>
       }
@@ -41,7 +39,17 @@ const router = createBrowserRouter([
   {
     element: <Login/>,
     path: "/login"
+  },
+  {
+  element: <LayoutGestoria/>,
+  children: [
+    {
+      path: "/gestoria",
+      element: <Private><Gestoria/></Private>
+    }
+  ]
   }
+  
 ])
 
 

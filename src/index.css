@@ -155,6 +155,12 @@ body {
   height: 8vh;
 }
 
+.customGreenBorder {
+  border: 1.7px solid rgb(1, 189, 1) !important;
+  border-style: solid;
+}
+
+
 .pageHeight {
   height: 92vh;
 }
@@ -317,8 +323,13 @@ input.corPlaceholder::placeholder {
   transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
+.customListWidth {
+  width: 15vw;
+}
+
+
 .customRedBorder {
-  border: 0.1px solid red !important;
+  border: 1.6px solid red !important;
   border-style: solid;
 }
 

@@ -18,7 +18,7 @@ export function Layout() {
     const [filters, setFilters] = useState({});
     return (
         <>
-        <SearchContext.Provider value={{searchValue: search, filters: filters}}>
+        <SearchContext.Provider value={{searchValue: search, filters: filters }}>
             <Header setSearch={setSearch} setFilters={setFilters} />
             <Outlet/>
         </SearchContext.Provider>

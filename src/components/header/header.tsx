@@ -59,7 +59,7 @@ export function Header({ setSearch, setFilters }: header) {
     return (
         <>
         <AddOportunity atualizaEstadoModal={() => setMostrarAdicionar(!mostrarAdicionar)} mostrarModal={mostrarAdicionar}  />
-        <div className="h-16 flex shadow-md w-full items-center box-border relative justify-between">
+        <div className="headerHeight flex shadow-md w-full items-center box-border relative justify-between">
             <img src={logo}  className=" w-14 h-14 ml-4 justify-self-start cursor-pointer " onClick={handleGoHome}  alt="" />
             <div className="flex w-auto gap-8 items-center relative self-center">
                 <div className="absolute ml-4 mt-1"><CiSearch size={26} /></div>

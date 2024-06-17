@@ -1,0 +1,160 @@
+import { GrnBtn } from "../greenBtn"
+import styles from './header.module.css'
+import { IoMdAddCircle } from "react-icons/io";
+import { FaFilter } from "react-icons/fa";
+import { CgProfile } from "react-icons/cg";
+import { CiSearch } from "react-icons/ci";
+import { useEffect, useState } from "react";
+import { ModalProfile } from "../modalProfile";
+import { useLocation } from "react-router-dom";
+import { FaHouseChimney } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+import { AddOportunity } from "../modalAddOportunity";
+import { Filter } from "../modalFilter";
+import { IoClose } from "react-icons/io5";
+import logo from '../../../public/assets/images/logo_funil_fundoBranco.png'
+import { WhiteBtn } from "../whiteBtn";
+import { FcBusinessman } from "react-icons/fc";
+import { ajax } from "../../ajax/ajax";
+
+interface header {
+    setSearch: (search: string) => void;
+    setFilters: (filters: any) => void;
+    setGerenciadosContext: (gestores: any) => void;
+}
+interface gerenciado {
+    CodigoVendedor: string;
+    VendedorExterno: string;
+}
+
+export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }: header) {
+    const [mostrarProfile, setMostrarProfile] = useState<boolean>(false);
+    const [mostrarAdicionar, setMostrarAdicionar] = useState<boolean>(false);
+    const [mostrarFiltro, setMostrarFiltro] = useState<boolean>(false);
+    const [localSearch, setLocalSearch] = useState<string>('');
+    const [showVendors, setShowVendors] = useState<boolean>(false);
+    const [selectedGerenciados, setSelectedGerenciados] = useState<gerenciado[]>([]);
+    
+
+    const navigate = useNavigate();
+
+    const { pathname } = useLocation();
+    
+    const handleSearch = (e: any) => {
+        setSearch(e);
+        setLocalSearch(e);
+    }
+
+    const HandleSetFilters = (filters: any) => {
+        setFilters(filters);
+    }
+
+    function handleGoHome() {
+        navigate('/')
+    }
+
+    function handleMostrarModal() {
+        setMostrarAdicionar(!mostrarAdicionar);
+    }
+
+    function handleProfile() {
+        setMostrarProfile(!mostrarProfile);
+    }
+
+    function handleFiltro() {
+        setMostrarFiltro(!mostrarFiltro);
+    }
+
+    const carregaGerenciados = async () => {
+        console.log("carregou gerenciados")
+        const response = await ajax({method: "GET", endpoint: "/gerenciados", data: null })
+        if (response.status == "error") {
+            setTimeout(() => {
+                navigate('/');  
+            }, 2000);
+            return;
+        }
+        if (response.status == "success") {
+            const data = response.data;
+            setSelectedGerenciados(data);
+        }
+    }
+
+    const handleGerenciados = ( gerenciado: gerenciado ) => {
+        const index = selectedGerenciados.findIndex((item) => item.CodigoVendedor == gerenciado.CodigoVendedor);
+        if (index == -1) {
+            setSelectedGerenciados([...selectedGerenciados, gerenciado]);
+        } else {
+            setSelectedGerenciados(selectedGerenciados.filter((item) => item.CodigoVendedor != gerenciado.CodigoVendedor));
+        }
+    }
+
+
+    useEffect(() => {
+        setGerenciadosContext(selectedGerenciados);
+    }, [selectedGerenciados])
+
+    useEffect(() => {
+        carregaGerenciados();
+    }, [])
+
+    
+
+
+
+    return (
+        <>
+        <AddOportunity atualizaEstadoModal={() => setMostrarAdicionar(!mostrarAdicionar)} mostrarModal={mostrarAdicionar}  />
+        <div className="headerHeight flex shadow-md w-full items-center box-border relative justify-between">
+            <img src={logo}  className=" w-14 h-14 ml-4 justify-self-start cursor-pointer " onClick={handleGoHome}  alt="" />
+            <div className="flex w-auto gap-8 items-center relative self-center">
+                <div className="absolute ml-4 mt-1"><CiSearch size={26} /></div>
+                <input disabled={pathname.includes('/opportunity') || pathname.includes('/leads') ? true : false } type="text" value={localSearch} className={pathname.includes('/opportunity') || pathname.includes('/leads') ? styles.searchDesativado : styles.search } onChange={(e) => handleSearch(e.target.value)}  placeholder="Busque por Oportunidades"  />
+               { localSearch == "" ? "" : <div className="absolute mr-4 right-0 mt-1" onClick={() => handleSearch("")}> <IoClose size={26}/> </div> } 
+               {pathname.includes('/opportunity') || pathname.includes('/leads') ? <WhiteBtn nomeBtn="Quadro" icon={<FaHouseChimney/>}  onClick={() => handleGoHome()}></WhiteBtn> : <GrnBtn nomeBtn="Oportunidade"  onClick={() => handleMostrarModal()} icon={<IoMdAddCircle size={18}/>}></GrnBtn>}
+                <div className="flex gap-4">
+                    <div className="flex flex-col items-center justify-center" >
+                        <p className="m-0 text-xs font-semibold text-green-500 " >Ganhando</p>
+                        <button className=" hover:scale-105 h-9 w-24 customGreenBorder outline-none bg-white rounded-md font-semibold text-green-500 cursor-pointer hover:bg-green-500 hover:text-white transition-all duration-300 ">
+                            1562 {/* Quando der hover colocar a porcentagem! */}
+                        </button>
+                    </div>
+                    <div className="flex flex-col items-center justify-center">
+                        <p className="m-0 text-xs font-semibold text-red-500" >Perdendo</p>
+                        <button className=" hover:scale-105 h-9 w-24 customRedBorder outline-none bg-white rounded-md font-semibold text-red-500 cursor-pointer hover:bg-red-500 hover:text-white transition-all duration-300 ">
+                            692
+                        </button>
+                    </div>
+                </div>
+                <div className="ml-4 relative flex justify-center "  >
+                    <WhiteBtn nomeBtn="Vendedores" icon={<FcBusinessman  />} onClick={() => setShowVendors(!showVendors)} />
+                    <div className={` ${showVendors ? "" : "hidden"} customBorder mt-14  customListWidth box-border absolute z-50 bg-white flex flex-col `} >
+                    {
+                        selectedGerenciados.map((gerenciado: { VendedorExterno: string, CodigoVendedor: string }) =>  {
+                            return (
+                                <label onClick={() => handleGerenciados( gerenciado )} className=" flex px-2 py-3 w-full box-border justify-between transition-all duration-300 hover:bg-black hover:bg-opacity-10 cursor-pointer " >
+                                    {gerenciado.VendedorExterno}
+                                    <input checked type="checkbox" className=" w-8 transition-all duration-300 hover:scale-105 " />
+                                </label>
+                            )
+                        })
+                    }
+                    </div>
+                </div>
+            </div>
+            
+
+            <div className="justify-self-end flex items-center justify-center gap-8 mr-6 h-full">
+                {pathname.includes('/opportunity') ? null : <WhiteBtn onClick={() => handleFiltro()} nomeBtn="Filtros" icon={<FaFilter size={16}/>}></WhiteBtn>}
+                {mostrarFiltro? <Filter handleFilters={HandleSetFilters} fecharFiltro={handleFiltro} /> : null} 
+                <div >
+                    <CgProfile size={33} onClick={() => handleProfile()} className="mr-8 mt-1.5 hover:scale-105 transition-all duration-500 cursor-pointer"/>  
+                    {mostrarProfile ? <ModalProfile/> : null }
+                </div>
+            </div>
+
+        </div>
+        </>
+    )
+}
+
