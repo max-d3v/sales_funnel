@@ -47,7 +47,7 @@ export function BoardGestoria() {
     const [isFirstLoadSearch, setIsFirstLoadSearch] = useState(true);
    //const [isHoveringWinLoss, setIsHoveringWinLoss] = useState(false);
 
-    const navigate = useNavigate();
+    //const navigate = useNavigate();
 
 
     function acertaEtapaSap(etapa: number) {

@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { CiLogout } from "react-icons/ci";
 import { CiUser } from "react-icons/ci";
 import { ajax } from "../ajax/ajax";
-import { IoEnter } from "react-icons/io5";
+//import { IoEnter } from "react-icons/io5";
 
 export function ModalProfile() {
     const { user, signed } = useContext(AuthContext);

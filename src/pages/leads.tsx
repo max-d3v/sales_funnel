@@ -33,8 +33,6 @@ export interface task {
         telefone_contato: string;
         vendedor: string;
         data_prevista: string;
-        tipoCliente?: string;
-        numero: string;
     }[];
     informacoes: {
         id_card: number;
@@ -53,6 +51,8 @@ export interface task {
         regiao: string | null;
         telefone: string | null;
         rua: string | null;
+        tipoCliente?: string;
+        numero: string;
     }[];
 }
 
