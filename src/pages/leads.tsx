@@ -33,6 +33,8 @@ export interface task {
         telefone_contato: string;
         vendedor: string;
         data_prevista: string;
+        tipoCliente?: string;
+        numero: string;
     }[];
     informacoes: {
         id_card: number;
@@ -101,15 +103,10 @@ export function Leads() {
         toast.loading("Cadastrando Cliente SAP");
         
 
-        var response;
-        try {
-            response = await ajax({method: "POST", endpoint: "/leads/registerLead", data: {id_card: id}});
-        }
-        catch(err) {
-            toast.dismiss();
-            toast.error("Erro ao cadastrar cliente SAP");
-            return;
-        }
+        
+        const response = await ajax({method: "POST", endpoint: "/leads/registerLead", data: {id_card: id}});
+        
+        
 
         if (response.status == "error") {
             toast.dismiss();
@@ -194,7 +191,7 @@ export function Leads() {
                 { loadingLead ? <Skeleton/> :
                 <div className="w-11/12 flex self-center justify-between " >
                     <h2 className="">{task?.card[0].titulo || <Skeleton/>}</h2>
-                    <div className="flex items-center h-20" data-tooltip-id="tooltip-4" data-tooltip-content="Ao selecionar esse botão, será criado um lead para esse cliente e o potencial será alterado para um Lead!" ><GrnBtn disabled={ isValidated ? false : true } customCss={ isValidated ? "" : "bg-slate-500 hover:scale-100 hover:bg-slate-500" } form="addLead"  type="submit" median={true} big={false} nomeBtn="Transformar em Lead" icon={ isValidated ? <MdUpload  size={30} /> : <RiProhibitedLine  size={30} /> } onClick={ isValidated ? onSubmitRegisterLead : alertNotAllFields}  /></div>
+                    <div className="flex items-center h-20" data-tooltip-id="tooltip-4" data-tooltip-content="Ao selecionar esse botão, será criado uma oportunidade para esse cliente e o potencial será alterado para um Lead!" ><GrnBtn disabled={ isValidated ? false : true } customCss={ isValidated ? "" : "bg-slate-500 hover:scale-100 hover:bg-slate-500" } form="addLead"  type="submit" median={true} big={false} nomeBtn="Transformar em Lead" icon={ isValidated ? <MdUpload  size={30} /> : <RiProhibitedLine  size={30} /> } onClick={ isValidated ? onSubmitRegisterLead : alertNotAllFields}  /></div>
                 </div>
                 }
                 {

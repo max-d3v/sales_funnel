@@ -111,11 +111,12 @@ export function DadosCliente({task, errorsRegister}: propsDadosClientes) {
 
 
     const handlePreValue = () => {
-        if (task?.informacoes[0].cpf) {
+        
+        if (task?.informacoes[0].tipoCliente == "cpf") {
             setClientType("cpf");
         }
-        if (task?.informacoes[0].cnpj) {
-            setClientType("cnpj")
+        if (task?.informacoes[0].tipoCliente == "cnpj") {
+            setClientType("cnpj");
         }
     }
     
@@ -147,8 +148,8 @@ export function DadosCliente({task, errorsRegister}: propsDadosClientes) {
                     <div className="w-1/2" ><InputDados editable={true} register={ register } preValue={  Object.keys(selectedData).length === 0 ?   task?.informacoes[0].razao_fantasia : selectedData['Nome comercial'] } name="razaoFantasia" error={ errors.razao_fantasia }  placeholder="Razão Fantasia" /></div>
                 </div>
                 <div className="flex mt-2 w-full gap-4">
-                    <div className="w-1/2" ><InputDados editable={true} register={ register } preValue={  Object.keys(selectedData).length === 0 ?  task?.informacoes[0].telefone : selectedData.telefone} name="telefone" error={ errors.telefone }  placeholder="Telefone" /></div>
                     <div className="w-1/2" ><InputDados editable={true} register={ register } preValue={  Object.keys(selectedData).length === 0 ?  task?.informacoes[0].rua : selectedData.Endereco} name="rua" error={ errors.rua }  placeholder="Rua" /></div>
+                    <div className="w-1/2" ><InputDados editable={true} register={ register } preValue={  Object.keys(selectedData).length === 0 ?  task?.informacoes[0].numero : selectedData.Numero} name="numero" error={ errors.numero }  placeholder="Número" /></div>
                 </div>
                 <div className="flex w-full gap-4 mt-12">
                     <div className="w-1/2 relative" >
@@ -161,9 +162,9 @@ export function DadosCliente({task, errorsRegister}: propsDadosClientes) {
                     </div>
                 </div>
                 <div className="flex w-full gap-4 mt-12">
+                    <div className="w-1/2" ><InputDados editable={true} register={ register } preValue={  Object.keys(selectedData).length === 0 ?  task?.informacoes[0].telefone : selectedData.telefone} name="telefone" error={ errors.telefone }  placeholder="Telefone" /></div>
                     <div className="w-1/2" ><InputDados editable={true} register={ register } preValue={ Object.keys(selectedData).length === 0 ? task?.informacoes[0].email:selectedData.email   }  name="email" error={errors.email}  placeholder="Email" /></div>                                
                 </div>
-                <div className="w-full mt-8"> <SelectDados register={register} name="pgtoPadrao" error={ errors.pgtoPadrao } tipo="pgto" placeholder="Forma de pagamento padrão" /> </div>
             </div>
             <div className="w-1/2 ">
                 <div className="flex flex-col w-full items-center">

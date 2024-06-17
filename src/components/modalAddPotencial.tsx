@@ -49,6 +49,19 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
         setRenderToaster(true);
         setAddLoading(true);      
         const toastId = toast.loading("Salvando")
+
+
+        if (data.dataContato && data.dataContato !== ""){
+            const datePrevista = new Date(data.dataContato);
+            if (datePrevista < new Date()) {
+                setAddLoading(false);
+                toast.dismiss(toastId);
+                toast.error("Data prevista de contato deve ser hoje ou depois de hoje");
+                return;
+            }
+        }
+        
+
         const dataObj = {
             titulo: data.titulo,
             valorEstimado: data.valorEstimado,
