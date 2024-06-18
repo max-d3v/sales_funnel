@@ -386,6 +386,9 @@ input.corPlaceholder::placeholder {
   z-index: 9999
 }
 
+.corDestaque {
+  color: rgb(255, 166, 0)
+}
 
 
 @tailwind base;

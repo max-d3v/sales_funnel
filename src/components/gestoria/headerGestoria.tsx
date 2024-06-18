@@ -17,26 +17,31 @@ import { WhiteBtn } from "../whiteBtn";
 import { FcBusinessman } from "react-icons/fc";
 import { ajax } from "../../ajax/ajax";
 import { IoFilterSharp } from "react-icons/io5";
+import toast from "react-hot-toast";
+import { ImSpinner8 } from "react-icons/im";
 
 interface header {
     setSearch: (search: string) => void;
     setFilters: (filters: any) => void;
-    setGerenciadosContext: (gestores: any) => void;
+    setGerenciadosContext: (gestores: gerenciado[]) => void;
+    setAllGerenciadosContext: (gestores: gerenciado[]) => void;
 }
-interface gerenciado {
+export interface gerenciado {
     CodigoVendedor: string;
     VendedorExterno: string;
     Selecionado: boolean;
 }
 
-export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }: header) {
+export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, setAllGerenciadosContext }: header) {
     const [mostrarProfile, setMostrarProfile] = useState<boolean>(false);
     const [mostrarAdicionar, setMostrarAdicionar] = useState<boolean>(false);
     const [mostrarFiltro, setMostrarFiltro] = useState<boolean>(false);
     const [localSearch, setLocalSearch] = useState<string>('');
     const [showVendors, setShowVendors] = useState<boolean>(false);
     const [gerenciados, setGerenciados] = useState<gerenciado[]>([]);
-    
+    const [firstRender, setFirstRender] = useState<boolean>(true);
+    const [indicadores, setIndicadores] = useState<any>({});
+    const [loadingIndicadores, setLoadingIndicadores] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -51,26 +56,27 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }:
         setFilters(filters);
     }
 
-    function handleGoHome() {
+    const handleGoHome = () => {
         navigate('/')
     }
 
-    function handleMostrarModal() {
+    const handleMostrarModal = () => {
         setMostrarAdicionar(!mostrarAdicionar);
     }
 
-    function handleProfile() {
+    const handleProfile = () => {
         setMostrarProfile(!mostrarProfile);
     }
 
-    function handleFiltro() {
+    const handleFiltro = () => {
         setMostrarFiltro(!mostrarFiltro);
     }
 
     const carregaGerenciados = async () => {
         console.log("carregou gerenciados")
-        const response = await ajax({method: "GET", endpoint: "/gerenciados", data: null })
+        const response = await ajax({method: "GET", endpoint: "/gestoria/gerenciados", data: null })
         if (response.status == "error") {
+            toast.error("Erro ao carregar os gerenciados")
             setTimeout(() => {
                 navigate('/');  
             }, 2000);
@@ -78,8 +84,7 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }:
         }
         if (response.status == "success") {
             const data = response.data;
-            await adicionaSelecionadoGerenciados(data);
-            atualizaGerenciadosContext();
+            adicionaSelecionadoGerenciados(data);
         }
     }
 
@@ -93,7 +98,6 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }:
 
     const handleGerenciados = ( gerenciado: gerenciado ) => {
         const index = gerenciados.findIndex((item) => item.CodigoVendedor == gerenciado.CodigoVendedor);
-        console.log(gerenciados[index]);
         if (gerenciados[index].Selecionado) {
             gerenciados[index].Selecionado = false;
             setGerenciados([...gerenciados]);
@@ -106,15 +110,42 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }:
         }
     }
 
+    const carregaIndicadores = async (gerenciados: gerenciado[]) => {
+        setLoadingIndicadores(true);
+        const response = await ajax({method: "POST", endpoint: "/gestoria/indicadores", data: {gerenciados: gerenciados} });
+        if (response.status == "error") {
+            toast.error("Erro ao carregar indicadores");
+        }
+        setIndicadores(response.data);
+        setLoadingIndicadores(false);
+    }
 
-    const atualizaGerenciadosContext = () => {
+    const atualizaGerenciadosContext = (firstRender: boolean = false) => {
         var gerenciadosFiltrados = gerenciados.filter((gerenciado) => gerenciado.Selecionado == true);
         setGerenciadosContext(gerenciadosFiltrados);
+        carregaIndicadores(gerenciadosFiltrados);
+        if (firstRender) {
+            setAllGerenciadosContext(gerenciados);
+        }
     }
 
     useEffect(() => {
+        if (gerenciados.length > 0) {
+            if (firstRender) {
+                atualizaGerenciadosContext(true);
+                setFirstRender(false);
+            }
+        }
+        
+        
+    }, [gerenciados])
+
+    useEffect(() => {
         carregaGerenciados();
-    }, [])
+    }, []);
+
+
+    
 
     
 
@@ -130,30 +161,31 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }:
                 <input disabled={pathname.includes('/opportunity') || pathname.includes('/leads') ? true : false } type="text" value={localSearch} className={pathname.includes('/opportunity') || pathname.includes('/leads') ? styles.searchDesativado : styles.search } onChange={(e) => handleSearch(e.target.value)}  placeholder="Busque por Oportunidades"  />
                { localSearch == "" ? "" : <div className="absolute mr-4 right-0 mt-1" onClick={() => handleSearch("")}> <IoClose size={26}/> </div> } 
                {pathname.includes('/opportunity') || pathname.includes('/leads') ? <WhiteBtn nomeBtn="Quadro" icon={<FaHouseChimney/>}  onClick={() => handleGoHome()}></WhiteBtn> : <GrnBtn nomeBtn="Oportunidade"  onClick={() => handleMostrarModal()} icon={<IoMdAddCircle size={18}/>}></GrnBtn>}
-                <div className="flex gap-4">
+                <div className="flex gap-4 mr-4 ml-4">
                     <div className="flex flex-col items-center justify-center" >
-                        <p className="m-0 text-xs font-semibold text-green-500 " >Ganhando</p>
+                        <p className="m-0 text-xs font-semibold text-green-500 " >Ganhos</p>
                         <button className=" hover:scale-105 h-9 w-24 customGreenBorder outline-none bg-white rounded-md font-semibold text-green-500 cursor-pointer hover:bg-green-500 hover:text-white transition-all duration-300 ">
-                            1562 {/* Quando der hover colocar a porcentagem! */}
+                           { loadingIndicadores ? <ImSpinner8 size={12} className="animate-spin" /> : indicadores.ganhos || 0 }
                         </button>
                     </div>
                     <div className="flex flex-col items-center justify-center">
-                        <p className="m-0 text-xs font-semibold text-red-500" >Perdendo</p>
+                        <p className="m-0 text-xs font-semibold text-red-500" >Perdidos</p>
                         <button className=" hover:scale-105 h-9 w-24 customRedBorder outline-none bg-white rounded-md font-semibold text-red-500 cursor-pointer hover:bg-red-500 hover:text-white transition-all duration-300 ">
-                            692
+                            { loadingIndicadores ? <ImSpinner8 size={12} className="animate-spin" /> : indicadores.perdidos || 0 }
+                        </button>
+                    </div>
+                    <div className="flex flex-col items-center justify-center" >
+                        <p className="m-0 text-xs font-semibold text-black" >Valor Total</p>
+                        <button className=" hover:scale-105 h-9 flex items-center justify-center customBorder outline-none bg-white rounded-md font-semibold text-black cursor-pointer hover:bg-black hover:text-white transition-all duration-300 ">
+                            { loadingIndicadores ? <ImSpinner8 size={12} className="animate-spin" /> : indicadores.valorTotal || 0 }
                         </button>
                     </div>
                 </div>    
             </div>
 
-                <div className="flex flex-col items-center justify-center" >
-                    <p className="m-0 text-xs font-semibold text-black" >Valor Total</p>
-                    <button className=" hover:scale-105 h-9 customBorder outline-none bg-white rounded-md font-semibold text-black cursor-pointer hover:bg-black hover:text-white transition-all duration-300 ">
-                        R$ 2.002.732,00
-                    </button>
-                </div>
+                
 
-                <div className=" relative flex justify-center "  >
+                <div className=" relative flex justify-center mr-2 "  >
                     <WhiteBtn nomeBtn="Vendedores" icon={<FcBusinessman  />} onClick={() => setShowVendors(!showVendors)} />
                     <div className={` ${showVendors ? "" : "hidden"} customBorder mt-14  customListWidth rounded-md box-border absolute z-50 bg-white flex flex-col `} >
                     {
@@ -166,7 +198,7 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext }:
                             )
                         })
                     }
-                    <GrnBtn onClick={ () => atualizaGerenciadosContext() } customCss="mt-2 mb-2 w-11/12 self-center" nomeBtn="Aplicar Filtros" type="submit" icon={<IoFilterSharp />} />
+                    <GrnBtn onClick={ () => atualizaGerenciadosContext() } customCss="mt-2 mb-2 w-11/12 self-center" nomeBtn="Aplicar Gerenciados" type="submit" icon={<IoFilterSharp />} />
                     </div>
                 </div>
 

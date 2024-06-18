@@ -6,6 +6,7 @@ import toast, { Toaster } from 'react-hot-toast';
 import React from 'react';
 import SearchContext from './layoutGestoria';
 import { GanhouPerdeu } from '../modalWinLoss';
+import { ChangeOwner } from './modalChangeOwner';
 
 
 export const TaskContextGestoria = React.createContext({} as any);
@@ -18,6 +19,8 @@ interface task {
     MaxLocalTotal: number;
     StageId: number;
     PredDate: string;
+    firstName: string;
+    lastName: string;
 }
 
 interface taskMysql {
@@ -44,6 +47,10 @@ export function BoardGestoria() {
     const [selectedTasks, setSelectedTasks] = useState<string[]>([]);
     const [showWinLoss, setShowWinLoss] = useState<boolean>(false);
     const [isFirstLoadSearch, setIsFirstLoadSearch] = useState(true);
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const [selectedTaskId, setSelectedTaskId] = useState<number>(0);
+    const [currentOwner, setCurrentOwner] = useState<string>("");
+
    //const [isHoveringWinLoss, setIsHoveringWinLoss] = useState(false);
 
 
@@ -259,7 +266,7 @@ export function BoardGestoria() {
 
 
     const carregaTasksSAP = async (filter: string = "") => {
-        const response = await ajax({ method: 'POST', endpoint: '/gerenciados/tasks', data: {filter: filter, filtros: filters, gerenciados: gerenciados} });
+        const response = await ajax({ method: 'POST', endpoint: '/gestoria/tasks', data: {filter: filter, filtros: filters, gerenciados: gerenciados} });
         if (!response) {
             return false;
         }
@@ -281,7 +288,7 @@ export function BoardGestoria() {
     }
 
     const carregaLeads = async (filter:string = "") => {
-        const response = await ajax({method: "POST", endpoint: "/gerenciados/leads", data: {filter: filter, filtros: filters, gerenciados: gerenciados}});    
+        const response = await ajax({method: "POST", endpoint: "/gestoria/leads", data: {filter: filter, filtros: filters, gerenciados: gerenciados}});    
         if (!response) {
             setLeadMysql([]);
             return false;
@@ -316,8 +323,6 @@ export function BoardGestoria() {
         if (gerenciados.length == 0) {
             return;
         }
-        console.log("foi carregado com o gerenciados:");
-        console.log(gerenciados);
         
         if (filter.length == 0) {
             toast.dismiss();
@@ -372,9 +377,13 @@ export function BoardGestoria() {
         searchTasks();
     }, [searchValue])
 
+    const handleChangeModalState = () => {
+        setIsOpen(!isOpen);
+    }
+
     useEffect(() => {
         carregaTasks();  
-    }, [filters, gerenciados])   
+    }, [filters, gerenciados]);
 
 
     /*
@@ -384,10 +393,12 @@ export function BoardGestoria() {
    */
 
     return (
-        <TaskContextGestoria.Provider value={{selectedTasks}}>
+        <TaskContextGestoria.Provider value={{selectedTasks: selectedTasks, alterModalState: handleChangeModalState, alterSelectedTask: setSelectedTaskId, alterCurrentOwner: setCurrentOwner}} >
         <DragDropContext useDrag={handleGanhouPerdeu} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
             <div className='flex mt-6 bg-white box-border max-w-full h-auto' >
-            <ColumnGestoria title="Lead In" tasks={lead} leads={leadMysql} id="1"/>
+            { <ChangeOwner mostrarModal={isOpen} atualizaEstadoModal={handleChangeModalState} idTask={selectedTaskId} currentOwner={currentOwner} /> }
+
+            <ColumnGestoria title="Qualificação" tasks={lead} leads={leadMysql} id="1"/>
             <ColumnGestoria title="Agendamento / Reunião" tasks={contato} id="2"/>
             <ColumnGestoria title="Diagnóstico" tasks={diagnostico} id="3"/>
             <ColumnGestoria title="Teste" tasks={teste} id="4"/>
