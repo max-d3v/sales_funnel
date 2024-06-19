@@ -1,3 +1,4 @@
+/*
 import { ReactNode } from "react";
 import SearchContext from "../components/layout";
 import { useContext } from "react";
@@ -12,7 +13,7 @@ export function Gestor({children}: GestorProps): any {
     const navigate = useNavigate();
     
 
-/*
+
     useEffect(() => {
         if (!isGestor) {
             navigate("/");
@@ -21,5 +22,6 @@ export function Gestor({children}: GestorProps): any {
             return children;
         }
     }, [isGestor])
-*/  
+
 }
+*/
