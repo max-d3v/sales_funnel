@@ -4,6 +4,7 @@ import { GrnBtn } from "./greenBtn";
 import { IoFilterSharp } from "react-icons/io5";
 import { WhiteBtn } from "./whiteBtn";
 import { IoIosCloseCircle } from "react-icons/io";
+import { useState } from "react";
 
 interface Filters {
     handleFilters: (filters: any) => void
@@ -12,8 +13,11 @@ interface Filters {
 
 export function Filter({ handleFilters, fecharFiltro }: Filters) {
     const { register, handleSubmit } = useForm<any>({});
+    const [switchHandler, setSwitchHandler] = useState<boolean>(false);
 
-    const onSubmit = (data: FormData) => {
+    const onSubmit = (data: any) => {
+        data.apenasDestacados = switchHandler;
+        console.log(data);
         handleFilters(data);
     }
 
@@ -70,6 +74,17 @@ export function Filter({ handleFilters, fecharFiltro }: Filters) {
                         <div className="flex items-center"><input type="checkbox" { ...register("teste") } id="teste"></input> <label htmlFor="teste" className="m-0" >Teste</label> </div>
                         <div className="flex items-center"><input type="checkbox" { ...register("propostaValor") } id="propostaValor"></input> <label htmlFor="propostaValor" className="m-0" >Proposta de Valor</label> </div>
                     </div>  
+                </div>
+            </div>
+            <div className=" flex flex-col  items-center mb-8">
+                <div className="self-start" >
+                    <p className=" m-0 mb-2 bg-white font-semibold text-xl " >Apenas Destacados</p>
+                    <label className="toggle-switch">
+                        <input type="checkbox" onClick={() => setSwitchHandler(!switchHandler)} />
+                        <div className="toggle-switch-background">
+                            <div className="toggle-switch-handle"></div>
+                        </div>
+                    </label>
                 </div>
             </div>
             <div className="horizontalRuleFilter" ></div>
