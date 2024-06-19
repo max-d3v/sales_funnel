@@ -46,7 +46,7 @@ const router = createBrowserRouter([
   children: [
     {
       path: "/gestoria",
-      element: <Private><Gestoria/></Private>
+      element: <Gestor><Private><Gestoria/></Private></Gestor>
     }
   ]
   }

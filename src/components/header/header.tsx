@@ -19,9 +19,10 @@ import toast from "react-hot-toast";
 interface header {
     setSearch: (search: string) => void;
     setFilters: (filters: any) => void;
+    setGestor: (isGestor: boolean) => void;
 }
 
-export function Header({ setSearch, setFilters }: header) {
+export function Header({ setSearch, setFilters, setGestor }: header) {
     const [mostrarProfile, setMostrarProfile] = useState<boolean>(false);
     const [mostrarAdicionar, setMostrarAdicionar] = useState<boolean>(false);
     const [mostrarFiltro, setMostrarFiltro] = useState<boolean>(false);
@@ -63,6 +64,7 @@ export function Header({ setSearch, setFilters }: header) {
             const isGerente = response.data.isGerente;
             if (isGerente) {
                 setIsGerente(true);
+                setGestor(true);
             }
             return;
         }
