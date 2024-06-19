@@ -5,7 +5,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { FaFilter } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { CiSearch } from "react-icons/ci";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ModalProfile } from "../modalProfile";
 import { useLocation } from "react-router-dom";
 import { FaHouseChimney } from "react-icons/fa6";
@@ -13,7 +13,9 @@ import { useNavigate } from "react-router-dom";
 import { AddOportunity } from "../modalAddOportunity";
 import { Filter } from "../modalFilter";
 import { IoClose } from "react-icons/io5";
+import { ajax } from "../../ajax/ajax";
 import logo from '../../../public/assets/images/logo_funil_fundoBranco.png'
+import toast from "react-hot-toast";
 interface header {
     setSearch: (search: string) => void;
     setFilters: (filters: any) => void;
@@ -24,6 +26,7 @@ export function Header({ setSearch, setFilters }: header) {
     const [mostrarAdicionar, setMostrarAdicionar] = useState<boolean>(false);
     const [mostrarFiltro, setMostrarFiltro] = useState<boolean>(false);
     const [localSearch, setLocalSearch] = useState<string>('');
+    const [isGerente, setIsGerente] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -38,21 +41,37 @@ export function Header({ setSearch, setFilters }: header) {
         setFilters(filters);
     }
 
-    function handleGoHome() {
+    const handleGoHome = () => {
         navigate('/')
     }
 
-    function handleMostrarModal() {
+    const handleMostrarModal = () => {
         setMostrarAdicionar(!mostrarAdicionar);
     }
 
-    function handleProfile() {
+    const handleProfile = () => {
         setMostrarProfile(!mostrarProfile);
     }
 
-    function handleFiltro() {
+    const handleFiltro = () => {
         setMostrarFiltro(!mostrarFiltro);
     }
+
+    const checaGerente = async () => {
+        const response = await ajax({method: "GET", endpoint: "/gestoria/checaGerente", data: null});
+        if (response.status == "success") {
+            const isGerente = response.data.isGerente;
+            if (isGerente) {
+                setIsGerente(true);
+            }
+            return;
+        }
+        toast.error("Erro ao verificar se usuario é gerente")
+    }
+
+    useEffect(() => {
+        checaGerente();
+    }, [])
 
 
 
@@ -77,7 +96,7 @@ export function Header({ setSearch, setFilters }: header) {
             <div >
             
             <CgProfile size={33} onClick={() => handleProfile()} className="mr-8 mt-1.5 hover:scale-105 transition-all duration-500 cursor-pointer"/>  
-            {mostrarProfile ? <ModalProfile/> : null }
+            {mostrarProfile ? <ModalProfile isGerente={isGerente} /> : null }
             </div>
             </div>
 
