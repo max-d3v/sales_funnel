@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import SearchContext from "../components/layout";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 interface GestorProps {
     children: ReactNode;
 }
