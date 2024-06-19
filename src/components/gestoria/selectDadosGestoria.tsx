@@ -1,6 +1,4 @@
 import {RegisterOptions, UseFormRegister} from 'react-hook-form';
-import { useContext } from 'react';
-import SearchContext from './layoutGestoria';
 import { gerenciado } from './headerGestoria';
 interface input {
     placeholder: string;
@@ -17,7 +15,7 @@ interface input {
     funcaoAoMudar?: (e: any) => void;
     preOwner: string;
 }
-export function SelectDadosGestoria({tipo, funcaoAoMudar, requiredDefault, preValue, register, placeholder, name, icon, error, rules, gerenciados, preOwner}: input) {
+export function SelectDadosGestoria({tipo, funcaoAoMudar, requiredDefault, register, placeholder, name, icon, error, rules, gerenciados, preOwner}: input) {
     return (
         <div className=" w-full relative mt-4 ">
             <p className="m-0 font-semibold text-sm">{placeholder}</p>

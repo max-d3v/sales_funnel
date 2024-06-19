@@ -32,7 +32,6 @@ interface taskProps {
 export function TaskGestoria({task, index}: taskProps) {
     const [isInDrag, setIsInDrag] = useState<boolean>(false);
     const [isHovered, setIsHovered] = useState<boolean>(false);
-    const [showAlterOwnerModal, setShowAlterOwnerModal] = useState<boolean>(false);
     const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
     const navigate = useNavigate();
