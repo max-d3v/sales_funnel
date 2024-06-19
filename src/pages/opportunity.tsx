@@ -44,7 +44,6 @@ export function Opportunity() {
     const [formattingDays, setFormattingDays] = useState<boolean>(true)
     const { id } = useParams<string>();
 
-
     const calculateDaysInEachStep = (taskData: any) => {
         const etapas = taskData?.SalesOpportunitiesLines;
         const objDays: any = {}

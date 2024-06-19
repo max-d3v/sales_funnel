@@ -86,7 +86,7 @@ export function Task({task, index}: taskProps) {
                     <p className='m-0 text-xs font-semibold mt-3 flex gap-2 items-center'> <CgProfile /> R$ {formatedPrice} <LuDot /> <span className={dateColor} > {formatedDate} </span> </p>
                     </div>
                     <div className={`flex flex-col h-full ${isHighlighted ? "justify-between" : "justify-center"}`} >
-                        <BsExclamationCircleFill data-tooltip-id="tooltip-12" data-tooltip-content="Essa oportunidade foi destacada pelo seu gestor!"  size={22} className={` ${!isHighlighted ? "opacity-0 absolute " : "opacity-100 scale-105"} corDestaque transition-all duration-300 p-1 `} />
+                        <BsExclamationCircleFill data-tooltip-id="tooltip-12" data-tooltip-content="Essa oportunidade foi destacada pelo seu gestor!"  size={22} className={` ${!isHighlighted ? "opacity-0 fixed h-0 w-0 " : "opacity-100 scale-105"} corDestaque transition-all duration-300 p-1 `} />
                         {isInDrag ? <ImSpinner8 className='animate-spin' size={20} /> : <FaCirclePlus onClick={() => handleOpenTask(task)} size={22} className=' hover:rotate-90 cursor-pointer transition-all duration-300 hover:scale-125 p-1  '  /> }  
                     </div>
                 </div>

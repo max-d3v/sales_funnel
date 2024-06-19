@@ -451,11 +451,11 @@ input.corPlaceholder::placeholder {
 .toggle-switch input[type="checkbox"]:checked + .toggle-switch:before {
   content: "On";
   color: #05c46b;
-  right: -15px;
+  right: -10vw;
 }
 
 .toggle-switch input[type="checkbox"]:checked + .toggle-switch-background .toggle-switch-handle {
-  transform: translateX(40px);
+  transform: translateX(3vw);
 }
 
 

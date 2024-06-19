@@ -26,6 +26,7 @@ export function Filter({ handleFilters, fecharFiltro }: Filters) {
     }
 
     const dataAtual = new Date().toLocaleDateString();
+    const data1mesAtras = new Date(new Date().setMonth(new Date().getMonth() - 1)).toLocaleDateString();
     return (        
         <form action="" id="filterOp" onSubmit={handleSubmit(onSubmit)} className="absolute flex p-4 bg-white rounded-md shadow-lg z-50 top-full right-40 flex-col w-auto transition-all duration-500 " >
             <div className="flex justify-between items-center" >
@@ -41,7 +42,7 @@ export function Filter({ handleFilters, fecharFiltro }: Filters) {
                 <p className="m-0 self-start text-xl font-semibold mb-1" >Data prevista de Visita </p>
                 <div className="flex justify-between gap-4 w-full  h-full" >
                     <div className="w-52" >
-                        <InputDados tirarTopo={true} editable={true} preValue={dataAtual} placeholder="Data Início" name="dataInicio" type="date" register={register} />
+                        <InputDados tirarTopo={true} editable={true} preValue={data1mesAtras} placeholder="Data Início" name="dataInicio" type="date" register={register} />
                     </div>
                     <p className="mt-7" >Até</p>
                     <div className="w-52" >

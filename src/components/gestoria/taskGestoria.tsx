@@ -39,7 +39,7 @@ export function TaskGestoria({task, index}: taskProps) {
     
 
     const handleOpenTask = (task: taskProps["task"]) => {
-        navigate(`/opportunity/${task.Id}`)
+        navigate(`/opportunity/${task.Id}?origem=gestoria`)
     }
 
     const diffInDays = () => {
@@ -57,13 +57,29 @@ export function TaskGestoria({task, index}: taskProps) {
     }
 
     const handleHighlightTask = async () => {
-        const response = await ajax({method: "POST", endpoint: "/gestoria/highlightTask", data: {taskId: task.Id}})
-        if (response.status == "error") {
-            toast.error("Erro ao destacar oportunidade");
-        }   
-        if (response.status == "success") {
-            toast.success("Oportunidade destacada com sucesso!");
+        if (!isHighlighted) {
             setIsHighlighted(true);
+            const response = await ajax({method: "POST", endpoint: "/gestoria/highlightTask", data: {taskId: task.Id}})
+            if (response.status == "error") {
+                toast.error("Erro ao destacar oportunidade");
+                setIsHighlighted(false);
+            }   
+            if (response.status == "success") {
+                toast.success("Oportunidade destacada com sucesso!");
+            }
+            return;
+        }
+        if (isHighlighted) {
+            setIsHighlighted(false);
+            const response = await ajax({method: "POST", endpoint: "/gestoria/unhighlightTask", data: {taskId: task.Id}})
+            if (response.status == "error") {
+                toast.error("Erro ao remover destaque da oportunidade");
+                setIsHighlighted(true);    
+            }   
+            if (response.status == "success") {
+                toast.success("Destaque removido com sucesso!");
+                
+            }
         }
     }
     

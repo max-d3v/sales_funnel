@@ -58,7 +58,7 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, s
     }
 
     const handleGoHome = () => {
-        navigate('/')
+        navigate('/gestoria')
     }
 
     const handleMostrarModal = () => {
@@ -137,6 +137,7 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, s
 
     useEffect(() => {
         if (indicadoresContext) {
+            const valorFormatado = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(indicadoresContext.valorTotal);
             setIndicadores(indicadoresContext);
         }
     }, [indicadoresContext])
@@ -172,7 +173,7 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, s
                     <div className="flex flex-col items-center justify-center" >
                         <p className="m-0 text-xs font-semibold text-black" >Valor Total</p>
                         <button className=" hover:scale-105 h-9 flex items-center justify-center customBorder outline-none bg-white rounded-md font-semibold text-black cursor-pointer hover:bg-black hover:text-white transition-all duration-300 ">
-                            { indicadores.valorTotal || <ImSpinner8 className="animate-spin"/>  }
+                            { indicadores.valorTotal ? new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' }).format(indicadores.valorTotal) : <ImSpinner8 className="animate-spin"/> }
                         </button>
                     </div>
                 </div>    
@@ -186,9 +187,9 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, s
                     {
                         gerenciados.map((gerenciado: { VendedorExterno: string, CodigoVendedor: string, Selecionado: boolean }) =>  {
                             return (
-                                <label onClick={() => handleGerenciados( gerenciado )} className=" flex px-4 py-3 w-full box-border justify-between transition-all duration-300 hover:bg-black hover:bg-opacity-10 cursor-pointer " >
+                                <label onClick={(e) => e.stopPropagation()}  className=" flex px-4 py-3 w-full box-border justify-between transition-all duration-300 hover:bg-black hover:bg-opacity-10 cursor-pointer " >
                                     {gerenciado.VendedorExterno}
-                                    <input checked={ gerenciado.Selecionado } onClick={(e) => e.stopPropagation()}  type="checkbox" className=" w-8 transition-all duration-300 hover:scale-105 " />
+                                    <input checked={ gerenciado.Selecionado } onClick={() => handleGerenciados(gerenciado)}  type="checkbox" className=" w-8 transition-all duration-300 hover:scale-105 " />
                                 </label>
                             )
                         })
