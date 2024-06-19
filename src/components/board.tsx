@@ -18,6 +18,7 @@ interface task {
         MaxLocalTotal: number;
         StageId: number;
         PredDate: string;
+        DestacadoGerente: string;
     }
 
     interface taskMysql {

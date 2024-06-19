@@ -3,10 +3,11 @@ import { CgProfile } from "react-icons/cg";
 import { LuDot } from "react-icons/lu";
 import { FaCirclePlus } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
-import { useContext } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { TaskContext } from './board';
-import { useState, useEffect } from 'react';
 import { ImSpinner8 } from "react-icons/im";
+import { BsExclamationCircleFill } from "react-icons/bs";
+import { Tooltip } from 'react-tooltip'
 
 
 
@@ -20,6 +21,7 @@ interface taskProps {
         MaxLocalTotal: number;
         StageId: number;
         PredDate: string;
+        DestacadoGerente: string; 
     }
     index: string;
 }
@@ -27,6 +29,8 @@ interface taskProps {
 
 export function Task({task, index}: taskProps) {
     const [isInDrag, setIsInDrag] = useState<boolean>(false);
+    const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
+
     const navigate = useNavigate();
     const { selectedTasks } = useContext(TaskContext);
     
@@ -52,6 +56,12 @@ export function Task({task, index}: taskProps) {
         const differenceInDays = Math.ceil(differenceInTime / (1000 * 3600 * 24));
         return differenceInDays
     }
+
+    useEffect(() => {
+        if (task.DestacadoGerente == "S") {
+            setIsHighlighted(true);
+        }
+    }, [])
           
 
     const formatedDate = new Date(task.PredDate).toLocaleDateString();
@@ -64,6 +74,8 @@ export function Task({task, index}: taskProps) {
 
     const formatedPrice = task.MaxLocalTotal.toLocaleString('pt-BR');
     return (
+        <>
+        <Tooltip id="tooltip-12" />
         <Draggable draggableId={task.Id.toString()} key={task.Id} index={index}>
             {(provided: any, snapshot: any) => {
             return (
@@ -73,10 +85,14 @@ export function Task({task, index}: taskProps) {
                     <p className='m-0 mr-2 text-sm'>{task.CustomerName}</p>  
                     <p className='m-0 text-xs font-semibold mt-3 flex gap-2 items-center'> <CgProfile /> R$ {formatedPrice} <LuDot /> <span className={dateColor} > {formatedDate} </span> </p>
                     </div>
-                    {isInDrag ? <ImSpinner8 className='animate-spin' size={20} /> : <FaCirclePlus onClick={() => handleOpenTask(task)} size={22} className=' hover:rotate-90 cursor-pointer transition-all duration-300 hover:scale-125 p-1  '  /> }  
+                    <div className={`flex flex-col h-full ${isHighlighted ? "justify-between" : "justify-center"}`} >
+                        <BsExclamationCircleFill data-tooltip-id="tooltip-12" data-tooltip-content="Essa oportunidade foi destacada pelo seu gestor!"  size={22} className={` ${!isHighlighted ? "opacity-0 absolute " : "opacity-100 scale-105"} corDestaque transition-all duration-300 p-1 `} />
+                        {isInDrag ? <ImSpinner8 className='animate-spin' size={20} /> : <FaCirclePlus onClick={() => handleOpenTask(task)} size={22} className=' hover:rotate-90 cursor-pointer transition-all duration-300 hover:scale-125 p-1  '  /> }  
+                    </div>
                 </div>
                 )
             }}
         </Draggable>
+        </>
     )
 }

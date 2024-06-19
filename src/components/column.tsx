@@ -17,6 +17,7 @@ interface colunaProps {
         MaxLocalTotal: number;
         StageId: number;
         PredDate: string;
+        DestacadoGerente: string;
     }[];
     id: string;
     leads?: {
