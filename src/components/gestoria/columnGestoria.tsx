@@ -19,6 +19,7 @@ interface colunaProps {
         PredDate: string;
         firstName: string;
         lastName: string;
+        DestacadoGerente: string;
     }[];
     id: string;
     leads?: {

@@ -136,10 +136,7 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, s
     }, []);
 
     useEffect(() => {
-        console.log("atualizou com os indicadores: ");
         if (indicadoresContext) {
-            console.log("atualizou com os indicadores: ");
-            console.log(indicadoresContext);
             setIndicadores(indicadoresContext);
         }
     }, [indicadoresContext])
@@ -163,19 +160,19 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, s
                     <div className="flex flex-col items-center justify-center" >
                         <p className="m-0 text-xs font-semibold text-green-500 " >Ganhos</p>
                         <button className=" hover:scale-105 h-9 w-24 customGreenBorder outline-none bg-white rounded-md font-semibold text-green-500 cursor-pointer hover:bg-green-500 hover:text-white transition-all duration-300 ">
-                           { indicadores ? <ImSpinner8 size={12} className="animate-spin mt-1" /> : indicadores.ganhos || 0 }
+                           { indicadores.ganhos || <ImSpinner8 className="animate-spin mt-1" />  }
                         </button>
                     </div>
                     <div className="flex flex-col items-center justify-center">
                         <p className="m-0 text-xs font-semibold text-red-500" >Perdidos</p>
                         <button className=" hover:scale-105 h-9 w-24 customRedBorder outline-none bg-white rounded-md font-semibold text-red-500 cursor-pointer hover:bg-red-500 hover:text-white transition-all duration-300 ">
-                            { indicadores ? <ImSpinner8 size={12} className="animate-spin mt-1" /> : indicadores.perdidos || 0 }
+                            { indicadores.perdidos || <ImSpinner8 className="animate-spin mt-1"/>  }
                         </button>
                     </div>
                     <div className="flex flex-col items-center justify-center" >
                         <p className="m-0 text-xs font-semibold text-black" >Valor Total</p>
                         <button className=" hover:scale-105 h-9 flex items-center justify-center customBorder outline-none bg-white rounded-md font-semibold text-black cursor-pointer hover:bg-black hover:text-white transition-all duration-300 ">
-                            { indicadores ? <ImSpinner8 size={12} className="animate-spin mt-1" /> : indicadores.valorTotal || 0 }
+                            { indicadores.valorTotal || <ImSpinner8 className="animate-spin"/>  }
                         </button>
                     </div>
                 </div>    

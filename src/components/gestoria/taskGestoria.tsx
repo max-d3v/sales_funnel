@@ -9,7 +9,8 @@ import { useState, useEffect } from 'react';
 import { ImSpinner8 } from "react-icons/im";
 import { BsExclamationCircle } from "react-icons/bs";
 import { BsExclamationCircleFill } from "react-icons/bs";
-
+import { ajax } from '../../ajax/ajax';
+import toast from 'react-hot-toast';
 interface taskProps {
     task: {
         Id: number;
@@ -22,6 +23,7 @@ interface taskProps {
         PredDate: string;
         firstName: string;
         lastName: string;
+        DestacadoGerente: string;
     }
     index: string;
 }
@@ -31,22 +33,13 @@ export function TaskGestoria({task, index}: taskProps) {
     const [isInDrag, setIsInDrag] = useState<boolean>(false);
     const [isHovered, setIsHovered] = useState<boolean>(false);
     const [showAlterOwnerModal, setShowAlterOwnerModal] = useState<boolean>(false);
+    const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
     const navigate = useNavigate();
     const { selectedTasks, alterModalState, alterSelectedTask, alterCurrentOwner } = useContext(TaskContextGestoria);
     
-    
-    useEffect(() => {
-        if (selectedTasks.includes(task.Id.toString())) {
-            setIsInDrag( true );
-        } 
-        if (!selectedTasks.includes(task.Id.toString())) {
-            setIsInDrag( false );
-        }
-    }, [selectedTasks])
-    
 
-    function handleOpenTask(task: taskProps["task"]) {
+    const handleOpenTask = (task: taskProps["task"]) => {
         navigate(`/opportunity/${task.Id}`)
     }
 
@@ -64,8 +57,15 @@ export function TaskGestoria({task, index}: taskProps) {
         alterModalState();
     }
 
-    const handleHighlightTask = () => {
-        console.log('highlight task');
+    const handleHighlightTask = async () => {
+        const response = await ajax({method: "POST", endpoint: "/gestoria/highlightTask", data: {taskId: task.Id}})
+        if (response.status == "error") {
+            toast.error("Erro ao destacar oportunidade");
+        }   
+        if (response.status == "success") {
+            toast.success("Oportunidade destacada com sucesso!");
+            setIsHighlighted(true);
+        }
     }
     
     const formatedDate = new Date(task.PredDate).toLocaleDateString();
@@ -76,6 +76,21 @@ export function TaskGestoria({task, index}: taskProps) {
     "text-yellow-600";
   
     const formatedPrice = task.MaxLocalTotal.toLocaleString('pt-BR');
+
+    useEffect(() => {
+        if (selectedTasks.includes(task.Id.toString())) {
+            setIsInDrag( true );
+        } 
+        if (!selectedTasks.includes(task.Id.toString())) {
+            setIsInDrag( false );
+        }
+    }, [selectedTasks])
+
+    useEffect(() => {
+        if (task.DestacadoGerente == "S") {
+            setIsHighlighted(true);
+        }
+    }, [])
   
     return (
         <>
@@ -101,7 +116,7 @@ export function TaskGestoria({task, index}: taskProps) {
                         onMouseLeave={() => setIsHovered(false)}
                         onClick={() => handleHighlightTask()}   
                         >
-                            <BsExclamationCircleFill size={22} className={` ${!isHovered ? "opacity-0 absolute " : "opacity-100 scale-105"} corDestaque  cursor-pointer transition-all duration-300 `} /> <BsExclamationCircle size={22} className={` ${isHovered ? "opacity-0 absolute" : "opacity-100"} corDestaque cursor-pointer transition-all duration:300 `} /> </div>
+                            <BsExclamationCircleFill size={22} className={` ${!isHovered && !isHighlighted ? "opacity-0 absolute " : "opacity-100 scale-105"} corDestaque  cursor-pointer transition-all duration-300 `} /> <BsExclamationCircle size={22} className={` ${isHovered || isHighlighted ? "opacity-0 absolute" : "opacity-100"} corDestaque cursor-pointer transition-all duration:300 `} /> </div>
                         {isInDrag ? <ImSpinner8 className='animate-spin' size={22} /> : <FaCirclePlus onClick={() => handleOpenTask(task)} size={22} className=' hover:rotate-90 cursor-pointer transition-all duration-300 hover:scale-125 p-1  '  /> }  
                     </div>
                 </div>

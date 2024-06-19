@@ -21,6 +21,7 @@ interface task {
     PredDate: string;
     firstName: string;
     lastName: string;
+    DestacadoGerente: string;
 }
 
 interface taskMysql {
