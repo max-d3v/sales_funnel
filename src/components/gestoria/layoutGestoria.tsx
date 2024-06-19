@@ -9,6 +9,8 @@ interface headerContextData {
     filters: any;
     gerenciados: any;
     allGerenciados: gerenciado[];
+    indicadoresContext: any;
+    alteraIndicadores: any;
 }
 
 interface gerenciado {
@@ -26,9 +28,10 @@ export function LayoutGestoria() {
     const [filters, setFilters] = useState({});
     const [gerenciados, setGerenciados] = useState<gerenciado[]>([]);
     const [allGerenciados, setAllGerenciados] = useState<gerenciado[]>([]);
+    const [indicadores, setIndicadores] = useState<any>({});
     return (
         <>
-        <SearchContextGestoria.Provider value={{searchValue: search, filters: filters, gerenciados: gerenciados, allGerenciados: allGerenciados}}>
+        <SearchContextGestoria.Provider value={{searchValue: search, filters: filters, gerenciados: gerenciados, allGerenciados: allGerenciados, indicadoresContext: indicadores, alteraIndicadores: setIndicadores}}>
             <HeaderGestoria setSearch={setSearch} setFilters={setFilters} setGerenciadosContext={setGerenciados} setAllGerenciadosContext={setAllGerenciados} />
             <Outlet/>
         </SearchContextGestoria.Provider>

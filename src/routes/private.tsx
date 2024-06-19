@@ -28,8 +28,7 @@ export function Private({children}: PrivateProps): any {
     }
     if (!loading && !signed) {
         console.log("Detectou mano não logado!");
-        return;
-      return <Navigate to="/login"/>;
+        return <Navigate to="/login"/>;
     }
 
     return children;

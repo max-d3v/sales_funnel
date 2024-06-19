@@ -4,7 +4,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { FaFilter } from "react-icons/fa";
 import { CgProfile } from "react-icons/cg";
 import { CiSearch } from "react-icons/ci";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import { ModalProfile } from "../modalProfile";
 import { useLocation } from "react-router-dom";
 import { FaHouseChimney } from "react-icons/fa6";
@@ -19,7 +19,7 @@ import { ajax } from "../../ajax/ajax";
 import { IoFilterSharp } from "react-icons/io5";
 import toast from "react-hot-toast";
 import { ImSpinner8 } from "react-icons/im";
-
+import SearchContextGestoria from "./layoutGestoria";
 interface header {
     setSearch: (search: string) => void;
     setFilters: (filters: any) => void;
@@ -42,6 +42,9 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, s
     const [firstRender, setFirstRender] = useState<boolean>(true);
     const [indicadores, setIndicadores] = useState<any>({});
     const [loadingIndicadores, setLoadingIndicadores] = useState<boolean>(false);
+    const [gerenciadoLocal, setGerenciadoLocal] = useState<gerenciado[]>([]);
+    
+    const { indicadoresContext } = useContext(SearchContextGestoria);
 
     const navigate = useNavigate();
 
@@ -110,20 +113,11 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, s
         }
     }
 
-    const carregaIndicadores = async (gerenciados: gerenciado[]) => {
-        setLoadingIndicadores(true);
-        const response = await ajax({method: "POST", endpoint: "/gestoria/indicadores", data: {gerenciados: gerenciados} });
-        if (response.status == "error") {
-            toast.error("Erro ao carregar indicadores");
-        }
-        setIndicadores(response.data);
-        setLoadingIndicadores(false);
-    }
 
     const atualizaGerenciadosContext = (firstRender: boolean = false) => {
         var gerenciadosFiltrados = gerenciados.filter((gerenciado) => gerenciado.Selecionado == true);
         setGerenciadosContext(gerenciadosFiltrados);
-        carregaIndicadores(gerenciadosFiltrados);
+        setGerenciadoLocal(gerenciadosFiltrados)
         if (firstRender) {
             setAllGerenciadosContext(gerenciados);
         }
@@ -144,7 +138,14 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, s
         carregaGerenciados();
     }, []);
 
-
+    useEffect(() => {
+        console.log("atualizou com os indicadores: ");
+        if (indicadoresContext) {
+            console.log("atualizou com os indicadores: ");
+            console.log(indicadoresContext);
+            setIndicadores(indicadoresContext);
+        }
+    }, [indicadoresContext])
     
 
     
@@ -165,19 +166,19 @@ export function HeaderGestoria({ setSearch, setFilters, setGerenciadosContext, s
                     <div className="flex flex-col items-center justify-center" >
                         <p className="m-0 text-xs font-semibold text-green-500 " >Ganhos</p>
                         <button className=" hover:scale-105 h-9 w-24 customGreenBorder outline-none bg-white rounded-md font-semibold text-green-500 cursor-pointer hover:bg-green-500 hover:text-white transition-all duration-300 ">
-                           { loadingIndicadores ? <ImSpinner8 size={12} className="animate-spin" /> : indicadores.ganhos || 0 }
+                           { loadingIndicadores ? <ImSpinner8 size={12} className="animate-spin mt-1" /> : indicadores.ganhos || 0 }
                         </button>
                     </div>
                     <div className="flex flex-col items-center justify-center">
                         <p className="m-0 text-xs font-semibold text-red-500" >Perdidos</p>
                         <button className=" hover:scale-105 h-9 w-24 customRedBorder outline-none bg-white rounded-md font-semibold text-red-500 cursor-pointer hover:bg-red-500 hover:text-white transition-all duration-300 ">
-                            { loadingIndicadores ? <ImSpinner8 size={12} className="animate-spin" /> : indicadores.perdidos || 0 }
+                            { loadingIndicadores ? <ImSpinner8 size={12} className="animate-spin mt-1" /> : indicadores.perdidos || 0 }
                         </button>
                     </div>
                     <div className="flex flex-col items-center justify-center" >
                         <p className="m-0 text-xs font-semibold text-black" >Valor Total</p>
                         <button className=" hover:scale-105 h-9 flex items-center justify-center customBorder outline-none bg-white rounded-md font-semibold text-black cursor-pointer hover:bg-black hover:text-white transition-all duration-300 ">
-                            { loadingIndicadores ? <ImSpinner8 size={12} className="animate-spin" /> : indicadores.valorTotal || 0 }
+                            { loadingIndicadores ? <ImSpinner8 size={12} className="animate-spin mt-1" /> : indicadores.valorTotal || 0 }
                         </button>
                     </div>
                 </div>    

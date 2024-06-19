@@ -87,7 +87,7 @@ export function TaskGestoria({task, index}: taskProps) {
                     <h3 className='p-0 m-0'>{task.OpportunityName}</h3>
                     <p className='m-0 mr-2 text-sm'>{task.CustomerName}</p>  
                     <div className='flex items-center gap-2 mt-3'>
-                        <div onClick={() => handleChangeTaskOwner()} className=' gap-1 whitespace-nowrap flex items-center customBorder rounded-md px-1 cursor-pointer transition-all duration-300 hover:bg-black hover:text-white' >
+                        <div onClick={() => handleChangeTaskOwner()} className=' gap-1 whitespace-nowrap flex items-center customBorder rounded-md px-1 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-sm' >
                         <CgProfile /><p className='m-0' > {task.firstName} </p>
                         </div>
                         <div className='m-0 text-xs font-semibold flex gap-1 items-center' >
@@ -101,7 +101,7 @@ export function TaskGestoria({task, index}: taskProps) {
                         onMouseLeave={() => setIsHovered(false)}
                         onClick={() => handleHighlightTask()}   
                         >
-                            <BsExclamationCircleFill size={24} className={` ${!isHovered ? "opacity-0 absolute " : "opacity-100 scale-105"} corDestaque  cursor-pointer transition-all duration-300 `} /> <BsExclamationCircle size={22} className={` ${isHovered ? "opacity-0 absolute" : "opacity-100"} corDestaque cursor-pointer transition-all duration:300 `} /> </div>
+                            <BsExclamationCircleFill size={22} className={` ${!isHovered ? "opacity-0 absolute " : "opacity-100 scale-105"} corDestaque  cursor-pointer transition-all duration-300 `} /> <BsExclamationCircle size={22} className={` ${isHovered ? "opacity-0 absolute" : "opacity-100"} corDestaque cursor-pointer transition-all duration:300 `} /> </div>
                         {isInDrag ? <ImSpinner8 className='animate-spin' size={22} /> : <FaCirclePlus onClick={() => handleOpenTask(task)} size={22} className=' hover:rotate-90 cursor-pointer transition-all duration-300 hover:scale-125 p-1  '  /> }  
                     </div>
                 </div>

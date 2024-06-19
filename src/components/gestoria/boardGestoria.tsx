@@ -36,7 +36,7 @@ interface taskMysql {
 
 export function BoardGestoria() {
 
-    const { searchValue, filters, gerenciados } = useContext(SearchContext);    
+    const { searchValue, filters, gerenciados, alteraIndicadores } = useContext(SearchContext);    
     const [leadMysql, setLeadMysql] = useState<taskMysql[]>([]);
     const [lead, setLead] = useState<task[]>([]);
     const [contato, setContato] = useState<task[]>([]);
@@ -273,8 +273,9 @@ export function BoardGestoria() {
         if (response.status === 'error') {
             return false;
         }
-        
 
+        alteraIndicadores(response.indicadores);
+        
         const { 3: contatoTasks = [], 6: leadTasks = [], 8: diagnosticoTasks = [], 7: testeTasks = [], 5: negociacaoTasks = [] } = response.data;
         const allTasks = contatoTasks.concat(leadTasks, diagnosticoTasks, testeTasks, negociacaoTasks);
         
