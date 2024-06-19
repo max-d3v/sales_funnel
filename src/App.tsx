@@ -9,7 +9,7 @@ import { ErrorBoundary } from "./pages/error";
 import { Gestoria } from "./pages/gestoria/gestoria";
 import { NotFound } from "./pages/notFound";
 import { LayoutGestoria } from "./components/gestoria/layoutGestoria";
-import { Gestor } from "./routes/gestor";
+//import { Gestor } from "./routes/gestor";
 
 const router = createBrowserRouter([
   {
