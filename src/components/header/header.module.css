@@ -8,6 +8,7 @@
     box-shadow: 2px 3px 3px rgba(0, 0, 0, 0.253);
     font-size: 16px;
     color: black;
+    display: flex;
 }
 
 .search:focus {
