@@ -82,7 +82,7 @@ export function ColumnGestoria({tasks, title, id, leads}: colunaProps) {
             {(provided: any, snapshot: any) => {
                     return (
                         <>
-                        <div className='relative flex items-center gap-2 w-11/12 justify-center mt-8' >
+                        <div data-tooltip-id="tooltip-1" data-tooltip-content="Não exige cadastro no SAP" className='relative flex items-center gap-2 w-11/12 justify-center mt-8' >
                             <div className='line left'></div>
                             <h3>Potenciais</h3>
                             <div className='line right' ></div>

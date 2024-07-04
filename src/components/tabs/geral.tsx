@@ -123,7 +123,7 @@ export function Geral({task}: {task?: task}) {
                     <InputDados isChanged={changedFields.includes("data")} wasChanged={handleFieldChanged} register={register} editable={false} preValue={`${startDateFormatted}`} placeholder="Data de início da oportunidade" name="data" />
                     <InputDados isChanged={changedFields.includes("codigoCliente")} wasChanged={handleFieldChanged} register={register} editable={false} preValue={`${task?.CardCode}`} placeholder="Código do Cliente" name="codigoCliente"/>
                     <InputDados isChanged={changedFields.includes("diasEtapaAtual")} wasChanged={handleFieldChanged} register={register} editable={false} preValue={`${0}`} placeholder="Dias na etapa atual" name="diasEtapaAtual"/>
-                    <InputDados isChanged={changedFields.includes("diaVisita")} wasChanged={handleFieldChanged} register={register} type="date" editable={true} preValue={`${predictedDateFormatted != null ? predictedDateFormatted : ""}`} placeholder="Data prevista" name="diaVisita"/>
+                    <InputDados isChanged={changedFields.includes("diaVisita")} wasChanged={handleFieldChanged} register={register} type="date" editable={true} preValue={`${predictedDateFormatted != null ? predictedDateFormatted : ""}`} placeholder="Data prevista de conclusão da etapa" name="diaVisita"/>
                 </div>
             </div>
             <div className="verticalRule"></div>

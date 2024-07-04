@@ -109,7 +109,7 @@ export function GeralLead({task, errors}: {task?: task, errors: any}) {
                 <div className="flex flex-col w-10/12 mt-6 self-center  gap-4" >
                     <InputDados error={errors?.titulo} wasChanged={handleFieldChanged}  register={register} editable={true} preValue={`${task?.card[0].titulo != null ? task?.card[0].titulo : ""}`} placeholder="Título"  name="titulo" />
                     <InputDados error={errors?.valor_estimado} wasChanged={handleFieldChanged}  register={register} type="numero" editable={true} icon={<MdAttachMoney size={20} />} preValue={`${task?.card[0].valor_estimado != null ? task?.card[0].valor_estimado : ""}`} placeholder="Valor Estimado" name="valorEstimado" />
-                    <InputDados error={errors?.data_prevista} wasChanged={handleFieldChanged}  register={register} type="date"  editable={true} preValue={`${predictedDateFormatted != null ? predictedDateFormatted : ""}`} placeholder="Data prevista" name="dataPrevista"/>
+                    <InputDados error={errors?.data_prevista} wasChanged={handleFieldChanged}  register={register} type="date"  editable={true} preValue={`${predictedDateFormatted != null ? predictedDateFormatted : ""}`} placeholder="Data prevista de conclusão da etapa" name="dataPrevista"/>
                     <InputDados wasChanged={handleFieldChanged}  register={register} editable={false} preValue={`${daysInStep ? daysInStep : ""}`} placeholder="Dias na etapa atual" name="diasEtapaAtual"/>
                 </div>
                 
