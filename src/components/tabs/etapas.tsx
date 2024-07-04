@@ -39,7 +39,7 @@ export function Etapas({task}: {task?: task}) {
     function acertaEtapaSapReverso(etapa: number) {
         switch(etapa) {
             case 6:
-                return "Lead In";
+                return "Qualificação";
             case 3:
                 return "Contato";
             case 8:

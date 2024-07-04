@@ -34,21 +34,17 @@ jobs:
           copapel/funil_vendas_frontend:${{ github.RUN_NUMBER }}
   
   #portainer-deploy:
-   # runs-on: ubuntu-latest
-    #
+  # runs-on: ubuntu-latest
+
+
+    
     #steps:
      # - name: Check out repo
       #  uses: actions/checkout@v4
-      
-      #- name: portainer Deploy
-  #      #uses: carlrygart/portainer-stack-deploy@v1.3.0
-   #     with:
-    #      portainer-host: ${{ secrets.PORTAINER_HOST }}
-     #     username: ${{ secrets.PORTAINER_USERNAME }}
-      #    password: ${{ secrets.PORTAINER_PASSWORD }}
-       #   stack-name: 'funil_vendas_frontend'
-        #  image: copapel/funil_vendas_frontend:latest
-         # stack-definition: 'stack-definition.yml'
+      #
+      #- name: Deploy to Portainer
+      #  run:
+      #    curl -X GET https://167.114.128.102:9443/api/auth
 
 
 

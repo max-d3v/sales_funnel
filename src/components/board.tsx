@@ -389,7 +389,7 @@ export function Board() {
         <TaskContext.Provider value={{selectedTasks}}>
         <DragDropContext useDrag={handleGanhouPerdeu} onDragEnd={handleDragEnd} onDragStart={handleDragStart}>
             <div className='flex mt-6 bg-white box-border max-w-full h-auto' >
-            <Column title="Lead In" tasks={lead} leads={leadMysql} id="1"/>
+            <Column title="Qualificação" tasks={lead} leads={leadMysql} id="1"/>
             <Column title="Agendamento / Reunião" tasks={contato} id="2"/>
             <Column title="Diagnóstico" tasks={diagnostico} id="3"/>
             <Column title="Teste" tasks={teste} id="4"/>

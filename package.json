@@ -14,7 +14,7 @@
     "@dotlottie/player-component": "^2.7.12",
     "@hookform/resolvers": "^3.3.4",
     "@lordicon/react": "^1.6.0",
-    "axios": "^1.6.8",
+    "axios": "^1.7.2",
     "core-js": "^3.37.1",
     "cors": "^2.8.5",
     "date-fns": "^3.6.0",

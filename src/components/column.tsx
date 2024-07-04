@@ -67,7 +67,7 @@ export function Column({tasks, title, id, leads}: colunaProps) {
             <Droppable droppableId={id}>
                 {(provided: any, snapshot: any) => {
                     return (
-                        <div className={` ${ title == 'Lead In' ? "" : "h-full" } w-11/12 bg-custom-gray gap-3 items-center flex flex-col `} ref={provided.innerRef} {...provided.droppableProps} isdraggingover={snapshot.isDraggingOver.toString()}>
+                        <div className={` ${ title == 'Qualificação' ? "" : "h-full" } w-11/12 bg-custom-gray gap-3 items-center flex flex-col `} ref={provided.innerRef} {...provided.droppableProps} isdraggingover={snapshot.isDraggingOver.toString()}>
                             {tasks?.length == 0 ? <div className='flex flex-col items-center justify-center mb-12 ' ><FaBoxOpen size={60} /></div> : "" }
                             {tasks?.map((task: any, index: any) => <Task task={task} index={index} key={task.Id} />)}
                             {provided.placeholder}
@@ -76,7 +76,7 @@ export function Column({tasks, title, id, leads}: colunaProps) {
                 }}
             </Droppable>
             {/* caso seja o lead ele adiciona a coluna dos potenciais */}
-            {title == 'Lead In' ? <Droppable droppableId={"-1"}>
+            {title == 'Qualificação' ? <Droppable droppableId={"-1"}>
             {(provided: any, snapshot: any) => {
                     return (
                         <>
@@ -93,7 +93,7 @@ export function Column({tasks, title, id, leads}: colunaProps) {
                     );
                 }}
             </Droppable> : ""}
-            { title == 'Lead In' ?  <button className=' mt-4 px-4 mb-4 flex items-center justify-center gap-2 p-2 rounded-md  oultine-none border-none bg-blue-500 text-white font-semibold cursor-pointer hover:bg-blue-600 transition-all duration-500 hover:shadow-lg hover:scale-105' onClick={() => setMostrarPotencial(!mostrarPotencial)}> <IoMdAddCircle/>  Potencial </button> : ""}
+            { title == 'Qualificação' ?  <button className=' mt-4 px-4 mb-4 flex items-center justify-center gap-2 p-2 rounded-md  oultine-none border-none bg-blue-500 text-white font-semibold cursor-pointer hover:bg-blue-600 transition-all duration-500 hover:shadow-lg hover:scale-105' onClick={() => setMostrarPotencial(!mostrarPotencial)}> <IoMdAddCircle/>  Potencial </button> : ""}
         </div>
         </>
     )

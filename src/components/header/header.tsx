@@ -84,8 +84,9 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
             <img src={logo}  className=" w-14 h-14 ml-4 justify-self-start cursor-pointer " onClick={handleGoHome}  alt="" />
             <div className="flex w-auto gap-8 items-center relative self-center">
                 <div className="absolute ml-4 mt-1"><CiSearch size={26} /></div>
-                <input disabled={pathname.includes('/opportunity') || pathname.includes('/leads') ? true : false } type="text" value={localSearch} className={pathname.includes('/opportunity') || pathname.includes('/leads') ? styles.searchDesativado : styles.search } onChange={(e) => handleSearch(e.target.value)}  placeholder="Busque por Oportunidades"  />
-               { localSearch == "" ? "" : <div className="absolute mr-4 right-0 mt-1" onClick={() => handleSearch("")}> <IoClose size={26}/> </div> } 
+                <input disabled={pathname.includes('/opportunity') || pathname.includes('/leads') ? true : false } type="text" value={localSearch} className={pathname.includes('/opportunity') || pathname.includes('/leads') ? styles.searchDesativado : styles.search } onChange={(e) => handleSearch(e.target.value)}  placeholder="Busque por Oportunidades" ></input>
+                { localSearch == "" ? "" : <div className="absolute mr-4 right-0 mt-1" onClick={() => handleSearch("")}> <IoClose size={26}/> </div> } 
+                
                {pathname.includes('/opportunity') || pathname.includes('/leads') ? <WhiteBtn nomeBtn="Quadro" icon={<FaHouseChimney/>}  onClick={() => handleGoHome()}></WhiteBtn> : <GrnBtn nomeBtn="Oportunidade"  onClick={() => handleMostrarModal()} icon={<IoMdAddCircle size={18}/>}></GrnBtn>}
 
             </div>
