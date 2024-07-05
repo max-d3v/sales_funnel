@@ -12,36 +12,39 @@ interface input {
     register: UseFormRegister<any>;
     requiredDefault?: boolean;
     funcaoAoMudar?: (e: any) => void;
+    itens?: any;
+    id?: string;
+    disabled?: boolean;
 }
-export function SelectDados({tipo, funcaoAoMudar, requiredDefault, preValue, register, placeholder, name, icon, error, rules}: input) {
+export function SelectDados({tipo, funcaoAoMudar, requiredDefault, preValue, register, placeholder, name, icon, error, rules, itens, disabled = false, id}: input) {
     
     return (
         <div className="relative mt-4 ">
             <p className="m-0 font-semibold text-sm">{placeholder}</p>
             <div className="absolute ml-2 mt-3 flex items-center justify-center">{icon}</div>
             <div className='flex items-center'>
-            <select {...(requiredDefault ? { required: true } : {})} {...funcaoAoMudar ? { ...register(name, { onChange: (e) => funcaoAoMudar(e) } ) } : { ...register(name, rules ) } }    className={` corPlaceholder text-black fontePadrao font-semibold colocarBorda w-full h-10 rounded-md border-none text-lg  ${icon ? 'pl-9' : 'pr-6 pl-2'} focus:outline-none focus:border-2`} >
+            <select id={id ? id : undefined} disabled={disabled}  {...(requiredDefault ? { required: true } : {})} {...funcaoAoMudar ? { ...register(name, { onChange: (e) => funcaoAoMudar(e) } ) } : { ...register(name, rules ) } }    className={` ${disabled ? "bg-gray-200  " : ""} corPlaceholder text-black fontePadrao font-semibold colocarBorda w-full h-10 rounded-md border-none text-lg  ${icon ? 'pl-9' : 'pr-6 pl-2'} focus:outline-none focus:border-2`} >
                 {
-                    tipo == 'resultado' ? 
+                    tipo == 'assunto' ? 
                     <>
-                    <option selected={preValue == "51"} value="51">Pedido</option>
-                    <option selected={preValue == "52"} value="52">Orçamento</option>
-                    <option selected={preValue == "53"} value="53">Visita</option>
-                    <option selected={preValue == "54"} value="54">Retonar</option>
-                    <option selected={preValue == "55"} value="55">Estoque abastecido</option>
-                    <option selected={preValue == "56"} value="56">Sem contato</option>
+                        <option value="Visita">Visita</option>
+                        <option value="Pedido">Pedido</option>
+                        <option value="Orçamento">Orçamento</option>
+                        <option value="O.S.">O.S.</option>
+                        <option value="Demonstração">Demonstração</option>
+                        <option value="Dúvida">Dúvida</option>
+                        <option value="Financeiro">Financeiro</option>
+                        <option value="Entrega">Entrega</option>
+                        <option value="Reclamação">Reclamação</option>
+                        <option value="Retorno">Retorno</option>
                     </>
                     : ""
                 }
                 {
-                    tipo == 'resultadoExterno' ? 
+                    tipo == 'tipo' ? 
                     <>
-                    <option selected={preValue == "72"} value="72">Visita Realizada</option>
-                    <option value="73">Reunião Realizada</option>
-                    <option value="74">Diagnóstico Realizado</option>
-                    <option value="79">Orçamento Realizado</option>
-                    <option value="77">Pedir Visita</option>
-                    <option value="20">Pedir Reunião</option>
+                        <option selected={preValue == "Lembrete"} value="10" className='text-black opacity-100' >Lembrete</option>
+                        <option selected={preValue == "Comunicação"} value="11">Comunicação</option>
                     </>
                     : ""
                 }
@@ -92,6 +95,14 @@ export function SelectDados({tipo, funcaoAoMudar, requiredDefault, preValue, reg
                 </>
                 :
                 ""
+                }
+                {
+                    tipo == "atribuidos" ?
+                    itens.map((item: any) => {
+                        return <option selected={item.userId == preValue} value={item.userId}>{item.firstName} {item.lastName}</option>
+                    }) 
+                    :
+                    ""
                 }
             </select>
         

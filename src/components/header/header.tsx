@@ -16,6 +16,7 @@ import { IoClose } from "react-icons/io5";
 import { ajax } from "../../ajax/ajax";
 import logo from '../../../public/assets/images/logo_funil_fundoBranco.png'
 import toast from "react-hot-toast";
+import { useParams } from "react-router-dom";
 interface header {
     setSearch: (search: string) => void;
     setFilters: (filters: any) => void;
@@ -29,9 +30,14 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
     const [localSearch, setLocalSearch] = useState<string>('');
     const [isGerente, setIsGerente] = useState<boolean>(false);
 
+
     const navigate = useNavigate();
 
     const { pathname } = useLocation();
+
+    const searchParams = new URLSearchParams(location.search);
+    const origem = searchParams.get('origem');
+
     
     const handleSearch = (e: any) => {
         setSearch(e);
@@ -43,7 +49,12 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
     }
 
     const handleGoHome = () => {
-        navigate('/')
+        if (origem) {
+            if (origem == "gestoria") {
+                return navigate("/gestoria");
+            }
+        }
+        navigate('/');
     }
 
     const handleMostrarModal = () => {

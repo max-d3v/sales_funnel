@@ -39,7 +39,7 @@ export function Filter({ handleFilters, fecharFiltro }: Filters) {
             </div>
             <div className="horizontalRuleFilter"></div>
             <div className="flex flex-col items-center mb-8 mt-4">
-                <p className="m-0 self-start text-xl font-semibold mb-1" >Data prevista de Visita </p>
+                <p className="m-0 self-start text-xl font-semibold mb-1" >Data prevista de avanço de etapa</p>
                 <div className="flex justify-between gap-4 w-full  h-full" >
                     <div className="w-52" >
                         <InputDados tirarTopo={true} editable={true} preValue={data1mesAtras} placeholder="Data Início" name="dataInicio" type="date" register={register} />
@@ -69,7 +69,7 @@ export function Filter({ handleFilters, fecharFiltro }: Filters) {
                 <div className="flex justify-between h-full w-full gap-4" >
                     <div className=" flex flex-col gap-1 " >
                         <div className="flex items-center mt-4"><input type="checkbox" { ...register("potencial") }  id="potencial" className="hover:scale-105 transition-all duration-300" ></input> <label htmlFor="potencial" className="m-0">Potencial</label> </div>
-                        <div className="flex items-center"><input type="checkbox" { ...register("leads") } id="leads"></input> <label htmlFor="leads" className="m-0" >Leads</label> </div>
+                        <div className="flex items-center"><input type="checkbox" { ...register("leads") } id="leads"></input> <label htmlFor="leads" className="m-0" >Qualificação</label> </div>
                         <div className="flex items-center"><input type="checkbox" { ...register("agendamento") } id="agendamento"></input> <label htmlFor="agendamento" className="m-0" >Agendamento / Reunião</label> </div>
                         <div className="flex items-center"><input type="checkbox" { ...register("diagnostico") } id="diagnostico"></input> <label htmlFor="diagnostico" className="m-0" >Diagnóstico</label> </div>
                         <div className="flex items-center"><input type="checkbox" { ...register("teste") } id="teste"></input> <label htmlFor="teste" className="m-0" >Teste</label> </div>

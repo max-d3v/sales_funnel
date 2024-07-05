@@ -200,7 +200,7 @@ export function Atividades({task}: {task?: task}) {
             </div>
             <div className="mt-6 box-border" >
                 <div className=" flex justify-between mb-2 items-end" >
-                    <GrnBtn nomeBtn="Novo Ticket" onClick={() => adicionarNovoTicket()} icon={<IoMdAddCircle />} customCss="h-10" />
+                    <GrnBtn nomeBtn="Novo Atendimento" onClick={() => adicionarNovoTicket()} icon={<IoMdAddCircle />} customCss="h-10" />
                     <div className="w-4/12" >
                         <Input valueHandler={(e) => setFilter(e.target.value)} placeholder="Pesquise por atividades / tickets" name="filter" icon={<CiSearch size={20} />} insidePlaceholder="Fulano de tal" />
                     </div>
