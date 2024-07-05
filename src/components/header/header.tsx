@@ -16,7 +16,6 @@ import { IoClose } from "react-icons/io5";
 import { ajax } from "../../ajax/ajax";
 import logo from '../../../public/assets/images/logo_funil_fundoBranco.png'
 import toast from "react-hot-toast";
-import { useParams } from "react-router-dom";
 interface header {
     setSearch: (search: string) => void;
     setFilters: (filters: any) => void;
