@@ -89,14 +89,20 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
         const etapaSap = acertaEtapaSap(etapa);
         
         const codigoCliente = document.getElementById("codigoCliente");
-
-        const dataObj = {
-            titulo: data.titulo,
-            codCliente: codigoCliente.value,
-            valorEstimado: data.valorEstimado,
-            dataPrevista: data.dataPrevista,
-            notas: quillValue,
-            etapa: etapaSap,
+        var dataObj
+        if (codigoCliente) {
+            dataObj = {
+                titulo: data.titulo,
+                codCliente: codigoCliente.value,
+                valorEstimado: data.valorEstimado,
+                dataPrevista: data.dataPrevista,
+                notas: quillValue,
+                etapa: etapaSap,
+            }
+        }
+        if (!codigoCliente) {
+            toast.error("Erro ao adicionar oportunidade!");
+            return;
         }
         
         
