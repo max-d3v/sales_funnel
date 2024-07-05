@@ -28,12 +28,12 @@ const router = createBrowserRouter([
         element: <Private><Leads/></Private>
       },
       {
-        element: <ErrorBoundary/>,
+        element: <Private><ErrorBoundary/></Private>,
         path: "iohfpio",
       },
       {
         path: "*",
-        element: <NotFound/>
+        element: <Private><NotFound/></Private>
       }
     ]
   },
