@@ -88,10 +88,11 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
         toast.loading('Salvando...');
         const etapaSap = acertaEtapaSap(etapa);
         
+        const codigoCliente = document.getElementById("codigoCliente");
 
         const dataObj = {
             titulo: data.titulo,
-            codCliente: data.codCliente,
+            codCliente: codigoCliente.value,
             valorEstimado: data.valorEstimado,
             dataPrevista: data.dataPrevista,
             notas: quillValue,
@@ -253,6 +254,7 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
         const inputCodigoCliente = document.getElementById("codigoCliente") as HTMLInputElement;
         if (inputCodigoCliente) {
             inputCodigoCliente.value = CardCode
+            inputCodigoCliente.innerHTML = CardCode;
         }
         setClientes([]);
     }
