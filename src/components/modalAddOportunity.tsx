@@ -88,7 +88,7 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
         toast.loading('Salvando...');
         const etapaSap = acertaEtapaSap(etapa);
         
-        const codigoCliente = document.getElementById("codigoCliente");
+        const codigoCliente: any = document.getElementById("codigoCliente");
         var dataObj
         if (codigoCliente) {
             dataObj = {
