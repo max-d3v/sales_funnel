@@ -79,6 +79,7 @@ export function ModalNovoTicket( {onClose, CardCode}: novoTicketProps ) {
         if (response.status == 'success') {
             toast.dismiss();
             toast.success("Ticket enviado!");
+            setIsOpen(!isOpen);
             return;
         }
 
