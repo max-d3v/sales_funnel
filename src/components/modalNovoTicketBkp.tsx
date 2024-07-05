@@ -1,3 +1,4 @@
+/*
 import { useState, useEffect } from "react";
 import { WhiteBtn } from "./whiteBtn";
 import { IoIosCloseCircle } from "react-icons/io";
@@ -137,4 +138,4 @@ export function ModalNovoTicket( {onClose, CardCode}: novoTicketProps ) {
         </div>
         
     )
-}
+}*/

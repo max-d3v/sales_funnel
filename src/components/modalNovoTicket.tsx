@@ -8,11 +8,9 @@ import { GrnBtn } from "./greenBtn";
 import { IoIosSave } from "react-icons/io";
 import { ajax } from "../ajax/ajax";
 import toast, { Toaster } from "react-hot-toast";
-import { ListaAtribuicoes } from "./listaAtribuicoes";
 import { useContext } from "react";
 import { AuthContext } from "../context/authProvider";
 import { achaNumAssunto } from "../utils/helpers";
-import { MdSystemSecurityUpdate } from "react-icons/md";
 interface novoTicketProps {
     onClose: () => void;
     CardCode?: string;
@@ -24,7 +22,6 @@ export function ModalNovoTicket( {onClose, CardCode}: novoTicketProps ) {
     const { register, handleSubmit } = useForm({});
     const [isFocused, setIsFocused] = useState(false);
     const [isFocusedRealizado, setIsFocusedRealizado] = useState(false);
-    const [ticketState, setTicketState] = useState("resultadoExterno");
     const [renderToast, setRenderToast] = useState(false);
     const [atribuidos, setAtribuidos] = useState<any>([]);
     const [tipo, setTipo] = useState("Lembrete");
@@ -89,19 +86,7 @@ export function ModalNovoTicket( {onClose, CardCode}: novoTicketProps ) {
         toast.error("Erro ao enviar ticket")
     }
 
-    const handleCanalState = (e: any) => {
-        const value = e.target.value;
-        if (value == "4")  {
-            setTicketState("resultadoExterno");
-            return;
-        }
-        if (value != "4") {
-            setTicketState("resultado");
-            return;
-        }
-        return;
-    }
-
+ 
     const carregaAtribuidos = async () => {
         const response = await ajax({method: "GET", endpoint: "/task/atribuicoes", data: null});
         if (response.status == "error") {
@@ -174,7 +159,7 @@ export function ModalNovoTicket( {onClose, CardCode}: novoTicketProps ) {
                     <div className="w-1/2" >
                     
                     <div className="flex justify-between w-full gap-2 " >
-                        <div className="w-full" > <SelectDados requiredDefault={true} preValue="Lembrete" disabled={true}  tipo="tipo" placeholder="Tipo" name="tipoRealizado" register={register} funcaoAoMudar={handleCanalState} /></div>
+                        <div className="w-full" > <SelectDados requiredDefault={true} preValue="Lembrete" disabled={true}  tipo="tipo" placeholder="Tipo" name="tipoRealizado" register={register}  /></div>
                     </div>
                     </div>
                 </div>
@@ -231,7 +216,7 @@ export function ModalNovoTicket( {onClose, CardCode}: novoTicketProps ) {
                         <div className="w-1/2" ><InputDados editable={true} requiredDefault={true} preValue={horarioAtual} placeholder="Horário" insidePlaceholder="13:29" name="horario" register={register} type="time" /></div>
                     </div>
                     <div className="flex justify-between w-full gap-2 " >
-                        <div className="w-full" > <SelectDados requiredDefault={true} preValue={tipo} disabled={true}  tipo="tipo" placeholder="Tipo" name="tipo" register={register} funcaoAoMudar={handleCanalState} /></div>
+                        <div className="w-full" > <SelectDados requiredDefault={true} preValue={tipo} disabled={true}  tipo="tipo" placeholder="Tipo" name="tipo" register={register}  /></div>
                     </div>
                     </div>
                 </div>
