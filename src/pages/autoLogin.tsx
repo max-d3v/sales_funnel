@@ -17,12 +17,11 @@ export function AutoLogin() {
         }
 
         if (response.status == 'success') {
-            navigate('/');
+            navigate('/');    
             return;
         }
     }
-
-    useEffect( () => {
+    const logingAutomatico = async () => {
         const searchParams = new URLSearchParams(location.search);
         const loginDataEncoded = searchParams.get('login');
         if (!loginDataEncoded) {
@@ -34,7 +33,11 @@ export function AutoLogin() {
         const [username, password] = loginData.split('|');
 
         const dataLogin = { email: username, senha: password };
-        login(dataLogin)
+        await login(dataLogin)
+    }
+
+    useEffect( () => {
+        logingAutomatico();
     }, [])
 
 
