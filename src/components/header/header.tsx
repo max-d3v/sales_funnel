@@ -82,6 +82,9 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
     }
 
     useEffect(() => {
+        if (pathname.includes("/autologin")) {
+            return;             
+        }
         checaGerente();
     }, [])
 

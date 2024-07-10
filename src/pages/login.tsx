@@ -10,7 +10,6 @@ import { ajax } from '../ajax/ajax';
 import { ImSpinner8 } from "react-icons/im";
 import toast, { Toaster } from 'react-hot-toast';
 import { AuthContext } from '../context/authProvider';
-
 const schema = z.object({
     username: z.string().min(1, "Usuário é obrigatório"),
     password: z.string().min(1, "Senha é obrigatória")
@@ -23,6 +22,7 @@ type FormData = z.infer<typeof schema>
 export function Login() {
 
     const { user } = useContext(AuthContext);
+
 
     const [loginErrors, setLoginErrors] = useState<string | null>(null);
     const [loginLoading, setloginLoading] = useState<boolean>(false);

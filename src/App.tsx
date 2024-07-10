@@ -9,7 +9,9 @@ import { ErrorBoundary } from "./pages/error";
 import { Gestoria } from "./pages/gestoria/gestoria";
 import { NotFound } from "./pages/notFound";
 import { LayoutGestoria } from "./components/gestoria/layoutGestoria";
+import { AutoLogin } from "./pages/autoLogin";
 //import { Gestor } from "./routes/gestor";
+
 
 const router = createBrowserRouter([
   {
@@ -18,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <Private><Home/></Private>
+      },
+      {
+        path: "/autologin",
+        element: <AutoLogin/>
       },
       {
         path: "/opportunity/:id",
@@ -33,7 +39,7 @@ const router = createBrowserRouter([
       },
       {
         path: "*",
-        element: <Private><NotFound/></Private>
+        element: <NotFound/>
       }
     ]
   },

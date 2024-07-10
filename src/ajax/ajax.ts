@@ -47,7 +47,7 @@ export async function ajax({ method, endpoint, data, signal }: Request) {
             localStorage.clear();
             sessionStorage.clear();
             
-            return window.location.href = '/login';
+           return window.location.href = '/login';
         }
 
         return responseJson;
