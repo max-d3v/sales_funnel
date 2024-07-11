@@ -107,9 +107,9 @@ new class DeployPortainer {
             // Filtrar pelo nome da imagem
 
             console.log("Vai comparar o nome da imagem: " + containers[0].Names[0]);
-            console.log("Com o nome da imagem: " + this.NomeImagem);
+            console.log("Com o nome da imagem: " + "/" + this.NomeImagem);
             
-            const targetContainer = containers.data.find(container => container.Names[0] === "/" + this.NomeImagem);
+            const targetContainer = containers.find(container => container.Names[0] === "/" + this.NomeImagem);
     
             if (targetContainer) {
                 console.log("Achou o container, vai parar o: ");
