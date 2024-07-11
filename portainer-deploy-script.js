@@ -100,9 +100,9 @@ new class DeployPortainer {
                 },
                 httpsAgent: agent
             };
-            const containers = await axios(listContainersConfig);
-    
-            console.log(containers.data);
+            const response = await axios(listContainersConfig);
+            const containers = response.data;
+            
 
             // Filtrar pelo nome da imagem
 
