@@ -27,3 +27,8 @@ dist-ssr
 slClass.json
 db.mjs
 index.js
+
+
+#env
+.env
+
