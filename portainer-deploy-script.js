@@ -12,8 +12,10 @@ new class DeployPortainer {
         this.Username = process.env.USERNAME
         this.Password = process.env.PASSWORD
         this.Imagem = process.env.NOME_IMAGEM
+        this.idContainer = "000";
         this.NomeImagem = this.Imagem.split(":")[0];
         this.TagImagem = this.Imagem.split(":")[1];
+
         this.executaGitOps();
     }
 
@@ -23,6 +25,7 @@ new class DeployPortainer {
         await this.pararContainerPorImagem();
         await this.deletarContainerParados();
         await this.criarContainer();
+        await this.rodarContainer();
     }
 
     portainerLogin = async () => {
@@ -69,31 +72,7 @@ new class DeployPortainer {
             throw new Error("Erro ao puxar a imagem do Docker Hub")
         }
     }
-    criarContainer = async () => {
-        const config = {
-            method: "post",
-            maxBodyLength: Infinity,
-            url: this.portainerUrl + '/endpoints/2/docker/containers/create',
-            headers: {
-                'Content-Type': 'application/json', 
-                'Authorization': `Bearer ${this.token}`,
-            },
-            data: {
-                "name": "funil_vendas_frontend",
-                "Image": "copapel/funil_vendas_frontend:latest",
-                "ExposedPorts": { "80/tcp": {} },
-                "HostConfig": { "PortBindings": { "8004/tcp": [{ "HostPort": "8004" }] }}
-            },
-            httpsAgent: agent
-        }
-        try {
-            const response = await axios(config);
-            console.log("Criou o container com sucesso!")
-
-        } catch(err) {
-            throw new Error("Erro ao criar o container")
-        }
-    }
+    
 
     pararContainerPorImagem = async () => {
         try {
@@ -134,7 +113,6 @@ new class DeployPortainer {
             console.error("Erro ao parar o container:", error);
         }
     }
-
     deletarContainerParados = async () => {
 
         const config = {
@@ -149,9 +127,57 @@ new class DeployPortainer {
         }
         try {
             const response = await axios(config);
+            const data = response.data;
             console.log("Deletou containers parados com sucesso")
         } catch(err) {
             throw new Error("Erro ao deletar os containers parados")
+        }
+    }
+
+    criarContainer = async () => {
+        const config = {
+            method: "post",
+            maxBodyLength: Infinity,
+            url: this.portainerUrl + '/endpoints/2/docker/containers/create',
+            headers: {
+                'Content-Type': 'application/json', 
+                'Authorization': `Bearer ${this.token}`,
+            },
+            data: {
+                "name": "funil_vendas_frontend",
+                "Image": "copapel/funil_vendas_frontend:latest",
+                "ExposedPorts": { "80/tcp": {} },
+                "HostConfig": { "PortBindings": { "8004/tcp": [{ "HostPort": "8004" }] }}
+            },
+            httpsAgent: agent
+        }
+        try {
+            const response = await axios(config);
+            console.log("Criou o container com sucesso!")
+
+        } catch(err) {
+            throw new Error("Erro ao criar o container")
+        }
+    }
+
+
+    rodarContainer = async () => {
+        const config = {
+            method: "post",
+            maxBodyLength: Infinity,
+            url: this.portainerUrl + `/endpoints/2/docker/containers/${this.idContainer}/start`,
+            headers: {
+                'Content-Type': 'application/json', 
+                'Authorization': `Bearer ${this.token}`,
+            },
+            httpsAgent: agent
+        }
+
+        try {
+            const response = await axios(config);
+            console.log("Rodou o container com sucesso!");
+        } catch(err) {
+            throw new Error("Erro ao rodar o container");
         }
     }
 }
