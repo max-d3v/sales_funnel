@@ -21,7 +21,7 @@ new class DeployPortainer {
         await this.pullarImagemDockerHub();
         await this.pararContainerPorImagem();
         await this.deletarContainerParados();
-        //await this.criarContainer();
+        await this.criarContainer();
     }
 
     portainerLogin = async () => {
