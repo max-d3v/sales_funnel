@@ -34,7 +34,7 @@ jobs:
           copapel/funil_vendas_frontend:${{ github.RUN_NUMBER }}
   
   portainer-deploy:
-    needs: build
+    needs: dockerhub-push
     runs-on: ubuntu-latest
     steps:      
       - name: Checkout code

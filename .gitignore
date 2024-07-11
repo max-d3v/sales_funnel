@@ -23,10 +23,10 @@ dist-ssr
 *.sln
 *.sw?
 
-#dbs and slClass 
-slClass.json
-db.mjs
-index.js
+#ajax and vite config 
+ajax.ts
+vite.config.ts
+
 
 
 #env
