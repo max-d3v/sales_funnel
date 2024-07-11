@@ -18,6 +18,8 @@ new class DeployPortainer {
     executaGitOps = async () => {
         console.log("Usuario: " + this.Username)
         console.log("Senha: " + this.Password)
+        console.log("dockerauth: " + this.dockerAuth)
+        console.log("imagem: " + this.nomeImagem)
 
 
 
