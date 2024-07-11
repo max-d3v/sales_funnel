@@ -11,18 +11,13 @@ new class DeployPortainer {
         this.token = "";
         this.Username = process.env.USERNAME
         this.Password = process.env.PASSWORD
-        this.nomeImagem = process.env.NOME_IMAGEM
+        this.Imagem = process.env.NOME_IMAGEM
+        this.NomeImagem = this.Imagem.split(":")[0];
+        this.TagImagem = this.Imagem.split(":")[1];
         this.executaGitOps();
     }
 
     executaGitOps = async () => {
-        console.log("Usuario: " + this.Username)
-        console.log("Senha: " + this.Password)
-        console.log("dockerauth: " + this.dockerAuth)
-        console.log("imagem: " + this.nomeImagem)
-
-
-
         await this.portainerLogin();
         await this.pullarImagemDockerHub();
         await this.pararContainerPorImagem();
@@ -57,7 +52,7 @@ new class DeployPortainer {
         const config = {
             method: "post",
             maxBodyLength: Infinity,
-            url: this.portainerUrl + '/endpoints/2/docker/images/create?fromImage=copapel/'+ this.nomeImagem +'',
+            url: this.portainerUrl + '/endpoints/2/docker/images/create?fromImage=copapel/'+ this.Imagem +'',
             headers: {
                 'Content-Type': 'application/json', 
                 'Authorization': `Bearer ${this.token}`,
@@ -107,11 +102,19 @@ new class DeployPortainer {
             };
             const containers = await axios(listContainersConfig);
     
+
+
             // Filtrar pelo nome da imagem
-            const targetContainer = containers.data.find(container => container.Image === this.nomeImagem);
+
+            console.log("Vai comparar o nome da imagem: " + containers[0].Names[0]);
+            console.log("Com o nome da imagem: " + this.NomeImagem);
+            
+            const targetContainer = containers.data.find(container => container.Names[0] === "/" + this.NomeImagem);
     
             if (targetContainer) {
-                // Parar o container
+                console.log("Achou o container, vai parar o: ");
+                console.log(targetContainer);
+                
                 const stopContainerConfig = {
                     method: "post",
                     url: this.portainerUrl + `/endpoints/2/docker/containers/${targetContainer.Id}/stop`,
