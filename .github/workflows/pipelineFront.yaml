@@ -25,11 +25,11 @@ jobs:
       - name: Run Portainer deploy script
         run: node ./portainer-deploy-script.js
         env:
-          USERNAME: ${{ secrets.PORTAINER_URL }}
-          PASSWORD: ${{ secrets.PORTAINER_USER }}
-          DOCKER_AUTH: ${{ secrets.PORTAINER_PWD }}
-          PORTAINER_URL: ${{ secrets.PORTAINER_STACK_NAME }}
-          NOME_IMAGEM: ${{ secrets.PORTAINER_STACK_FILE }}
+          USERNAME: ${{ secrets.USERNAME }}
+          PASSWORD: ${{ secrets.PASSWORD }}
+          DOCKER_AUTH: ${{ secrets.DOCKER_AUTH }}
+          PORTAINER_URL: ${{ secrets.PORTAINER_URL }}
+          NOME_IMAGEM: ${{ secrets.NOME_IMAGEM }}
 
 
 
