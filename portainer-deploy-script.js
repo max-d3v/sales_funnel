@@ -1,6 +1,5 @@
 import axios from 'axios';
 import https from 'https';
-import 'dotenv/config'
 const agent = new https.Agent({
     rejectUnauthorized: false
   });
@@ -21,7 +20,7 @@ new class DeployPortainer {
         console.log("Senha: " + this.Password)
 
 
-        
+
         await this.portainerLogin();
         await this.pullarImagemDockerHub();
         await this.pararContainerPorImagem();
