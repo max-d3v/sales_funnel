@@ -16,6 +16,8 @@ import { IoClose } from "react-icons/io5";
 import { ajax } from "../../ajax/ajax";
 import logo from '../../../public/assets/images/logo_funil_fundoBranco.png'
 import toast from "react-hot-toast";
+import { useContext } from "react";
+import { AuthContext } from "../../context/authProvider";
 interface header {
     setSearch: (search: string) => void;
     setFilters: (filters: any) => void;
@@ -31,6 +33,8 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
 
 
     const navigate = useNavigate();
+
+    const { signed } = useContext(AuthContext);
 
     const { pathname } = useLocation();
 
@@ -88,6 +92,12 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
         checaGerente();
     }, [])
 
+    useEffect(() => {
+        if (signed) {
+            checaGerente();
+        }
+    }, [signed])
+
 
 
     return (
@@ -102,7 +112,7 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
                 
                {pathname.includes('/opportunity') || pathname.includes('/leads') ? <WhiteBtn nomeBtn="Quadro" icon={<FaHouseChimney/>}  onClick={() => handleGoHome()}></WhiteBtn> : <GrnBtn nomeBtn="Oportunidade"  onClick={() => handleMostrarModal()} icon={<IoMdAddCircle size={18}/>}></GrnBtn>}
 
-            </div>
+            </div>  
             
 
             <div className="justify-self-end flex items-center justify-center gap-8 mr-6 h-full">
