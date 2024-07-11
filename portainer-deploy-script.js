@@ -17,6 +17,11 @@ new class DeployPortainer {
     }
 
     executaGitOps = async () => {
+        console.log("Usuario: " + this.Username)
+        console.log("Senha: " + this.Password)
+
+
+        
         await this.portainerLogin();
         await this.pullarImagemDockerHub();
         await this.pararContainerPorImagem();
