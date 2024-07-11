@@ -77,7 +77,7 @@ new class DeployPortainer {
             },
             data: {
                 "name": "funil_vendas_frontend",
-                "Image": "funil_vendas_frontend:latest",
+                "Image": "copapel/funil_vendas_frontend:latest",
                 "ExposedPorts": { "80/tcp": {} },
                 "HostConfig": { "PortBindings": { "8004/tcp": [{ "HostPort": "8004" }] }}
             },
