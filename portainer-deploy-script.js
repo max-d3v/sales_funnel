@@ -127,7 +127,6 @@ new class DeployPortainer {
         }
         try {
             const response = await axios(config);
-            const data = response.data;
             console.log("Deletou containers parados com sucesso")
         } catch(err) {
             throw new Error("Erro ao deletar os containers parados")
@@ -153,6 +152,7 @@ new class DeployPortainer {
         }
         try {
             const response = await axios(config);
+            console.log(response.data);
             console.log("Criou o container com sucesso!")
 
         } catch(err) {
