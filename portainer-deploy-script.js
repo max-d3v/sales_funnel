@@ -102,7 +102,7 @@ new class DeployPortainer {
             };
             const containers = await axios(listContainersConfig);
     
-            console.log(containers);
+            console.log(containers.data);
 
             // Filtrar pelo nome da imagem
 
