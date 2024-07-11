@@ -96,10 +96,10 @@ export function Opportunity() {
 
     useEffect(() => {
         const carregaTask = async () => {
-            const toastId = toast.loading("Carregando dados da Oportunidade");
+            //const toastId = toast.loading("Carregando dados da Oportunidade");
             const task = await ajax({method: "POST", endpoint: "/task", data: {id: id}});
             if (task.status == "success") {
-                toast.dismiss(toastId)
+//                toast.dismiss(toastId)
                 setLoadingOp(false);
                 toast.success("Oportunidade carregada")
                 setTask(task.data);
@@ -108,12 +108,12 @@ export function Opportunity() {
             }
             if (task.status == 'error') {
                 setLoadingOp(false);
-                toast.dismiss(toastId);
+//                toast.dismiss(toastId);
                 toast.error(task.message)
                 return;
             }
             setLoadingOp(false);
-            toast.dismiss(toastId);
+//            toast.dismiss(toastId);
             toast.error("erro inesperado");
         }
         carregaTask();
