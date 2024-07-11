@@ -34,10 +34,7 @@ jobs:
           copapel/funil_vendas_frontend:${{ github.RUN_NUMBER }}
   
   portainer-deploy:
-  runs-on: ubuntu-latest
-
-
-    
+    runs-on: ubuntu-latest
     steps:      
       - name: Checkout code
         uses: actions/checkout@v2
