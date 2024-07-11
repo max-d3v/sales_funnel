@@ -21,9 +21,9 @@ new class DeployPortainer {
 
     executaGitOps = async () => {
         await this.portainerLogin();
-        await this.pullarImagemDockerHub();
         await this.pararContainerPorImagem();
         await this.deletarContainerParados();
+        await this.pullarImagemDockerHub();
         await this.criarContainer();
         await this.rodarContainer();
     }
