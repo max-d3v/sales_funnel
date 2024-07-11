@@ -102,7 +102,7 @@ new class DeployPortainer {
             };
             const containers = await axios(listContainersConfig);
     
-
+            console.log(containers);
 
             // Filtrar pelo nome da imagem
 
@@ -114,7 +114,7 @@ new class DeployPortainer {
             if (targetContainer) {
                 console.log("Achou o container, vai parar o: ");
                 console.log(targetContainer);
-                
+
                 const stopContainerConfig = {
                     method: "post",
                     url: this.portainerUrl + `/endpoints/2/docker/containers/${targetContainer.Id}/stop`,
