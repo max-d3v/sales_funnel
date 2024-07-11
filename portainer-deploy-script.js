@@ -85,7 +85,8 @@ new class DeployPortainer {
                 "Image": "funil_vendas_frontend:latest",
                 "ExposedPorts": { "80/tcp": {} },
                 "HostConfig": { "PortBindings": { "8004/tcp": [{ "HostPort": "8004" }] }}
-            }
+            },
+            httpsAgent: agent
         }
         try {
             const response = await axios(config);
@@ -102,6 +103,7 @@ new class DeployPortainer {
                 headers: {
                     'Authorization': `Bearer ${this.token}`,
                 },
+                httpsAgent: agent
             };
             const containers = await axios(listContainersConfig);
     
@@ -116,6 +118,7 @@ new class DeployPortainer {
                     headers: {
                         'Authorization': `Bearer ${this.token}`,
                     },
+                    httpsAgent: agent
                 };
                 await axios(stopContainerConfig);
                 console.log(`Container ${targetContainer.Id} parado com sucesso.`);
