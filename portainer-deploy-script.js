@@ -42,7 +42,9 @@ new class DeployPortainer {
         try {
             const response = await axios(config);
             const token = response.data.jwt;
-            this.token = token;    
+            this.token = token;  
+            console.log("Fez login no portainer com sucesso!")
+  
         } catch(err) {
             throw new Error("Erro ao logar no Portainer")
         }
@@ -62,6 +64,7 @@ new class DeployPortainer {
         }
         try {
             const response = await axios(config);
+            console.log("Puxou a imagem do dockerhub com sucesso!")
         } catch(err) {
             throw new Error("Erro ao puxar a imagem do Docker Hub")
         }
@@ -85,6 +88,8 @@ new class DeployPortainer {
         }
         try {
             const response = await axios(config);
+            console.log("Criou o container com sucesso!")
+
         } catch(err) {
             throw new Error("Erro ao criar o container")
         }
@@ -105,14 +110,11 @@ new class DeployPortainer {
             
 
             // Filtrar pelo nome da imagem
-
-            console.log("Vai comparar o nome da imagem: " + containers[0].Names[0]);
-            console.log("Com o nome da imagem: " + "/" + this.NomeImagem);
             
             const targetContainer = containers.find(container => container.Names[0] === "/" + this.NomeImagem);
     
             if (targetContainer) {
-                console.log("Achou o container, vai parar o: ");
+                console.log("Achou container, vai para-lo: ");
                 console.log(targetContainer);
 
                 const stopContainerConfig = {
@@ -134,6 +136,7 @@ new class DeployPortainer {
     }
 
     deletarContainerParados = async () => {
+
         const config = {
             method: "post",
             maxBodyLength: Infinity,
@@ -146,6 +149,7 @@ new class DeployPortainer {
         }
         try {
             const response = await axios(config);
+            console.log("Deletou containers parados com sucesso")
         } catch(err) {
             throw new Error("Erro ao deletar os containers parados")
         }
