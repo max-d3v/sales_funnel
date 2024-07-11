@@ -22,6 +22,7 @@ new class DeployPortainer {
     executaGitOps = async () => {
         await this.portainerLogin();
         await this.pararContainerPorImagem();
+        return;
         await this.deletarContainerParados();
         await this.pullarImagemDockerHub();
         await this.criarContainer();
@@ -95,6 +96,7 @@ new class DeployPortainer {
                 console.log(container.Names[0] == "/" + this.NomeImagem );
             });
             
+            return;
             const targetContainer = containers.find(container => container.Names[0] === "/" + this.NomeImagem);
     
             if (targetContainer) {
