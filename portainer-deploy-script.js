@@ -152,7 +152,7 @@ new class DeployPortainer {
         }
         try {
             const response = await axios(config);
-            console.log(response.data);
+            this.idContainer = response.data.Id;
             console.log("Criou o container com sucesso!")
 
         } catch(err) {
