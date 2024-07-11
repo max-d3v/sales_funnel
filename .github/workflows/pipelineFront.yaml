@@ -33,19 +33,25 @@ jobs:
         tags:
           copapel/funil_vendas_frontend:${{ github.RUN_NUMBER }}
   
-  #portainer-deploy:
-  # runs-on: ubuntu-latest
+  portainer-deploy:
+  runs-on: ubuntu-latest
 
 
     
-    #steps:
-     # - name: Check out repo
-      #  uses: actions/checkout@v4
-      #
-      #- name: Deploy to Portainer
-      #  run:
-      #    curl -X GET https://167.114.128.102:9443/api/auth
+    steps:      
+      - name: Checkout code
+        uses: actions/checkout@v2
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14' # Escolha a versão do Node.js que você precisa
+
+      - name: Install dependencies
+        run: npm install axios https dotenv
+
+      - name: Run Portainer deploy script
+        run: node ./portainer-deploy-script.js
 
 
 
