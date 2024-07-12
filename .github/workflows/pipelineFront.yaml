@@ -6,9 +6,34 @@ on:
       - main
 
 jobs:
+  dockerhub-push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Check out the repository
+      uses: actions/checkout@v4
+    
+    - name: Login into docker
+      uses: docker/login-action@v3.2.0
+      with:
+        username: ${{secrets.DOCKERHUB_USER}}
+        password: ${{secrets.DOCKERHUB_PWD}}
+
+    - name: Set up Docker Build and Push latest
+      uses: docker/build-push-action@v5.3.0
+      with:
+        push: true
+        tags:
+          copapel/funil_vendas_frontend:latest
+    
+    - name: Set up Docker Build and Push version
+      uses: docker/build-push-action@v5.3.0
+      with:
+        push: true
+        tags:
+          copapel/funil_vendas_frontend:${{ github.RUN_NUMBER }}
 
   portainer-deploy:
-#    needs: dockerhub-push
+    needs: dockerhub-push
     runs-on: ubuntu-latest
     steps:      
       - name: Checkout code
@@ -17,7 +42,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '14' # Escolha a versão do Node.js que você precisa
+          node-version: '14'
 
       - name: Install dependencies
         run: npm install axios https dotenv

@@ -90,10 +90,10 @@ new class DeployPortainer {
 
             // Filtrar pelo nome da imagem
 
-            containers.forEach(container => {
-                console.log("Comparouu a imagem: " + container.Image + " com a imagem: copapel/" + this.Imagem);
-                console.log(container.Image == "copapel/" + this.Imagem );
-            });
+            //containers.forEach(container => {
+            //    console.log("Comparouu a imagem: " + container.Image + " com a imagem: copapel/" + this.Imagem);
+            //    console.log(container.Image == "copapel/" + this.Imagem );
+            //});
             
             const targetContainer = containers.find(container => container.Image === "copapel/" + this.Imagem);
     
