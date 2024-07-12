@@ -21,6 +21,7 @@ import { LoadingModal } from "../modalLoading";
 import { ModalConteudo } from "../modalConteudo";
  
 interface atividadeFields {
+    ClgCode: string;
     lastName: string;
     firstName: string;
     Details: string;
@@ -28,6 +29,12 @@ interface atividadeFields {
     CreateDate: string;
     CntctDate: string;
     dept: string;
+    NomeAssunto: string;
+    Closed: string;
+    AssignedBy: string;
+    AttendUser: string;
+    NomeAtribuidor: string;
+    UltimoNomeAtribuidor: string;
 }
 
 
@@ -183,14 +190,14 @@ export function Atividades({task}: {task?: task}) {
         { showNewTicket ?  <ModalNovoTicket CardCode={task?.CardCode} onClose={() => setShowNewTicket(!showNewTicket)} /> : "" }
 
         <div>
-            <div className="flex flex-col customBorder shadow-md p-2 rounded-md" >
+            <div className="flex flex-col customBorder shadow-md p-2 rounded-md hidden " >
                 <div className="flex items-center gap-4" >
                     <h1 className="m-0 ml-2">
                         Ações Rápidas
                     </h1>
                    <FaCircleInfo data-tooltip-id="tooltip-6" data-tooltip-content="As ações rápidas são requisições/informações repassados para internos através da agenda!" />
                 </div>
-                <div className=" flex justify-between mt-4 px-12 py-4 gap-2 ">
+                <div className=" flex justify-between mt-4 px-12 py-4 gap-2  ">
                     <BtnRapidas nome="Pedir Visita" icon={<IoIosChatbubbles size={25} />} onClick={() => handlePedirAcao("Agendar Visita", "data", "77")} />
                     <BtnRapidas bgColor="red-500" nome="Requisitar Pedido" icon={<GiMoneyStack size={30} />} onClick={() =>handlePedirAcao("Requisitar Pedido", "nada", "78")} />
                     <BtnRapidas bgColor="amber-500" nome="Realizei Visita" icon={<MdConnectWithoutContact  size={30} />} onClick={() => handlePedirAcao("Realizei Visita", "conteudo", "72")} />
@@ -198,19 +205,20 @@ export function Atividades({task}: {task?: task}) {
                     <BtnRapidas bgColor="slate-500" nome="Tirar cliente da agenda" icon={<IoIosRemoveCircle   size={30} />} onClick={() => handlePedirAcao("Retirar Cliente", "nada", "0")} />
                 </div>
             </div>
-            <div className="mt-6 box-border" >
+            <div className="  box-border" >
                 <div className=" flex justify-between mb-2 items-end" >
                     <GrnBtn nomeBtn="Novo Atendimento" onClick={() => adicionarNovoTicket()} icon={<IoMdAddCircle />} customCss="h-10" />
                     <div className="w-4/12" >
                         <Input valueHandler={(e) => setFilter(e.target.value)} placeholder="Pesquise por atividades / tickets" name="filter" icon={<CiSearch size={20} />} insidePlaceholder="Fulano de tal" />
                     </div>
                 </div>
-                <div key={0} style={{ maxHeight: "80vh" }} className="flex  flex-col gap-0.5 bg-custom-gray rounded-md customBorder shadow-sm p-2 box-border overflow-y-scroll overflow-x-hidden" >
+                <div key={0} style={{ maxHeight: "80vh" }} className=" w-full flex  flex-col gap-0.5 bg-custom-gray rounded-md customBorder shadow-sm p-2 box-border overflow-y-scroll overflow-x-hidden" >
                     <div className="flex gap-2  w-full px-2 mb-2 " >
-                        <h2 className="m-0 w-1/5" >Origem</h2>
-                        <h2 className="m-0 w-1/5">Data</h2>
-                        <h2 className="m-0 w-2/5">Mensagem</h2>
-                        <h2 className="m-0 w-1/5">Vendedor</h2>
+                        <h2 className="m-0 w-1/6 ">Atividade</h2>
+                        <h2 className="m-0 w-1/6">Data</h2>
+                        <h2 className="m-0 w-1/6">Usuário/Vendedor</h2>
+                        <h2 className="m-0 w-2/6">Resultado/Conteúdo</h2>
+                        <h2 className="m-0 w-1/6">Assunto</h2>
                     </div>
                     {loadingTickets ? <LoadingModal/> : (
                     atividades.length === 0 ? (
@@ -219,17 +227,26 @@ export function Atividades({task}: {task?: task}) {
                             <p className="font-semibold text-xl">Esse cliente não possui tickets</p>
                         </div>
                     ) : (
-                        atividades.map((ativ, index) => (
-                            <Atividade 
+                        atividades.map((ativ, index) => {
+                            const nomeAtribuidor = ativ.NomeAtribuidor + " " + ativ.UltimoNomeAtribuidor;
+                            return (
+                                <Atividade 
                                 keyNum={index + 1} 
                                 bg={index % 2 !== 0 ? "custom-gray" : "white"} 
-                                origem={ativ.dept === '6' ? "Agenda copapel" : "Funil de vendas"} 
+                                numeroAtiv={ativ.ClgCode}
                                 dataContact={ativ.CntctDate} 
                                 dataCreate={ativ.CreateDate} 
                                 mensagem={ativ.Notes} 
                                 vendedor={`${ativ.firstName} ${ativ.lastName}`} 
-                            />
-                        ))
+                                assunto={ativ.NomeAssunto}
+                                fechada={ativ.Closed}
+                                atribuidor={ativ.AssignedBy}
+                                atribuido={ativ.AttendUser}
+                                nomeAtribuidor={nomeAtribuidor}
+                                />
+                            )
+                            
+                        })
                     )
                 )}
                 </div>

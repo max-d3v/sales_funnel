@@ -88,7 +88,7 @@ new class DeployPortainer {
             const containers = response.data;
             
 
-            // Filtrar pelo nome da imagem
+            // debug pro nome
 
             //containers.forEach(container => {
             //    console.log("Comparouu a imagem: " + container.Image + " com a imagem: copapel/" + this.Imagem);
@@ -98,9 +98,6 @@ new class DeployPortainer {
             const targetContainer = containers.find(container => container.Image === "copapel/" + this.Imagem);
     
             if (targetContainer) {
-                console.log("Achou container, vai para-lo: ");
-                console.log(targetContainer);
-
                 const stopContainerConfig = {
                     method: "post",
                     url: this.portainerUrl + `/endpoints/2/docker/containers/${targetContainer.Id}/stop`,
