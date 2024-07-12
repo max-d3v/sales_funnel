@@ -11,7 +11,7 @@ new class DeployPortainer {
         this.token = "";
         this.Username = process.env.USERNAME
         this.Password = process.env.PASSWORD
-        this.Imagem = process.env.NOME_IMAGEM
+        this.Imagem = "funil_vendas_frontend:latest"
         this.idContainer = "000";
         this.NomeImagem = this.Imagem.split(":")[0];
         this.TagImagem = this.Imagem.split(":")[1];
@@ -92,7 +92,7 @@ new class DeployPortainer {
             // Filtrar pelo nome da imagem
 
             containers.forEach(container => {
-                console.log("Comparou a imagem:" + container.Image + " com a imagem: copapel/" + this.Imagem);
+                console.log("Comparou a imagem: " + container.Image + " com a imagem: copapel/" + this.Imagem);
                 console.log(container.Imagem == "copapel/" + this.Imagem );
             });
             
