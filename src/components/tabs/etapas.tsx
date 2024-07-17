@@ -5,14 +5,23 @@ export function Etapas({task}: {task?: task}) {
     const [etapas, setEtapas] = useState<any>([]);
     const [counter, setCounter] = useState<number>(0);
 
+    function addDays(date: Date, days: number): Date {
+        var result = new Date(date);
+        result.setDate(result.getDate() + days);
+        return result;
+    }
+
     function handeleEtapas() {
         var etapas = task?.SalesOpportunitiesLines
         var etapasArray: any = [];
+        console.log(etapas);
         etapas.forEach((etapa: any) => {
             
             const nomeEtapa = acertaEtapaSapReverso(etapa.StageKey);
-            const startDate: Date = new Date(etapa.StartDate);
-            const closingDate: Date = new Date(etapa.ClosingDate);
+            const startDate: Date = addDays(new Date(etapa.StartDate), 1);
+            console.log(etapa.StartDate);
+            console.log(startDate);
+            const closingDate: Date = addDays(new Date(etapa.ClosingDate), 1);
             const diffMilliseconds: number = closingDate.getTime() - startDate.getTime();
             var diasNaEtapa: number = Math.floor(diffMilliseconds / (1000 * 60 * 60 * 24));
             const startDateFormatted: string = `${startDate.getDate()}/${startDate.getMonth() + 1}/${startDate.getFullYear()}`;
@@ -24,6 +33,7 @@ export function Etapas({task}: {task?: task}) {
                 startDateFormatted: startDateFormatted,
                 finishDateFormatted: finishDateFormatted
             }
+            console.log(objToAdd);
             etapasArray.push(objToAdd);
         });
         setCounter(etapas.length - 1);

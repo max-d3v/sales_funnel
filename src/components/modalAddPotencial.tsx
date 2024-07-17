@@ -149,13 +149,13 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
 
     return (
         <div className={` ${isOpen ? "" : "hidden"} modalAdd fixed top-0 left-0 w-full h-full bg-opacity-50 bg-black overflow-auto z-50 flex items-center justify-center box-border`}>
-            <div className={` ${isOpen ? "slide-up" : "slide-down"} bg-white w-3/6 rounded-md shadow-md flex flex-col`} >
-            <div className="w-full h-20 flex items-center justify-between  bg-white rounded-sm">
+            <div className={` ${isOpen ? "slide-up" : "slide-down"}  bg-white w-3/6 rounded-md shadow-md flex flex-col`} >
+            <div className="w-full flex items-center justify-between  bg-white rounded-sm">
                     <p className="font-bold text-xl ml-6">Adicionar Potencial</p>
                     <div className="mr-6" onClick={() => handleClose()}  ><WhiteBtn nomeBtn="Fechar" icon={<MdCancel />}/></div>
                 </div>
                 <hr className="m-0"/>
-                <form id="addPo" action="" onSubmit={handleSubmit(onSubmit)} className="flex customFormHeight w-full px-8 py-4 box-border mb-4  justify-between gap-4">
+                <form id="addPo" action="" onSubmit={handleSubmit(onSubmit)} className=" h-full flex customFormHeight w-full px-8 py-4 box-border mb-4  justify-between gap-4">
                     <div className="flex flex-col h-full  w-1/2">
                         <Input insidePlaceholder="Título da oportunidade" placeholder="Título" name="titulo" error={ errors.titulo?.message } register={register}></Input>
                         <Input type="number" insidePlaceholder="20000" placeholder="Valor Estimado" icon={<FaMoneyBillWave />} name="valorEstimado" error={ errors.valorEstimado?.message } register={register}></Input>

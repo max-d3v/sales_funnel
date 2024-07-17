@@ -87,14 +87,6 @@ new class DeployPortainer {
             const response = await axios(listContainersConfig);
             const containers = response.data;
             
-
-            // debug pro nome
-
-            //containers.forEach(container => {
-            //    console.log("Comparouu a imagem: " + container.Image + " com a imagem: copapel/" + this.Imagem);
-            //    console.log(container.Image == "copapel/" + this.Imagem );
-            //});
-            
             const targetContainer = containers.find(container => container.Image === "copapel/" + this.Imagem);
     
             if (targetContainer) {
