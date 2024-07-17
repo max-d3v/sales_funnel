@@ -107,9 +107,8 @@ export function Login() {
                 <form action="" className='flex flex-col  items-center' onSubmit={handleSubmit(onSubmit)}>
                     <h1 className='m-0 font-semibold'>Bem vindo(a) de volta! </h1>
                     <p className='m-0 font-semibold text-slate-600'>Informe seus dados para entrar</p>
-                    <h1>FUNIL EM MANUTENÇÃO</h1>
-                    <Input customCss='hidden'  placeholder="Usuário" icon={<CgProfile />} error={errors.username?.message} name="username" register={register}  />
-                    <Input customCss='hidden' type="password"  placeholder="Senha" icon={<FaLock />} error={errors.password?.message} name="password" register={register} />
+                    <Input  placeholder="Usuário" icon={<CgProfile />} error={errors.username?.message} name="username" register={register}  />
+                    <Input type="password"  placeholder="Senha" icon={<FaLock />} error={errors.password?.message} name="password" register={register} />
                         <button onClick={handleDebouncedClick} className={`h-12 w-full rounded-md border-none bg-green-500 text-white font-semibold text-lg mt-6 cursor-pointer hover:bg-green-600 transition-all duration-300 shadow-md hover:shadow-lg flex gap-4 items-center justify-center ${loginLoading ? "disabled:opacity-75 cursor-default" : ""} `}>{loginLoading ? "Entrando" : "Entrar"}{loginLoading ? <ImSpinner8 className='animate-spin' size={20} /> : ""}</button>
                     <p className=' text-red-600 m-0 font-semibold mt-2 '> {loginErrors}</p>
                 </form> 
