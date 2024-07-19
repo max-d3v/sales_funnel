@@ -7,7 +7,7 @@ import { WhiteBtn } from "./whiteBtn";
 import { MdCancel } from "react-icons/md";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { useEffect } from "react";
-import toast, { Toaster } from 'react-hot-toast';
+import toast from 'react-hot-toast';
 import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Importe o estilo do editor
 import { IoPersonAdd } from "react-icons/io5";
@@ -19,7 +19,7 @@ const schema = z.object({
     valorEstimado: z.string().min(1, "Valor estimado é obrigatório"),
     pessoaContato: z.string(),
     meioContato: z.string(),
-    dataContato: z.string()
+    dataContato: z.string().min(1, "Data prevista de contato é obrigatória!")
   });
 type FormData = z.infer<typeof schema>
 
@@ -37,7 +37,6 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
     const [isOpen, setIsOpen] = useState(true);
     const [addLoading, setAddLoading] = useState<boolean>(false);
     const [quillValue, setquillValue] = useState<string>(''); 
-    const [renderToaster, setRenderToaster] = useState<boolean>(false);
     const [isWaiting, setIsWaiting] = useState(false);
 
     const { register, handleSubmit, formState: { errors }} = useForm<FormData>({
@@ -46,7 +45,6 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
     })
 
     async function onSubmit(data: FormData) {  
-        setRenderToaster(true);
         setAddLoading(true);      
         const toastId = toast.loading("Salvando")
 
@@ -61,7 +59,6 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
             }
         }
         
-
         const dataObj = {
             titulo: data.titulo,
             valorEstimado: data.valorEstimado,
@@ -95,7 +92,6 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
         if (response.status == 'success') {
             setAddLoading(false);
             toast.dismiss(toastId);
-            setRenderToaster(false);
             if (typeof response.message == "string") {
                 toast.success(response.message);
             }
@@ -161,7 +157,7 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
                         <Input type="number" insidePlaceholder="20000" placeholder="Valor Estimado" icon={<FaMoneyBillWave />} name="valorEstimado" error={ errors.valorEstimado?.message } register={register}></Input>
                         <Input insidePlaceholder="Pedro da silva" placeholder="Pessoa de Contato" icon={<IoPersonAdd />} name="pessoaContato" error={ errors.pessoaContato?.message } register={register}></Input>
                         <Input insidePlaceholder="cliente@vendas.com.br OU (47) 99141-1100" placeholder="Meio de contato" icon={<MdConnectWithoutContact />} name="meioContato" error={ errors.meioContato?.message } register={register}></Input>
-                        <Input insidePlaceholder="dd/mm/aaaa" placeholder="Data Prevista de contato" icon={<MdConnectWithoutContact />} type="date" name="dataContato" error={ errors.meioContato?.message } register={register}></Input>
+                        <Input insidePlaceholder="dd/mm/aaaa" placeholder="Data Prevista de contato" icon={<MdConnectWithoutContact />} type="date" name="dataContato" error={ errors.dataContato?.message } register={register}></Input>
 
                     </div>
                     <div className=" flex flex-col w-1/2">
@@ -177,7 +173,7 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
                     <button className=" ml-12 h-10 w-28 customRedBorder bg-white rounded-md font-semibold text-red-500 cursor-pointer hover:bg-red-500 hover:text-white transition-all duration-300 ">Cancelar</button>
                     <button onClick={handleDebouncedClick} form="addPo" type="submit" className=" mr-12 h-10 w-28 rounded-md border-none bg-green-500 text-white font-semibold text-lg  cursor-pointer hover:bg-green-600 transition-all duration-300 shadow-md hover:shadow-lg flex gap-4 items-center justify-center">{addLoading ? "Salvando" : "Salvar"}</button>
                 </div>
-                {renderToaster ? <Toaster/> : ""}
+                
             </div>
         </div>
     )

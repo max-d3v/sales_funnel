@@ -229,6 +229,7 @@ export function Board() {
                 }
                 if (response.status == "success") {
                     toast.success("Potencial desativado com sucesso");
+                    return;
                 }
             }
             toast.error("Transforme o Potencial em Lead!")

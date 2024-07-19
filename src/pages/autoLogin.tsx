@@ -9,7 +9,7 @@ export function AutoLogin() {
   
 
     const login = async (dataLogin: any) => {
-        const response = await ajax({method: 'POST',endpoint: '/login', data: dataLogin});
+        const response = await ajax({method: 'POST',endpoint: '/loginSession', data: dataLogin});
         
         if (response.status == 'error') {
             navigate("/login");
@@ -24,15 +24,10 @@ export function AutoLogin() {
     const logingAutomatico = async () => {
         const searchParams = new URLSearchParams(location.search);
         const loginDataEncoded = searchParams.get('login');
-        if (!loginDataEncoded) {
-            console.error('Dados de login não fornecidos');
-            return;
-        }
-        const loginData = atob(loginDataEncoded);
-
-        const [username, password] = loginData.split('|');
-
-        const dataLogin = { email: username, senha: password };
+        
+        
+        
+        const dataLogin = { sessionId: loginDataEncoded };
         await login(dataLogin)
     }
 
