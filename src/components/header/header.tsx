@@ -93,7 +93,7 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
     }, [])
 
     useEffect(() => {
-        if (signed) {
+        if (signed && !pathname.includes("/autologin") && !pathname.includes("/autoLogin")) {
             checaGerente();
         }
     }, [signed])
