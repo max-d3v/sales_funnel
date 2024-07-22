@@ -35,6 +35,7 @@ interface atividadeFields {
     AttendUser: string;
     NomeAtribuidor: string;
     UltimoNomeAtribuidor: string;
+    idAtribuidor: string;
 }
 
 
@@ -228,7 +229,7 @@ export function Atividades({task}: {task?: task}) {
                         </div>
                     ) : (
                         atividades.map((ativ, index) => {
-                            const nomeAtribuidor = ativ.NomeAtribuidor + " " + ativ.UltimoNomeAtribuidor;
+                            const nomeAtribuidor = ativ.firstName + " " + ativ.lastName;
                             return (
                                 <Atividade 
                                 keyNum={index + 1} 
@@ -240,7 +241,7 @@ export function Atividades({task}: {task?: task}) {
                                 vendedor={`${ativ.firstName} ${ativ.lastName}`} 
                                 assunto={ativ.NomeAssunto}
                                 fechada={ativ.Closed}
-                                atribuidor={ativ.AssignedBy}
+                                atribuidor={ativ.idAtribuidor}
                                 atribuido={ativ.AttendUser}
                                 nomeAtribuidor={nomeAtribuidor}
                                 />
