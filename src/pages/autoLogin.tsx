@@ -6,7 +6,7 @@ export function AutoLogin() {
 
     const location = useLocation();
     const navigate = useNavigate();
-  
+//    const a = 123;
 
     const login = async (dataLogin: any) => {
         const response = await ajax({method: 'POST',endpoint: '/loginSession', data: dataLogin});

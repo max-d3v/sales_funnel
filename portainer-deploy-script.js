@@ -41,12 +41,14 @@ new class DeployPortainer {
             httpsAgent: agent
         }
         try {
+            console.log(config);
             const response = await axios(config);
             const token = response.data.jwt;
             this.token = token;  
             console.log("Fez login no portainer com sucesso!")
   
         } catch(err) {
+            console.log(err);
             throw new Error("Erro ao logar no Portainer")
         }
     }
