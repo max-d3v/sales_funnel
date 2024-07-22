@@ -4,7 +4,7 @@ const agent = new https.Agent({
     rejectUnauthorized: false
   });
 
-new class DeployPortainer {
+class DeployPortainer {
     constructor() {
         this.portainerUrl = process.env.PORTAINER_URL;
         this.dockerAuth = process.env.DOCKER_AUTH;
@@ -140,7 +140,7 @@ new class DeployPortainer {
                 "name": "funil_vendas_frontend",
                 "Image": "copapel/funil_vendas_frontend:latest",
                 "ExposedPorts": { "80/tcp": {} },
-                "HostConfig": { "PortBindings": { "8004/tcp": [{ "HostPort": "8004" }] }}
+                "HostConfig": { "PortBindings": { "8007/tcp": [{ "HostPort": "8007" }] }}
             },
             httpsAgent: agent
         }
@@ -176,3 +176,4 @@ new class DeployPortainer {
     }
 }
 
+//const deploy = new DeployPortainer();

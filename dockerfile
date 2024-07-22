@@ -29,7 +29,7 @@ COPY --from=build /funil_vendas/dist /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose ports (if needed)
-EXPOSE 8004
+EXPOSE 8007
 
 
 # NGINX should automatically start, so no need for CMD
