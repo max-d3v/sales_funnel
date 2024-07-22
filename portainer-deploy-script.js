@@ -13,8 +13,6 @@ new class DeployPortainer {
         this.Password = process.env.PASSWORD
         this.Imagem = "funil_vendas_frontend:latest"
         this.idContainer = "000";
-        this.NomeImagem = this.Imagem.split(":")[0];
-        this.TagImagem = this.Imagem.split(":")[1];
 
         this.executaGitOps();
     }

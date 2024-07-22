@@ -11,13 +11,15 @@ export function AutoLogin() {
     const login = async (dataLogin: any) => {
         const response = await ajax({method: 'POST',endpoint: '/loginSession', data: dataLogin});
         
+
+        
         if (response.status == 'error') {
             navigate("/login");
             return;
         }
 
         if (response.status == 'success') {
-            navigate('/');    
+            navigate('/');
             return;
         }
     }
