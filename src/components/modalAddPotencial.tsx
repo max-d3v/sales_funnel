@@ -97,13 +97,14 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
             }
             setTimeout(() => {}, 100)
             setIsOpen(false);
+            window.location.reload();
             return;
         }
 
         setAddLoading(false);
         toast.dismiss(toastId);
         toast.error("Erro inesperado");
-    }
+    }   
 
     const handleClose = () => {
         setIsOpen(false);

@@ -168,7 +168,7 @@ export function DadosCliente({task, errorsRegister}: propsDadosClientes) {
             </div>
             <div className="w-1/2 ">
                 <div className="flex flex-col w-full items-center">
-                    <BlueBtn nomeBtn="Buscar Empresa" icon={ <CiSearch size={45} color="white" /> } onClick={() => setOpen(!open)} />
+                 {/*   <BlueBtn nomeBtn="Buscar Empresa" icon={ <CiSearch size={45} color="white" /> } onClick={() => setOpen(!open)} />  */}
                     <div className="mt-40" ><GrnBtn form="addLead" type="submit" big={true} nomeBtn="Salvar Dados Cliente" icon={<IoIosSave size={30} />} onClick={handleSubmit(onSubmitSavePotential)}  /></div>
 
                 </div>
