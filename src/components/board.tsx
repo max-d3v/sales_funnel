@@ -229,6 +229,7 @@ export function Board() {
                 }
                 if (response.status == "success") {
                     toast.success("Potencial desativado com sucesso");
+                    window.location.reload();
                     return;
                 }
             }
