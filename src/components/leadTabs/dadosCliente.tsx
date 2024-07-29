@@ -5,8 +5,6 @@ import { InputDados } from "../inputDados";
 import { SelectDados } from "../selectDados";
 import { GrnBtn } from "../greenBtn";
 import { IoIosSave } from "react-icons/io";
-import { CiSearch } from "react-icons/ci";
-import { BlueBtn } from "../blueBtn";
 import {useForm} from 'react-hook-form';
 import { ajax } from "../../ajax/ajax";
 import { useEffect } from 'react';
