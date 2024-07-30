@@ -176,6 +176,14 @@ export function Atividades({task}: {task?: task}) {
         return;
     }
 
+    const handleCloseNewTicketModal = () => {
+        setShowNewTicket(!showNewTicket);
+        carregaAtividades("");
+    }
+    const handleCloseEndTicketModal = () => {
+        setShowEndTicket(!showEndTicket)
+        carregaAtividades("");
+    }
     useEffect(() => {
         carregaAtividades("");
     }, [])
@@ -193,8 +201,8 @@ export function Atividades({task}: {task?: task}) {
     return (
         <>
         <ModalConteudo show={showModalConteudo} fechaModal={alterShow} atualizaModal={handleModalConteudoChange} atualizaDataModal={handleDataModalChange} titulo={tituloAtual} tipo={tipoAtual} enviaTicket={enviaTicket}/>
-        { showNewTicket ?  <ModalNovoTicket CardCode={task?.CardCode} onClose={() => setShowNewTicket(!showNewTicket)} /> : "" }
-        { showEndTicket ? <EndTicket  onClose={() => setShowEndTicket(!showEndTicket)} ticketData={closingTicketData} /> : "" }
+        { showNewTicket ?  <ModalNovoTicket CardCode={task?.CardCode} onClose={() => handleCloseNewTicketModal()} /> : "" }
+        { showEndTicket ? <EndTicket  onClose={() => handleCloseEndTicketModal()} ticketData={closingTicketData} /> : "" }
         <div>
             <div className="flex flex-col customBorder shadow-md p-2 rounded-md hidden " >
                 <div className="flex items-center gap-4" >

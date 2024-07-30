@@ -381,7 +381,9 @@ input.corPlaceholder::placeholder {
   border: 0.1px solid green !important;
 }
 
-
+.react-tooltip {
+  z-index: 50;
+}
 .envelopeTeste {
   z-index: 9999
 }
