@@ -176,4 +176,4 @@ class DeployPortainer {
     }
 }
 
-//const deploy = new DeployPortainer();
+const deploy = new DeployPortainer();
