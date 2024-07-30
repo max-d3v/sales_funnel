@@ -19,7 +19,7 @@ import { IoIosRemoveCircle } from "react-icons/io";
 import { Tooltip } from 'react-tooltip'
 import { LoadingModal } from "../modalLoading";
 import { ModalConteudo } from "../modalConteudo";
- 
+import { EndTicket } from "../modalEndTicket"; 
 interface atividadeFields {
     ClgCode: string;
     lastName: string;
@@ -50,7 +50,8 @@ export function Atividades({task}: {task?: task}) {
     const [modalData, setModalData] = useState<string>("");
     const [tipoAtual, setTipoAtual] = useState<string>("conteudo");
     const [dataQuickAction, setDataQuickAction] = useState<any>({});
-
+    const [showEndTicket, setShowEndTicket] = useState<boolean>(false);
+    const [closingTicketData, setClosingTicketData] = useState<any>(null);
     const handlePedirAcao = async (atividade: string, tipo: string, numeroResultado: string) => {
         if (tipo !== "nada") {
             setShowModalConteudo(true);
@@ -105,6 +106,10 @@ export function Atividades({task}: {task?: task}) {
 
     const adicionarNovoTicket = () => {
         setShowNewTicket(true);
+    }
+    const finalizarTicket = (ticketData: any) => {
+        setClosingTicketData(ticketData);
+        setShowEndTicket(true);
     }
 
     const handleModalConteudoChange = (e: string) => {
@@ -189,7 +194,7 @@ export function Atividades({task}: {task?: task}) {
         <>
         <ModalConteudo show={showModalConteudo} fechaModal={alterShow} atualizaModal={handleModalConteudoChange} atualizaDataModal={handleDataModalChange} titulo={tituloAtual} tipo={tipoAtual} enviaTicket={enviaTicket}/>
         { showNewTicket ?  <ModalNovoTicket CardCode={task?.CardCode} onClose={() => setShowNewTicket(!showNewTicket)} /> : "" }
-
+        { showEndTicket ? <EndTicket  onClose={() => setShowEndTicket(!showEndTicket)} ticketData={closingTicketData} /> : "" }
         <div>
             <div className="flex flex-col customBorder shadow-md p-2 rounded-md hidden " >
                 <div className="flex items-center gap-4" >
@@ -232,6 +237,7 @@ export function Atividades({task}: {task?: task}) {
                             const nomeAtribuidor = ativ.firstName + " " + ativ.lastName;
                             return (
                                 <Atividade 
+                                finalizarTicket={() => finalizarTicket({id_ticket: ativ.ClgCode, mensagem: ativ.Notes})}
                                 keyNum={index + 1} 
                                 bg={index % 2 !== 0 ? "custom-gray" : "white"} 
                                 numeroAtiv={ativ.ClgCode}
