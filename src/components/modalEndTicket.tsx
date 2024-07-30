@@ -68,7 +68,7 @@ export function EndTicket( {onClose, ticketData}: novoTicketProps ) {
             <div className={`bg-white w-5/12 h-4/6 rounded-md flex flex-col box-border shadow-lg p-2`}>                
                 <div className="flex justify-between px-4 items-center mt-2" >
                     <p className="m-0  text-xl font-semibold " >Resultado do Atendimento</p>
-                    <WhiteBtn nomeBtn="Fechar" onClick={() => setIsOpen(false)} icon={ <IoIosCloseCircle /> } />
+                    <WhiteBtn type="button" nomeBtn="Fechar" onClick={() => setIsOpen(false)} icon={ <IoIosCloseCircle /> } />
 
                 </div>
                 <div className="horizontalRule" ></div>
