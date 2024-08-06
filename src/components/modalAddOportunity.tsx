@@ -310,7 +310,7 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
                             <div data-tooltip-id="tooltip-1" data-tooltip-content="Proposta de Valor" className="flex" onClick={() => setEtapa(5)}> <div className="triangle-right-white absolute"></div> <button type="button" className={`w-10 h-6 border-none ${ etapa >= 5 ? "bg-green-500" : "" }`} ></button><div className={etapa >= 5 ? `triangle-right` : `triangle-right-grey`}></div></div>
                             </div>
                         </div>
-                        <Input type="date" placeholder="Data prevista de contato" customCss="mt-2" insidePlaceholder="DD/MM/YYYY" name="dataPrevista" error={ errors.dataPrevista?.message } register={register}></Input>                    </div>
+                        <Input type="date" placeholder="Data prevista de conclusão da etapa" customCss="mt-2" insidePlaceholder="DD/MM/YYYY" name="dataPrevista" error={ errors.dataPrevista?.message } register={register}></Input>                    </div>
                         <div className=" flex flex-col w-1/2">
                             <div className="mt-6 h-full box-border w-full mb-4">
                                 <p className="m-0 font-semibold" >Anotações</p>

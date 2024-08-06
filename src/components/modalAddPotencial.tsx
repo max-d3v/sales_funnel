@@ -150,7 +150,7 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
                         <Input type="number" insidePlaceholder="20000" placeholder="Valor Estimado" icon={<FaMoneyBillWave />} name="valorEstimado" error={ errors.valorEstimado?.message } register={register}></Input>
                         <Input insidePlaceholder="Pedro da silva" placeholder="Pessoa de Contato" icon={<IoPersonAdd />} name="pessoaContato" error={ errors.pessoaContato?.message } register={register}></Input>
                         <Input insidePlaceholder="cliente@vendas.com.br OU (47) 99141-1100" placeholder="Meio de contato" icon={<MdConnectWithoutContact />} name="meioContato" error={ errors.meioContato?.message } register={register}></Input>
-                        <Input insidePlaceholder="dd/mm/aaaa" placeholder="Data Prevista de contato" icon={<MdConnectWithoutContact />} type="date" name="dataContato" error={ errors.dataContato?.message } register={register}></Input>
+                        <Input insidePlaceholder="dd/mm/aaaa" placeholder="Data Prevista de conclusão da etapa" icon={<MdConnectWithoutContact />} type="date" name="dataContato" error={ errors.dataContato?.message } register={register}></Input>
 
                     </div>
                     <div className=" flex flex-col w-1/2">
