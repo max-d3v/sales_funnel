@@ -323,7 +323,7 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
                         <div className=" flex flex-col w-1/2">
                             <div className="mt-6  w-full box-border mb-4">
                                 <p className="m-0 font-semibold" >Anotações</p>
-                                <ReactQuill theme="snow" onChange={(value) => setquillValue(value)}  className={`myQuill w-12/12 border-none shadow-md`} modules={modules} />
+                                <ReactQuill theme="snow" onChange={setquillValue} value={quillValue}  className={`myQuill w-12/12 border-none shadow-md`} modules={modules} />
                                 <input type="text" value={quillValue} className="hidden" {...register("notas")} />
                             </div>
                     </div>  

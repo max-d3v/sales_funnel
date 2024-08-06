@@ -47,7 +47,7 @@ export function NotesLead({task}: {task?: task}) {
                 <GrnBtn onClick={ () => handleSubmit() } nomeBtn="Salvar" customCss="text-xl" icon={<IoIosSave size={20} />} />
             </div>
             <div className="flex w-full mt-6" >
-                <ReactQuill theme="snow" value={quillValue} onChange={(value) => setquillValue(value)}  className={`myQuillBig shadow-md`} modules={modules} />
+                <ReactQuill theme="snow" value={quillValue} onChange={setquillValue}  className={`myQuillBig shadow-md`} modules={modules} />
 
             </div>
         </div>
