@@ -233,7 +233,7 @@ export function Board() {
                     return;
                 }
             }
-            toast.error("Transforme o Potencial em Lead!")
+            toast.error("Transforme o Potencial em Qualificação!")
             return;
         }
 
@@ -327,7 +327,7 @@ export function Board() {
         if (!responseSap || !responseMysql) {
             if (filter.length == 0) {
             toast.dismiss();
-            toast.error("Erro ao carregar oportunidades / leads");
+            toast.error("Erro ao carregar oportunidades / potenciais");
             }
             return;
         }

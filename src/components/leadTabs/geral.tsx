@@ -43,7 +43,7 @@ export function GeralLead({task, errors}: {task?: task, errors: any}) {
 
     const onSubmit = async (data: any) => {
         toast.dismiss();
-        toast.loading("Atualizando lead");
+        toast.loading("Atualizando Potencial");
         const objAtt: any = {};
         objAtt.id = task?.card[0].id_card;
         
@@ -74,7 +74,7 @@ export function GeralLead({task, errors}: {task?: task, errors: any}) {
         }
         if (response.status == 'success') {
             toast.dismiss();
-            toast.success("Lead atualizado");
+            toast.success("Potencial atualizado");
             setTimeout( () => {
                 window.location.reload();    
             } , 500 ) 
