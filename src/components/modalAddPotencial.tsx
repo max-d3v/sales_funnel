@@ -26,13 +26,6 @@ type FormData = z.infer<typeof schema>
 
 
 export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEstadoModal: () => void, mostrarModal: boolean}) {
-    const modules = {
-        toolbar: [
-            [{ 'header': '1'}, {'header': '2'}],
-            ['bold', 'italic', 'underline'], 
-            ['clean']
-        ],
-    }
     const [isOpen, setIsOpen] = useState(true);
     const [addLoading, setAddLoading] = useState<boolean>(false);
     const [quillValue, setquillValue] = useState<string>(''); 
