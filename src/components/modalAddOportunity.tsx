@@ -13,7 +13,6 @@ import { ImSpinner8 } from "react-icons/im";
 import toast, { Toaster } from 'react-hot-toast';
 import { ajax } from "../ajax/ajax";
 import { LoadingModal } from "./modalLoading";
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Importe o estilo do editor
 
 const isAfterToday = (value: any) => {
@@ -29,7 +28,6 @@ const schema = z.object({
     dataPrevista: z.string().min(1, "Data de Prevista é obrigatória").refine(isAfterToday, {
       message: "A data prevista deve ser posterior à data atual",
     }),
-    notas: z.string(),
   });
 type FormData = z.infer<typeof schema>
 
@@ -51,13 +49,6 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
     const [loadingSearch, setLoadingSearch] = useState<boolean>(false);
 
     const abortControllerRef = useRef<AbortController | null>(null);
-    const modules = {
-        toolbar: [
-            [{ 'header': '1'}, {'header': '2'}],
-            ['bold', 'italic', 'underline'], 
-            ['clean']
-        ],
-    }
 
     const { register, handleSubmit, formState: { errors }} = useForm<FormData>({
         resolver: zodResolver(schema),
@@ -321,10 +312,9 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
                         </div>
                         <Input type="date" placeholder="Data prevista de contato" customCss="mt-2" insidePlaceholder="DD/MM/YYYY" name="dataPrevista" error={ errors.dataPrevista?.message } register={register}></Input>                    </div>
                         <div className=" flex flex-col w-1/2">
-                            <div className="mt-6  w-full box-border mb-4">
+                            <div className="mt-6 h-full box-border w-full mb-4">
                                 <p className="m-0 font-semibold" >Anotações</p>
-                                <ReactQuill theme="snow" onChange={setquillValue} value={quillValue}  className={`myQuill w-12/12 border-none shadow-md`} modules={modules} />
-                                <input type="text" value={quillValue} className="hidden" {...register("notas")} />
+                                <textarea  onChange={(e) => setquillValue(e.target.value)} value={quillValue}  className={` p-2 box-border w-full h-full rounded-md customBorder shadow-md focus:outline-none `}  />
                             </div>
                     </div>  
                 </form>

@@ -8,7 +8,6 @@ import { MdCancel } from "react-icons/md";
 import { FaMoneyBillWave } from "react-icons/fa";
 import { useEffect } from "react";
 import toast from 'react-hot-toast';
-import ReactQuill from 'react-quill';
 import 'react-quill/dist/quill.snow.css'; // Importe o estilo do editor
 import { IoPersonAdd } from "react-icons/io5";
 import { MdConnectWithoutContact } from "react-icons/md";
@@ -162,10 +161,9 @@ export function AddPotential({atualizarEstadoModal, mostrarModal}: {atualizarEst
 
                     </div>
                     <div className=" flex flex-col w-1/2">
-                            <div className="mt-6  w-full box-border mb-4">
+                            <div className="mt-6 h-full w-full box-border mb-4">
                                 <p className="m-0 font-semibold" > Anotações </p>
-                                <ReactQuill theme="snow" onChange={setquillValue} value={quillValue}  className={`myQuill2 w-12/12 border-none shadow-md`} modules={modules} />
-                                <input type="text" value={quillValue} className="hidden" /*{...register("notas")}*/ />
+                                <textarea  onChange={(e) =>setquillValue(e.target.value)} value={quillValue}  className={`myQuill2 w-full h-full customBorder rounded-md border-none shadow-md p-2 focus:outline-none`}  />
                             </div>
                     </div>  
                 </form>

@@ -1,6 +1,5 @@
 import { GrnBtn } from "../greenBtn"
 import { IoIosSave } from "react-icons/io";
-import ReactQuill from 'react-quill';
 import { useState } from "react";
 import { task } from "../../pages/opportunity"
 import { ajax } from "../../ajax/ajax";
@@ -8,13 +7,7 @@ import toast from 'react-hot-toast';
 
 export function Notes({task}: {task?: task}) {
     const [quillValue, setquillValue] = useState<string | undefined>(task?.Remarks); 
-    const modules = {
-        toolbar: [
-            [{ 'header': '1'}, {'header': '2'}],
-            ['bold', 'italic', 'underline'], 
-            ['clean']
-        ],
-    }
+    
 
     const handleSubmit = async () => {
         toast.dismiss();
@@ -47,7 +40,7 @@ export function Notes({task}: {task?: task}) {
                 <GrnBtn onClick={ () => handleSubmit() } nomeBtn="salvar" icon={<IoIosSave size={20} />} />
             </div>
             <div className="flex w-full mt-6" >
-                <ReactQuill theme="snow" value={quillValue} onChange={setquillValue}  className={`myQuillBig text-xl border-none shadow-md`} modules={modules} />
+                <textarea value={quillValue} onChange={(e) => setquillValue(e.target.value)}  className={`myQuillBig text-xl customBorder rounded-md p-2 focus:outline-none shadow-md`} />
 
             </div>
         </div>
