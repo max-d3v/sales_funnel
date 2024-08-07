@@ -4,12 +4,13 @@ import { LuDot } from "react-icons/lu";
 import { FaCirclePlus } from "react-icons/fa6";
 import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
-import { TaskContextGestoria } from '../gestoria/boardGestoria';
+import { TaskContextGestoria } from './boardGestoriaInterna';
 import { useState, useEffect } from 'react';
 import { ImSpinner8 } from "react-icons/im";
 import { BsExclamationCircle } from "react-icons/bs";
 import { BsExclamationCircleFill } from "react-icons/bs";
 import { ajax } from '../../ajax/ajax';
+import { Tooltip } from 'react-tooltip';
 import toast from 'react-hot-toast';
 interface taskProps {
     task: {
@@ -29,17 +30,17 @@ interface taskProps {
 }
 
 
-export function TaskGestoria({task, index}: taskProps) {
+export function TaskGestoriaInterna({task, index}: taskProps) {
     const [isInDrag, setIsInDrag] = useState<boolean>(false);
     const [isHovered, setIsHovered] = useState<boolean>(false);
     const [isHighlighted, setIsHighlighted] = useState<boolean>(false);
 
     const navigate = useNavigate();
-    const { selectedTasks, alterModalState, alterSelectedTask, alterCurrentOwner } = useContext(TaskContextGestoria);
+    const { selectedTasks } = useContext(TaskContextGestoria);
     
 
     const handleOpenTask = (task: taskProps["task"]) => {
-        navigate(`/opportunity/${task.Id}?origem=gestoria`)
+        navigate(`/opportunity/${task.Id}?origem=gestoriaInterna`)
     }
 
     const diffInDays = () => {
@@ -50,12 +51,13 @@ export function TaskGestoria({task, index}: taskProps) {
         return differenceInDays
     }
 
+    /*
     const handleChangeTaskOwner = () => {
         alterSelectedTask(task.Id.toString());
         alterCurrentOwner(task.firstName + " " + task.lastName);
         alterModalState();
     }
-
+    */
     const handleHighlightTask = async () => {
         if (!isHighlighted) {
             setIsHighlighted(true);
@@ -93,13 +95,11 @@ export function TaskGestoria({task, index}: taskProps) {
     const formatedPrice = task.MaxLocalTotal.toLocaleString('pt-BR');
 
     useEffect(() => {
-        if (selectedTasks) {
-            if (selectedTasks.includes(task.Id.toString())) {
-                setIsInDrag( true );
-            } 
-            if (!selectedTasks.includes(task.Id.toString())) {
-                setIsInDrag( false );
-            }    
+        if (selectedTasks.includes(task.Id.toString())) {
+            setIsInDrag( true );
+        } 
+        if (!selectedTasks.includes(task.Id.toString())) {
+            setIsInDrag( false );
         }
     }, [selectedTasks])
 
@@ -119,23 +119,29 @@ export function TaskGestoria({task, index}: taskProps) {
                     <h3 className='p-0 m-0'>{task.OpportunityName}</h3>
                     <p className='m-0 mr-2 text-sm'>{task.CustomerName}</p>  
                     <div className='flex items-center gap-2 mt-3'>
-                        <div onClick={() => handleChangeTaskOwner()} className=' gap-1 whitespace-nowrap flex items-center customBorder rounded-md px-1 cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-sm' >
+                        <div className=' gap-1 whitespace-nowrap flex items-center customBorder rounded-md px-1 cursor-pointer' >
                         <CgProfile /><p className='m-0' > {task.firstName} </p>
                         </div>
                         <div className='m-0 text-xs font-semibold flex gap-1 items-center' >
                            <p className='m-0' > R$ {formatedPrice} </p> <LuDot /> <span className={dateColor} > {formatedDate} </span> </div>
                         </div>
                         
-                    </div>  
+                    </div> 
+                     
                     <div className='h-full flex flex-col justify-between ml-3'>
-                        <div className="flex items-center justify-center p-1"
+                        <div  className="flex items-center justify-center p-1"
+                        data-tooltip-id="tooltip-gestoria-interna"
+                        data-tooltip-content="Destacar oportunidade"
                         onMouseEnter={() => setIsHovered(true)}
                         onMouseLeave={() => setIsHovered(false)}
                         onClick={() => handleHighlightTask()}   
                         >
-                            <BsExclamationCircleFill size={22} className={` ${!isHovered && !isHighlighted ? "opacity-0 absolute " : "opacity-100 scale-105"} corDestaque  cursor-pointer transition-all duration-300 `} /> <BsExclamationCircle size={22} className={` ${isHovered || isHighlighted ? "opacity-0 absolute" : "opacity-100"} corDestaque cursor-pointer transition-all duration:300 `} /> </div>
+                            <BsExclamationCircleFill size={22} className={` ${!isHovered && !isHighlighted ? "opacity-0 absolute " : "opacity-100 scale-105"} corDestaque  cursor-pointer transition-all duration-300 `} /> <BsExclamationCircle size={22} className={` ${isHovered || isHighlighted ? "opacity-0 absolute" : "opacity-100"} corDestaque cursor-pointer transition-all duration:300 `} />
+                         </div>
+                    
                         {isInDrag ? <ImSpinner8 className='animate-spin' size={22} /> : <FaCirclePlus onClick={() => handleOpenTask(task)} size={22} className=' hover:rotate-90 cursor-pointer transition-all duration-300 hover:scale-125 p-1  '  /> }  
                     </div>
+                    
                 </div>
                 )
             }}

@@ -30,7 +30,7 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
     const [mostrarFiltro, setMostrarFiltro] = useState<boolean>(false);
     const [localSearch, setLocalSearch] = useState<string>('');
     const [isGerente, setIsGerente] = useState<boolean>(false);
-
+    const [isInterno, setIsInterno] = useState<boolean>(false);
 
     const navigate = useNavigate();
 
@@ -55,6 +55,8 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
         if (origem) {
             if (origem == "gestoria") {
                 return navigate("/gestoria");
+            } else if (origem == "gestoriaInterna") {
+                return navigate("/gestoriaInterna");
             }
         }
         navigate('/');
@@ -72,7 +74,7 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
         setMostrarFiltro(!mostrarFiltro);
     }
 
-    const checaGerente = async () => {
+    const checaIsGerente = async () => {
         const response = await ajax({method: "GET", endpoint: "/gestoria/checaGerente", data: null});
         if (response.status == "success") {
             const isGerente = response.data.isGerente;
@@ -85,16 +87,32 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
         toast.error("Erro ao verificar se usuario é gerente")
     }
 
+    const checaIsInterno = async () => {
+        const response = await ajax({method: "GET", endpoint: "/gestoriaInterna/checaInterno", data: null});
+        if (response.status == "success") {
+            const isInterno = response.data.isInterno;
+            if (isInterno) {
+                setIsInterno(true);
+            }
+            return;
+        }
+        toast.error("Erro ao verificar se usuario é interno")
+    }
+
     useEffect(() => {
         if (pathname.includes("/autologin") || pathname.includes("/autoLogin")) {
             return;          
         }
-        checaGerente();
+        console.log("asdasd")
+        checaIsInterno();
+        checaIsGerente();
     }, [])
 
     useEffect(() => {
         if (signed && !pathname.includes("/autologin") && !pathname.includes("/autoLogin")) {
-            checaGerente();
+            console.log("ugaduga")
+            checaIsInterno();
+            checaIsGerente();
         }
     }, [signed])
 
@@ -122,7 +140,7 @@ export function Header({ setSearch, setFilters, setGestor }: header) {
             <div >
             
             <CgProfile size={33} onClick={() => handleProfile()} className="mr-8 mt-1.5 hover:scale-105 transition-all duration-500 cursor-pointer"/>  
-            {mostrarProfile ? <ModalProfile isGerente={isGerente} /> : null }
+            {mostrarProfile ? <ModalProfile isGerente={isGerente} isInterno={isInterno} /> : null }
             </div>
             </div>
 
