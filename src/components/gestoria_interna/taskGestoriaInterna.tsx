@@ -10,7 +10,6 @@ import { ImSpinner8 } from "react-icons/im";
 import { BsExclamationCircle } from "react-icons/bs";
 import { BsExclamationCircleFill } from "react-icons/bs";
 import { ajax } from '../../ajax/ajax';
-import { Tooltip } from 'react-tooltip';
 import toast from 'react-hot-toast';
 interface taskProps {
     task: {
