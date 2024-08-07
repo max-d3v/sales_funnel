@@ -273,7 +273,7 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
                         <Input customCss="h-1/2" insidePlaceholder="Título da oportunidade" placeholder="Título" name="titulo" error={ errors.titulo?.message } register={register} ></Input>
                         <div>
 
-                        <Input id="codigoCliente" valueHandler={(e) => handleCodigoCliente(e)} insidePlaceholder="C027277 ou Flávio" placeholder="Código do cliente" icon={<BsPersonBoundingBox />} name="codCliente" error={ errors.codCliente?.message } register={register}></Input>
+                        <Input id="codigoCliente" valueHandler={(e) => handleCodigoCliente(e)} insidePlaceholder="C000000 ou Nome do cliente" placeholder="Código do cliente" icon={<BsPersonBoundingBox />} name="codCliente" error={ errors.codCliente?.message } register={register}></Input>
                         <div className="relative z-40 " >
                             <div className={` box-border absolute z-50 w-80 flex flex-col bg-white shadow-md ${ clientes.length > 0 ? "customBorder" : "" } mt-1 rounded-md`} >
                             {
