@@ -14,7 +14,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import { ajax } from "../ajax/ajax";
 import { LoadingModal } from "./modalLoading";
 import 'react-quill/dist/quill.snow.css'; // Importe o estilo do editor
-
+import { SelectDados } from "./selectDados";
+import { useContext } from "react";
+import { AuthContext } from "../context/authProvider";
 const isAfterToday = (value: any) => {
     const today = new Date();
     const selectedDate = new Date(value);
@@ -28,6 +30,7 @@ const schema = z.object({
     dataPrevista: z.string().min(1, "Data de Prevista é obrigatória").refine(isAfterToday, {
       message: "A data prevista deve ser posterior à data atual",
     }),
+    atribuido: z.string().optional(),
   });
 type FormData = z.infer<typeof schema>
 
@@ -37,8 +40,13 @@ interface cliente {
     codigo: string;
 }
 
+export interface colaborador {
+    NomeColaborador: string;
+    CodigoVendedorColaborador: string;
+}
 
-export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEstadoModal: () => void, mostrarModal: boolean}) {
+
+export function AddOportunity({atualizaEstadoModal, mostrarModal, isGestor = false} : {atualizaEstadoModal: () => void, mostrarModal: boolean, isGestor?: boolean}) {
     const [isOpen, setIsOpen] = useState(mostrarModal);
     const [addLoading, setAddLoading] = useState<boolean>(false);
     const [etapa, setEtapa] = useState<number>(1);
@@ -47,8 +55,11 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
     const [isWaiting, setIsWaiting] = useState(false);
     const [clientes, setClientes] = useState<Array<cliente>>([]);
     const [loadingSearch, setLoadingSearch] = useState<boolean>(false);
+    const [colaboradoresData,  setColaboradoresData] = useState<colaborador[]>([]);
 
     const abortControllerRef = useRef<AbortController | null>(null);
+
+    const { user } = useContext(AuthContext);
 
     const { register, handleSubmit, formState: { errors }} = useForm<FormData>({
         resolver: zodResolver(schema),
@@ -89,6 +100,7 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
                 dataPrevista: data.dataPrevista,
                 notas: quillValue,
                 etapa: etapaSap,
+                atribuido: data.atribuido
             }
         }
         if (!codigoCliente) {
@@ -100,7 +112,6 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
 
         var response: any;
 
-        
         response = await ajax({method: "POST", endpoint: "/task/add", data: dataObj});
         
         
@@ -141,6 +152,25 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
         setAddLoading(false);
         toast.dismiss();
         toast.error("Erro inesperado");
+    }
+
+    const getColaboradores = async () => {
+        const response = await ajax({method: "GET", endpoint: "/colaboradores/todos", data: null});
+        if (!response.status) {
+            toast.error("Erro inesperado");
+            return;
+        }
+        if (response.status == "error") {
+            if (typeof response.message == "string") {
+                toast.error(response.message);
+                return;
+            }
+            toast.error("Erro ao buscar colaboradores")
+            return;
+        }
+        if (response.status == "success") {
+            setColaboradoresData(response.data);
+        }
     }
 
 
@@ -224,6 +254,9 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
 
     useEffect(() => {
         if (isOpen) {
+            if (isGestor) {
+                getColaboradores();
+            }
             document.body.style.overflow = 'hidden';
         } else {
             document.body.style.overflow = 'unset';
@@ -310,7 +343,13 @@ export function AddOportunity({atualizaEstadoModal, mostrarModal} : {atualizaEst
                             <div data-tooltip-id="tooltip-1" data-tooltip-content="Proposta de Valor" className="flex" onClick={() => setEtapa(5)}> <div className="triangle-right-white absolute"></div> <button type="button" className={`w-10 h-6 border-none ${ etapa >= 5 ? "bg-green-500" : "" }`} ></button><div className={etapa >= 5 ? `triangle-right` : `triangle-right-grey`}></div></div>
                             </div>
                         </div>
-                        <Input type="date" placeholder="Data prevista de conclusão da etapa" customCss="mt-2" insidePlaceholder="DD/MM/YYYY" name="dataPrevista" error={ errors.dataPrevista?.message } register={register}></Input>                    </div>
+                        <Input type="date" placeholder="Data prevista de conclusão da etapa" customCss="mt-2" insidePlaceholder="DD/MM/YYYY" name="dataPrevista" error={ errors.dataPrevista?.message } register={register}></Input>                   
+                        { isGestor ? 
+                        <SelectDados preValue={user.id} placeholder="Atribuição" name="atribuido"  register={register} tipo="colaboradores" colaboradores={colaboradoresData} />
+                        :
+                        null
+                        }
+                        </div>
                         <div className=" flex flex-col w-1/2">
                             <div className="mt-6 h-full box-border w-full mb-4">
                                 <p className="m-0 font-semibold" >Anotações</p>

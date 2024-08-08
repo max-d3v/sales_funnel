@@ -1,5 +1,5 @@
 import {RegisterOptions, UseFormRegister} from 'react-hook-form';
-
+import { colaborador } from './modalAddOportunity';
 interface input {
     placeholder: string;
     name: string;
@@ -13,11 +13,11 @@ interface input {
     requiredDefault?: boolean;
     funcaoAoMudar?: (e: any) => void;
     itens?: any;
+    colaboradores?: any;
     id?: string;
     disabled?: boolean;
 }
-export function SelectDados({tipo, funcaoAoMudar, requiredDefault, preValue, register, placeholder, name, icon, error, rules, itens, disabled = false, id}: input) {
-    
+export function SelectDados({tipo, funcaoAoMudar, requiredDefault, preValue, register, placeholder, name, icon, error, rules, itens, disabled = false, id, colaboradores}: input) {
     return (
         <div className="relative mt-4 ">
             <p className="m-0 font-semibold text-sm">{placeholder}</p>
@@ -101,6 +101,14 @@ export function SelectDados({tipo, funcaoAoMudar, requiredDefault, preValue, reg
                     itens.map((item: any) => {
                         return <option selected={item.userId == preValue} value={item.userId}>{item.firstName} {item.lastName}</option>
                     }) 
+                    :
+                    ""
+                }
+                {
+                    tipo == "colaboradores" ?
+                    colaboradores.map((colaborador: colaborador) => {
+                        return <option selected={colaborador.CodigoVendedorColaborador == preValue} value={colaborador.CodigoVendedorColaborador}>{colaborador.NomeColaborador}</option>
+                    })
                     :
                     ""
                 }
